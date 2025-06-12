@@ -1,0 +1,927 @@
+import { useState, useEffect } from "react";
+import {
+  headAccData,
+  topAccData,
+  backAccData,
+  armAccData,
+  waistAccData,
+  legsAccData,
+} from "../data/accessories";
+
+import {
+  fightingActiveBuffs,
+  gunActiveBuffs,
+  swordActiveBuffs,
+  fruitActiveBuffs,
+  suitActiveBuffs,
+  armamentActiveBuffs,
+  conquerorsActiveBuffs,
+  blacksmithActiveBuffs,
+  giantActiveBuffs,
+  supportActiveBuffs,
+} from "../data/activebuff";
+
+import { damageData, Weapon, Mode } from "../data/damage";
+
+import { titleBuffsData } from "../data/titlebuff";
+
+import { raceBuffsData } from "../data/racebuff";
+
+import { useDevMode } from "../hooks/devmode";
+
+const Calculator = () => {
+  const dev = useDevMode();
+  const [strength, setStrength] = useState(1);
+  const [strengthAcc, setStrengthAcc] = useState(0);
+  const [stamina, setStamina] = useState(1);
+  const [staminaAcc, setStaminaAcc] = useState(0);
+  const [defense, setDefense] = useState(1);
+  const [defenseAcc, setDefenseAcc] = useState(0);
+  const [sword, setSword] = useState(1);
+  const [swordAcc, setSwordAcc] = useState(0);
+  const [gun, setGun] = useState(1);
+  const [gunAcc, setGunAcc] = useState(0);
+  const [haki, setHaki] = useState(1);
+  const [hakiAcc, setHakiAcc] = useState(0);
+  const [fruit, setFruit] = useState(1);
+  const [fruitAcc, setFruitAcc] = useState(0);
+
+  // Accessory part selections
+  const [selectedHeadAcc, setSelectedHeadAcc] = useState(0);
+  const [selectedTopAcc, setSelectedTopAcc] = useState(0);
+  const [selectedBackAcc, setSelectedBackAcc] = useState(0);
+  const [selectedArmAcc, setSelectedArmAcc] = useState(0);
+  const [selectedWaistAcc, setSelectedWaistAcc] = useState(0);
+  const [selectedLegsAcc, setSelectedLegsAcc] = useState(0);
+
+  const [fightingBuff, setFightingBuff] = useState(0);
+  const [gunSBuff, setGunSBuff] = useState(0);
+  const [swordSBuff, setSwordSBuff] = useState(0);
+  const [fruitSBuff, setFruitSBuff] = useState(0);
+  const [suitBuff, setSuitBuff] = useState(0);
+  const [titleBuff, setTitleBuff] = useState(0);
+  const [raceBuff, setRaceBuff] = useState(0);
+  const [armamentBuff, setArmamentBuff] = useState(0);
+  const [conquerorsBuff, setConquerorsBuff] = useState(0);
+  const [blacksmithBuff, setBlacksmithBuff] = useState(0);
+  const [giantBuff, setGiantBuff] = useState(0);
+  const [supportBuff, setSupportBuff] = useState(0);
+
+  const [fruitBuff, setFruitBuff] = useState(1);
+  const [swordBuff, setSwordBuff] = useState(1);
+  const [gunBuff, setGunBuff] = useState(1);
+  const [strengthBuff, setStrengthBuff] = useState(1);
+
+  const [selectedDamage, setSelectedDamage] = useState(0);
+  const [selectedDamageData, setSelectectedDamageData] = useState<Weapon[]>();
+
+  const moveKeys = ["M1", "Q", "E", "R", "F", "G", "T", "U", "Y"];
+
+  const [baseDamages, setBaseDamages] = useState<Record<string, number>>(() =>
+    moveKeys.reduce((acc, key) => ({ ...acc, [key]: 0 }), {})
+  );
+
+  const handleChange = (key: string, value: string) => {
+    const numeric = parseFloat(value) || 0;
+    setBaseDamages((prev) => ({ ...prev, [key]: numeric }));
+  };
+
+  useEffect(() => {
+    // You will need to import and use the corresponding data arrays for each accessory part
+    const selectedHead = headAccData.find((acc) => acc.id === selectedHeadAcc);
+    const selectedTop = topAccData.find((acc) => acc.id === selectedTopAcc);
+    const selectedBack = backAccData.find((acc) => acc.id === selectedBackAcc);
+    const selectedArm = armAccData.find((acc) => acc.id === selectedArmAcc);
+    const selectedWaist = waistAccData.find(
+      (acc) => acc.id === selectedWaistAcc
+    );
+    const selectedLegs = legsAccData.find((acc) => acc.id === selectedLegsAcc);
+
+    const selectedFighting = fightingActiveBuffs.find(
+      (buff) => buff.id === fightingBuff
+    );
+    const selectedGunS = gunActiveBuffs.find((buff) => buff.id === gunSBuff);
+    const selectedSwordS = swordActiveBuffs.find(
+      (buff) => buff.id === swordSBuff
+    );
+    const selectedFruitS = fruitActiveBuffs.find(
+      (buff) => buff.id === fruitSBuff
+    );
+    const selectedSuit = suitActiveBuffs.find((buff) => buff.id === suitBuff);
+    const selectedTitle = titleBuffsData.find((buff) => buff.id === titleBuff);
+    const selectedRace = raceBuffsData.find((buff) => buff.id === raceBuff);
+    const selectedArmament = armamentActiveBuffs.find(
+      (buff) => buff.id === armamentBuff
+    );
+    const selectedConquerors = conquerorsActiveBuffs.find(
+      (buff) => buff.id === conquerorsBuff
+    );
+    const selectedBlacksmith = blacksmithActiveBuffs.find(
+      (buff) => buff.id === blacksmithBuff
+    );
+    const selectedGiant = giantActiveBuffs.find(
+      (buff) => buff.id === giantBuff
+    );
+    const selectedSupport = supportActiveBuffs.find(
+      (buff) => buff.id === supportBuff
+    );
+
+    const foundDamage = damageData.find((dmg) => dmg.id === selectedDamage);
+    setSelectectedDamageData(foundDamage ? [foundDamage] : undefined);
+
+    setStrengthAcc(
+      (selectedHead?.strength || 0) +
+        (selectedTop?.strength || 0) +
+        (selectedBack?.strength || 0) +
+        (selectedArm?.strength || 0) +
+        (selectedWaist?.strength || 0) +
+        (selectedLegs?.strength || 0)
+    );
+    setStaminaAcc(
+      (selectedHead?.stamina || 0) +
+        (selectedTop?.stamina || 0) +
+        (selectedBack?.stamina || 0) +
+        (selectedArm?.stamina || 0) +
+        (selectedWaist?.stamina || 0) +
+        (selectedLegs?.stamina || 0)
+    );
+    setDefenseAcc(
+      (selectedHead?.defense || 0) +
+        (selectedTop?.defense || 0) +
+        (selectedBack?.defense || 0) +
+        (selectedArm?.defense || 0) +
+        (selectedWaist?.defense || 0) +
+        (selectedLegs?.defense || 0)
+    );
+    setSwordAcc(
+      (selectedHead?.sword || 0) +
+        (selectedTop?.sword || 0) +
+        (selectedBack?.sword || 0) +
+        (selectedArm?.sword || 0) +
+        (selectedWaist?.sword || 0) +
+        (selectedLegs?.sword || 0)
+    );
+    setGunAcc(
+      (selectedHead?.gun || 0) +
+        (selectedTop?.gun || 0) +
+        (selectedBack?.gun || 0) +
+        (selectedArm?.gun || 0) +
+        (selectedWaist?.gun || 0) +
+        (selectedLegs?.gun || 0)
+    );
+    setHakiAcc(
+      (selectedHead?.haki || 0) +
+        (selectedTop?.haki || 0) +
+        (selectedBack?.haki || 0) +
+        (selectedArm?.haki || 0) +
+        (selectedWaist?.haki || 0) +
+        (selectedLegs?.haki || 0)
+    );
+    setFruitAcc(
+      (selectedHead?.fruit || 0) +
+        (selectedTop?.fruit || 0) +
+        (selectedBack?.fruit || 0) +
+        (selectedArm?.fruit || 0) +
+        (selectedWaist?.fruit || 0) +
+        (selectedLegs?.fruit || 0)
+    );
+    setFruitBuff(
+      (selectedFighting?.fruitbuff || 1) *
+        (selectedGunS?.fruitbuff || 1) *
+        (selectedSwordS?.fruitbuff || 1) *
+        (selectedFruitS?.fruitbuff || 1) *
+        (selectedSuit?.fruitbuff || 1) *
+        (selectedTitle?.fruitbuff || 1) *
+        (selectedRace?.fruitbuff || 1) *
+        (selectedArmament?.fruitbuff || 1) *
+        (selectedConquerors?.fruitbuff || 1) *
+        (selectedBlacksmith?.fruitbuff || 1) *
+        (selectedGiant?.fruitbuff || 1) *
+        (selectedSupport?.fruitbuff || 1)
+    );
+    setSwordBuff(
+      (selectedFighting?.swordbuff || 1) *
+        (selectedGunS?.swordbuff || 1) *
+        (selectedSwordS?.swordbuff || 1) *
+        (selectedFruitS?.swordbuff || 1) *
+        (selectedSuit?.swordbuff || 1) *
+        (selectedTitle?.swordbuff || 1) *
+        (selectedRace?.swordbuff || 1) *
+        (selectedArmament?.swordbuff || 1) *
+        (selectedConquerors?.swordbuff || 1) *
+        (selectedBlacksmith?.swordbuff || 1) *
+        (selectedGiant?.swordbuff || 1) *
+        (selectedSupport?.swordbuff || 1)
+    );
+    setGunBuff(
+      (selectedFighting?.gunbuff || 1) *
+        (selectedGunS?.gunbuff || 1) *
+        (selectedSwordS?.gunbuff || 1) *
+        (selectedFruitS?.gunbuff || 1) *
+        (selectedSuit?.gunbuff || 1) *
+        (selectedTitle?.gunbuff || 1) *
+        (selectedRace?.gunbuff || 1) *
+        (selectedArmament?.gunbuff || 1) *
+        (selectedConquerors?.gunbuff || 1) *
+        (selectedBlacksmith?.gunbuff || 1) *
+        (selectedGiant?.gunbuff || 1) *
+        (selectedSupport?.gunbuff || 1)
+    );
+    setStrengthBuff(
+      (selectedFighting?.strengthbuff || 1) *
+        (selectedGunS?.strengthbuff || 1) *
+        (selectedSwordS?.strengthbuff || 1) *
+        (selectedFruitS?.strengthbuff || 1) *
+        (selectedSuit?.strengthbuff || 1) *
+        (selectedTitle?.strengthbuff || 1) *
+        (selectedRace?.strengthbuff || 1) *
+        (selectedArmament?.strengthbuff || 1) *
+        (selectedConquerors?.strengthbuff || 1) *
+        (selectedBlacksmith?.strengthbuff || 1) *
+        (selectedGiant?.strengthbuff || 1) *
+        (selectedSupport?.strengthbuff || 1)
+    );
+  }, [
+    selectedHeadAcc,
+    selectedTopAcc,
+    selectedBackAcc,
+    selectedArmAcc,
+    selectedWaistAcc,
+    selectedLegsAcc,
+    fightingBuff,
+    gunSBuff,
+    swordSBuff,
+    fruitSBuff,
+    suitBuff,
+    titleBuff,
+    raceBuff,
+    armamentBuff,
+    conquerorsBuff,
+    blacksmithBuff,
+    giantBuff,
+    supportBuff,
+    selectedDamage,
+  ]);
+
+  return (
+    <div className="w-full flex flex-col items-center">
+      <div className="stats shadow">
+        <div className="stat">
+          <div className="stat-figure text-primary">
+            <span className="text-4xl">📊</span>
+          </div>
+          <div className="stat-title">Total Stats</div>
+          <div className="stat-value text-primary">
+            {(
+              strength +
+              stamina +
+              defense +
+              sword +
+              gun +
+              haki +
+              fruit
+            ).toLocaleString()}
+          </div>
+          <div className="stat-desc">
+            +{" "}
+            {(
+              strengthAcc +
+              staminaAcc +
+              defenseAcc +
+              swordAcc +
+              gunAcc +
+              hakiAcc +
+              fruitAcc
+            ).toLocaleString()}
+          </div>
+        </div>
+
+        <div className="stat">
+          <div className="stat-figure text-secondary">
+            <span className="text-4xl">🔱</span>
+          </div>
+          <div className="stat-title">Active Buffs</div>
+          <div className="join">
+            <div className="join join-vertical">
+              <div className="badge badge-lg custom-text-fruit w-full">
+                {fruitBuff.toFixed(2)} x Fruit Damage
+              </div>
+              <div className="badge badge-lg custom-text-sword w-full">
+                {swordBuff.toFixed(2)} x Sword Damage
+              </div>
+            </div>
+            <div className="join join-vertical">
+              <div className="badge badge-lg custom-text-gun w-full">
+                {gunBuff.toFixed(2)} x Gun Damage
+              </div>
+              <div className="badge badge-lg custom-text-strength w-full">
+                {strengthBuff.toFixed(2)} x Strength Damage
+              </div>
+            </div>
+          </div>
+          <div className="stat-desc">
+            {(
+              ((strength + stamina + defense + sword + gun + haki + fruit) /
+                10000) *
+              3
+            )
+              .toFixed(4)
+              .toLocaleString() + " x from Pinpoint Artifact"}
+          </div>
+        </div>
+
+        <div className="stat">
+          <div className="stat-value">
+            <select
+              value={selectedDamage}
+              onChange={(e) => setSelectedDamage(Number(e.target.value))}
+              className="select select-accent"
+            >
+              <option value="" disabled>
+                Pick a main damage
+              </option>
+              {damageData.map((dmg) => (
+                <option key={dmg.id} value={dmg.id}>
+                  {dmg.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="stat-title">Main Damage</div>
+          <div className="stat-desc text-secondary">
+            {selectedDamageData && selectedDamageData.length > 0 ? (
+              <div>
+                {selectedDamageData[0].modes &&
+                  selectedDamageData[0].modes.map((mode: Mode) => (
+                    <div key={mode.name}>
+                      <input
+                        type="checkbox"
+                        className="toggle toggle-warning toggle-xs"
+                      />
+                      <span className="ml-2">{mode.name}</span>
+                    </div>
+                  ))}
+              </div>
+            ) : (
+              "No damage data selected"
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap gap-4 mt-4">
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+          <legend className="fieldset-legend">Stats Details</legend>
+
+          <label className="label">
+            <span>Strength</span>{" "}
+            <input
+              type="number"
+              min={1}
+              max={14285}
+              value={strength}
+              onChange={(e) => setStrength(Number(e.target.value))}
+              className="input input-xs input-bordered w-24 text-right"
+            />
+            <span> + {strengthAcc}</span>
+          </label>
+          <input
+            type="range"
+            min={1}
+            max="14285"
+            value={strength}
+            onChange={(e) => setStrength(Number(e.target.value))}
+            className="range custom-text-strength"
+          />
+
+          <label className="label mt-2">
+            <span>Stamina</span>{" "}
+            <input
+              type="number"
+              min={1}
+              max={14285}
+              value={stamina}
+              onChange={(e) => setStamina(Number(e.target.value))}
+              className="input input-xs input-bordered w-24 text-right"
+            />
+            <span> + {staminaAcc}</span>
+          </label>
+          <input
+            type="range"
+            min={1}
+            max="14285"
+            value={stamina}
+            onChange={(e) => setStamina(Number(e.target.value))}
+            className="range custom-text-stamina"
+          />
+
+          <label className="label mt-2">
+            <span>Defense</span>{" "}
+            <input
+              type="number"
+              min={1}
+              max={14285}
+              value={defense}
+              onChange={(e) => setDefense(Number(e.target.value))}
+              className="input input-xs input-bordered w-24 text-right"
+            />
+            <span> + {defenseAcc}</span>
+          </label>
+          <input
+            type="range"
+            min={1}
+            max="14285"
+            value={defense}
+            onChange={(e) => setDefense(Number(e.target.value))}
+            className="range custom-text-defense"
+          />
+
+          <label className="label mt-2">
+            <span>Sword</span>{" "}
+            <input
+              type="number"
+              min={1}
+              max={14285}
+              value={sword}
+              onChange={(e) => setSword(Number(e.target.value))}
+              className="input input-xs input-bordered w-24 text-right"
+            />
+            <span> + {swordAcc}</span>
+          </label>
+          <input
+            type="range"
+            min={1}
+            max="14285"
+            value={sword}
+            onChange={(e) => setSword(Number(e.target.value))}
+            className="range custom-text-sword"
+          />
+
+          <label className="label mt-2">
+            <span>Gun</span>{" "}
+            <input
+              type="number"
+              min={1}
+              max={14285}
+              value={gun}
+              onChange={(e) => setGun(Number(e.target.value))}
+              className="input input-xs input-bordered w-24 text-right"
+            />
+            <span> + {gunAcc}</span>
+          </label>
+          <input
+            type="range"
+            min={1}
+            max="14285"
+            value={gun}
+            onChange={(e) => setGun(Number(e.target.value))}
+            className="range custom-text-gun"
+          />
+
+          <label className="label mt-2">
+            <span>Haki</span>{" "}
+            <input
+              type="number"
+              min={1}
+              max={14285}
+              value={haki}
+              onChange={(e) => setHaki(Number(e.target.value))}
+              className="input input-xs input-bordered w-24 text-right"
+            />
+            <span> + {hakiAcc}</span>
+          </label>
+          <input
+            type="range"
+            min={1}
+            max="14285"
+            value={haki}
+            onChange={(e) => setHaki(Number(e.target.value))}
+            className="range custom-text-haki"
+          />
+
+          <label className="label mt-2">
+            <span>Fruit</span>{" "}
+            <input
+              type="number"
+              min={1}
+              max={14285}
+              value={fruit}
+              onChange={(e) => setFruit(Number(e.target.value))}
+              className="input input-xs input-bordered w-24 text-right"
+            />
+            <span> + {fruitAcc}</span>
+          </label>
+          <input
+            type="range"
+            min={1}
+            max="14285"
+            value={fruit}
+            onChange={(e) => setFruit(Number(e.target.value))}
+            className="range custom-text-fruit"
+          />
+
+          <div className="flex justify-center gap-4">
+            <button
+              className="btn btn-soft"
+              onClick={() => {
+                setStrength(1);
+                setStamina(1);
+                setDefense(1);
+                setSword(1);
+                setGun(1);
+                setHaki(1);
+                setFruit(1);
+              }}
+            >
+              Minimum
+            </button>
+            <button
+              className="btn btn-soft btn-success"
+              onClick={() => {
+                setStrength(14285);
+                setStamina(14285);
+                setDefense(14285);
+                setSword(14285);
+                setGun(14285);
+                setHaki(14285);
+                setFruit(14285);
+              }}
+            >
+              Maximum
+            </button>
+          </div>
+        </fieldset>
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+          <legend className="fieldset-legend">Accessories Details</legend>
+
+          <label className="label mt-2">
+            <span>Head Accessory</span>
+          </label>
+          <select
+            value={selectedHeadAcc}
+            onChange={(e) => setSelectedHeadAcc(Number(e.target.value))}
+            className="select select-primary"
+          >
+            <option value="" disabled>
+              Pick a head accessory
+            </option>
+            {headAccData.map((acc) => (
+              <option key={acc.id} value={acc.id}>
+                {acc.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="label mt-2">
+            <span>Top Accessory</span>
+          </label>
+          <select
+            value={selectedTopAcc}
+            onChange={(e) => setSelectedTopAcc(Number(e.target.value))}
+            className="select select-secondary"
+          >
+            <option value="" disabled>
+              Pick a top accessory
+            </option>
+            {topAccData.map((acc) => (
+              <option key={acc.id} value={acc.id}>
+                {acc.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="label mt-2">
+            <span>Arm Accessory</span>
+          </label>
+          <select
+            value={selectedArmAcc}
+            onChange={(e) => setSelectedArmAcc(Number(e.target.value))}
+            className="select select-accent"
+          >
+            <option value="" disabled>
+              Pick an arm accessory
+            </option>
+            {armAccData.map((acc) => (
+              <option key={acc.id} value={acc.id}>
+                {acc.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="label mt-2">
+            <span>Back Accessory</span>
+          </label>
+          <select
+            value={selectedBackAcc}
+            onChange={(e) => setSelectedBackAcc(Number(e.target.value))}
+            className="select select-info"
+          >
+            <option value="" disabled>
+              Pick a back accessory
+            </option>
+            {backAccData.map((acc) => (
+              <option key={acc.id} value={acc.id}>
+                {acc.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="label mt-2">
+            <span>Waist Accessory</span>
+          </label>
+          <select
+            value={selectedWaistAcc}
+            onChange={(e) => setSelectedWaistAcc(Number(e.target.value))}
+            className="select select-error"
+          >
+            <option value="" disabled>
+              Pick a waist accessory
+            </option>
+            {waistAccData.map((acc) => (
+              <option key={acc.id} value={acc.id}>
+                {acc.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="label mt-2">
+            <span>Legs Accessory</span>
+          </label>
+          <select
+            value={selectedLegsAcc}
+            onChange={(e) => setSelectedLegsAcc(Number(e.target.value))}
+            className="select select-warning"
+          >
+            <option value="" disabled>
+              Pick a legs accessory
+            </option>
+            {legsAccData.map((acc) => (
+              <option key={acc.id} value={acc.id}>
+                {acc.name}
+              </option>
+            ))}
+          </select>
+        </fieldset>
+
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+          <legend className="fieldset-legend">Active Buffs Details</legend>
+
+          <label className="label mt-2">
+            <span>Support Style</span>
+          </label>
+          <select
+            value={supportBuff}
+            onChange={(e) => setSupportBuff(Number(e.target.value))}
+            className="select"
+          >
+            <option value="" disabled>
+              Pick a support style
+            </option>
+            {supportActiveBuffs.map((buff) => (
+              <option key={buff.id} value={buff.id}>
+                {buff.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="label mt-2">
+            <span>Fighting Style</span>
+          </label>
+          <select
+            value={fightingBuff}
+            onChange={(e) => setFightingBuff(Number(e.target.value))}
+            className="select"
+            disabled={
+              selectedDamageData?.[0].type === "Fighting" ? true : false
+            }
+          >
+            <option value="" disabled>
+              Pick a fighting style
+            </option>
+            {fightingActiveBuffs.map((buff) => (
+              <option key={buff.id} value={buff.id}>
+                {buff.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="label mt-2">
+            <span>Gun Style</span>
+          </label>
+          <select
+            value={gunSBuff}
+            onChange={(e) => setGunSBuff(Number(e.target.value))}
+            className="select"
+          >
+            <option value="" disabled>
+              Pick a gun style
+            </option>
+            {gunActiveBuffs.map((buff) => (
+              <option key={buff.id} value={buff.id}>
+                {buff.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="label mt-2">
+            <span>Sword Style</span>
+          </label>
+          <select
+            value={swordSBuff}
+            onChange={(e) => setSwordSBuff(Number(e.target.value))}
+            className="select"
+          >
+            <option value="" disabled>
+              Pick a sword style
+            </option>
+            {swordActiveBuffs.map((buff) => (
+              <option key={buff.id} value={buff.id}>
+                {buff.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="label mt-2">
+            <span>Devil Fruit</span>
+          </label>
+          <select
+            value={fruitSBuff}
+            onChange={(e) => setFruitSBuff(Number(e.target.value))}
+            className="select"
+          >
+            <option value="" disabled>
+              Pick a devil fruit
+            </option>
+            {fruitActiveBuffs.map((buff) => (
+              <option key={buff.id} value={buff.id}>
+                {buff.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="label mt-2">
+            <span>Suit</span>
+          </label>
+          <select
+            value={suitBuff}
+            onChange={(e) => setSuitBuff(Number(e.target.value))}
+            className="select"
+          >
+            <option value="" disabled>
+              Pick a suit
+            </option>
+            {suitActiveBuffs.map((buff) => (
+              <option key={buff.id} value={buff.id}>
+                {buff.name}
+              </option>
+            ))}
+          </select>
+        </fieldset>
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+          <legend className="fieldset-legend">Active Buffs Details 2</legend>
+
+          <label className="label mt-2">
+            <span>Title</span>
+          </label>
+          <select
+            value={titleBuff}
+            onChange={(e) => setTitleBuff(Number(e.target.value))}
+            className="select"
+          >
+            <option value="" disabled>
+              Pick a title
+            </option>
+            {titleBuffsData.map((buff) => (
+              <option key={buff.id} value={buff.id}>
+                {buff.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="label mt-2">
+            <span>Race</span>
+          </label>
+          <select
+            value={raceBuff}
+            onChange={(e) => setRaceBuff(Number(e.target.value))}
+            className="select"
+          >
+            <option value="" disabled>
+              Pick a race
+            </option>
+            {raceBuffsData.map((buff) => (
+              <option key={buff.id} value={buff.id}>
+                {buff.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="label mt-2">
+            <span>Armament Haki</span>
+          </label>
+          <select
+            value={armamentBuff}
+            onChange={(e) => setArmamentBuff(Number(e.target.value))}
+            className="select"
+          >
+            <option value="" disabled>
+              Pick a armament haki
+            </option>
+            {armamentActiveBuffs.map((buff) => (
+              <option key={buff.id} value={buff.id}>
+                {buff.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="label mt-2">
+            <span>Conqueror Haki</span>
+          </label>
+          <select
+            value={conquerorsBuff}
+            onChange={(e) => setConquerorsBuff(Number(e.target.value))}
+            className="select"
+          >
+            <option value="" disabled>
+              Pick a conqueror haki
+            </option>
+            {conquerorsActiveBuffs.map((buff) => (
+              <option key={buff.id} value={buff.id}>
+                {buff.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="label mt-2">
+            <span>Blacksmith Upgrade</span>
+          </label>
+          <select
+            value={blacksmithBuff}
+            onChange={(e) => setBlacksmithBuff(Number(e.target.value))}
+            className="select"
+          >
+            <option value="" disabled>
+              Pick a blacksmith upgrade
+            </option>
+            {blacksmithActiveBuffs.map((buff) => (
+              <option key={buff.id} value={buff.id}>
+                {buff.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="label mt-2">
+            <span>Giant Blacksmith Upgrade</span>
+          </label>
+          <select
+            value={giantBuff}
+            onChange={(e) => setGiantBuff(Number(e.target.value))}
+            className="select"
+          >
+            <option value="" disabled>
+              Pick a giant blacksmith upgrade
+            </option>
+            {giantActiveBuffs.map((buff) => (
+              <option key={buff.id} value={buff.id}>
+                {buff.name}
+              </option>
+            ))}
+          </select>
+        </fieldset>
+      </div>
+      {dev && (
+        <div className="w-full max-w-4xl mt-4 flex flex-col items-center">
+          <div className="divider w-full">Base to Scale Damage</div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+            {moveKeys.map((key) => (
+              <div key={key} className="space-y-4 border p-4 rounded-xl shadow">
+                <label className="input">
+                  <span className="label">{key} Move</span>
+                  <input
+                    type="number"
+                    placeholder="0.00"
+                    min={0}
+                    max={10000000}
+                    step="100"
+                    value={baseDamages[key]}
+                    onChange={(e) => handleChange(key, e.target.value)}
+                  />
+                </label>
+                <label className="input">
+                  <span className="label">Scaled Damage</span>
+                  <input
+                    type="number"
+                    readOnly
+                    // value={(baseDamages[key] * scaleFactor).toFixed(2)}
+                  />
+                </label>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Calculator;

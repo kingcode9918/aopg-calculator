@@ -1,0 +1,98 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --strengthcolor: #ff0000;
+  --staminacolor: #55aaff;
+  --defensecolor: #00ff00;
+  --swordcolor: #ffff7f;
+  --guncolor: #ffff00;
+  --hakicolor: #aa00aa;
+  --fruitcolor: #ff00bf;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.custom-table thead tr th:nth-child(2) {
+  color: var(--strengthcolor);
+}
+.custom-table tbody tr td:nth-child(2) {
+  color: var(--strengthcolor);
+}
+.custom-table thead tr th:nth-child(3) {
+  color: var(--staminacolor);
+}
+.custom-table tbody tr td:nth-child(3) {
+  color: var(--staminacolor);
+}
+.custom-table thead tr th:nth-child(4) {
+  color: var(--defensecolor);
+}
+.custom-table tbody tr td:nth-child(4) {
+  color: var(--defensecolor);
+}
+.custom-table thead tr th:nth-child(5) {
+  color: var(--swordcolor);
+}
+.custom-table tbody tr td:nth-child(5) {
+  color: var(--swordcolor);
+}
+.custom-table thead tr th:nth-child(6) {
+  color: var(--guncolor);
+}
+.custom-table tbody tr td:nth-child(6) {
+  color: var(--guncolor);
+}
+.custom-table thead tr th:nth-child(7) {
+  color: var(--hakicolor);
+}
+.custom-table tbody tr td:nth-child(7) {
+  color: var(--hakicolor);
+}
+.custom-table thead tr th:nth-child(8) {
+  color: var(--fruitcolor);
+}
+.custom-table tbody tr td:nth-child(8) {
+  color: var(--fruitcolor);
+}
+.custom-text-strength {
+  color: var(--strengthcolor);
+}
+.custom-text-sword {
+  color: var(--swordcolor);
+}
+.custom-text-gun {
+  color: var(--guncolor);
+}
+.custom-text-fruit {
+  color: var(--fruitcolor);
+}
+.custom-text-stamina {
+  color: var(--staminacolor);
+}
+.custom-text-defense {
+  color: var(--defensecolor);
+}
+.custom-text-haki {
+  color: var(--hakicolor);
+}

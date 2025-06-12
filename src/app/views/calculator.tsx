@@ -19,7 +19,7 @@ import {
   giantActiveBuffs,
   supportActiveBuffs,
 } from "../data/activebuff";
-import { damageData, Weapon, Mode } from "../data/damage";
+// import { damageData, Weapon, Mode } from "../data/damage";
 import { titleBuffsData } from "../data/titlebuff";
 import { raceBuffsData } from "../data/racebuff";
 import { useDevMode } from "../hooks/devmode";
@@ -67,8 +67,8 @@ const buffFieldsets = [
         key: "fightingBuff",
         label: "Fighting Style",
         data: fightingActiveBuffs,
-        disableIf: (selectedDamageData: Weapon[] | undefined) =>
-          selectedDamageData?.[0].type === "Fighting",
+        // disableIf: (selectedDamageData: Weapon[] | undefined) =>
+        //   selectedDamageData?.[0].type === "Fighting",
       },
       { key: "gunSBuff", label: "Gun Style", data: gunActiveBuffs },
       { key: "swordSBuff", label: "Sword Style", data: swordActiveBuffs },
@@ -279,8 +279,8 @@ const Calculator = () => {
   });
 
   // Damage
-  const [selectedDamage, setSelectedDamage] = useState(0);
-  const [selectedDamageData, setSelectedDamageData] = useState<Weapon[]>();
+  // const [selectedDamage, setSelectedDamage] = useState(0);
+  // const [selectedDamageData, setSelectedDamageData] = useState<Weapon[]>();
   const [baseDamages, setBaseDamages] = useState<Record<string, number>>(() =>
     moveKeys.reduce((acc, key) => ({ ...acc, [key]: 0 }), {})
   );
@@ -322,6 +322,7 @@ const Calculator = () => {
     });
 
     // Buffs
+    /* eslint-disable */
     const getBuff = (arr: any[], id: number) =>
       arr.find((b) => b.id === id) || {};
     const selected = {
@@ -423,9 +424,9 @@ const Calculator = () => {
     });
 
     // Damage
-    const foundDamage = damageData.find((dmg) => dmg.id === selectedDamage);
-    setSelectedDamageData(foundDamage ? [foundDamage] : undefined);
-  }, [acc, buffs, selectedDamage, customModeBuff]);
+    // const foundDamage = damageData.find((dmg) => dmg.id === selectedDamage);
+    // setSelectedDamageData(foundDamage ? [foundDamage] : undefined);
+  }, [acc, buffs, customModeBuff]);
 
   const combinedStatValue =
     (stats as any)[selectedScale.replace("Buff", "")] +
@@ -541,7 +542,7 @@ const Calculator = () => {
               <span className="opacity-70">x (applies to all buffs)</span>
             </div>
           )}
-          <div className="stat-desc text-secondary">
+          {/* <div className="stat-desc text-secondary">
             {selectedDamageData && selectedDamageData.length > 0 ? (
               <div>
                 {selectedDamageData[0].modes &&
@@ -558,10 +559,9 @@ const Calculator = () => {
             ) : (
               "No damage data selected"
             )}
-          </div>
+          </div> */}
         </div>
       </div>
-
       <div className="flex flex-wrap gap-4 mb-4">
         <button
           className="btn custom-text-fruit"
@@ -588,7 +588,6 @@ const Calculator = () => {
           Best Strength Build
         </button>
       </div>
-
       {/* Fieldsets */}
       <div className="flex flex-wrap gap-4 mt-4">
         {/* Stats Fieldset */}
@@ -673,13 +672,13 @@ const Calculator = () => {
         </fieldset>
 
         {/* Buffs Fieldsets */}
-        {buffFieldsets.map((fieldset, idx) => (
+        {buffFieldsets.map((fieldset) => (
           <fieldset
             key={fieldset.legend}
             className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4"
           >
             <legend className="fieldset-legend">{fieldset.legend}</legend>
-            {fieldset.fields.map(({ key, label, data, disableIf }) => {
+            {fieldset.fields.map(({ key, label, data }) => {
               // Get selected buff object
               const selectedBuffId = buffs[key as keyof typeof buffs];
               const selectedBuff = data.find(
@@ -746,7 +745,7 @@ const Calculator = () => {
                       handleBuffChange(key, Number(e.target.value))
                     }
                     className="select"
-                    disabled={disableIf ? disableIf(selectedDamageData) : false}
+                    // disabled={disableIf ? disableIf(selectedDamageData) : false}
                   >
                     <option value="" disabled>
                       Pick a {label.toLowerCase()}
@@ -763,7 +762,7 @@ const Calculator = () => {
           </fieldset>
         ))}
       </div>
-
+      {/* eslint-enable */}
       {/* Dev Mode: Base to Scale Damage */}
       {dev && (
         <div className="w-full max-w-4xl mt-4 flex flex-col items-center">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 
 export function useDevMode(
@@ -10,7 +10,10 @@ export function useDevMode(
   const [isDevMode, setIsDevMode] = useState(false);
 
   // Normalize secrets to an array
-  const secretList = Array.isArray(secrets) ? secrets : [secrets];
+  const secretList = useMemo(
+    () => (Array.isArray(secrets) ? secrets : [secrets]),
+    [secrets]
+  );
 
   useEffect(() => {
     const devParam = searchParams.get("devmode");
@@ -22,7 +25,7 @@ export function useDevMode(
       localStorage.removeItem("devmode");
       setIsDevMode(false);
     }
-  }, [searchParams, secrets]);
+  }, [searchParams, secrets, secretList]);
 
   return isDevMode;
 }

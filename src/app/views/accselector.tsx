@@ -21,7 +21,9 @@ const AccessorySelector = ({ onSelect, selected }: AccessorySelectorProps) => (
           className={`tab tab-lg ${
             selected === key ? "tab-active" : ""
           } ${text} font-bold`}
-          onClick={() => onSelect(key as any)}
+          onClick={() =>
+            onSelect(key as "head" | "top" | "arm" | "back" | "waist" | "legs")
+          }
         >
           {label}
         </a>

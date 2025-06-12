@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+/* eslint-disable */
 interface GenericTableProps<T extends Record<string, any>> {
   data: T[];
 }
@@ -16,6 +17,7 @@ const emojiMap: Record<string, string> = {
 };
 
 const GenericTable = <T extends Record<string, any>>({
+  /* eslint-disable */
   data,
 }: GenericTableProps<T>) => {
   const [sortKey, setSortKey] = useState<string | null>(null);

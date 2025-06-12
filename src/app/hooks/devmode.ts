@@ -3,22 +3,26 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-export function useDevMode(secret = "kingcode99") {
+export function useDevMode(
+  secrets: string[] | string = ["kingcode99", "zoro088502", "ivan_crysis"]
+) {
   const searchParams = useSearchParams();
   const [isDevMode, setIsDevMode] = useState(false);
+
+  // Normalize secrets to an array
+  const secretList = Array.isArray(secrets) ? secrets : [secrets];
 
   useEffect(() => {
     const devParam = searchParams.get("devmode");
 
-    if (devParam === secret) {
+    if (devParam && secretList.includes(devParam)) {
       localStorage.setItem("devmode", "true");
       setIsDevMode(true);
     } else {
-      // If the param is not present or invalid, disable devmode
       localStorage.removeItem("devmode");
       setIsDevMode(false);
     }
-  }, [searchParams]);
+  }, [searchParams, secrets]);
 
   return isDevMode;
 }

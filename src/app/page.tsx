@@ -52,16 +52,16 @@ export default function Home() {
                 </h1>
                 <p className="py-4 text-base sm:text-lg text-gray-700 dark:text-gray-300">
                   This site is your ultimate tool for mastering damage output in{" "}
-                  <strong>A One Piece Game</strong> on Roblox. Whether you're
-                  optimizing your build, testing different stats, or comparing
-                  gear—our{" "}
+                  <strong>A One Piece Game</strong> on Roblox. Whether
+                  you&apos;re optimizing your build, testing different stats, or
+                  comparing gear—our{" "}
                   <span className="font-semibold text-primary">
                     damage calculator
                   </span>{" "}
                   helps you find the perfect setup to maximize your power.
                 </p>
                 <p className="pb-6 text-base sm:text-lg text-gray-700 dark:text-gray-300">
-                  You'll also find helpful information on{" "}
+                  You&apos;ll also find helpful information on{" "}
                   <strong>titles</strong>, <strong>races</strong>, and{" "}
                   <strong>accessories</strong> to support your character
                   decisions. These features are here to guide you, but the
@@ -110,13 +110,13 @@ export default function Home() {
                             <span className="font-medium">
                               A One Piece Game
                             </span>{" "}
-                            on Roblox. Whether you're optimizing your build,
-                            testing different stats, or comparing gear—our
-                            damage calculator helps you find the perfect setup
-                            to maximize your power.
+                            on Roblox. Whether you&apos;re optimizing your
+                            build, testing different stats, or comparing
+                            gear—our damage calculator helps you find the
+                            perfect setup to maximize your power.
                           </p>
                           <p>
-                            You'll also find helpful information on titles,
+                            You&apos;ll also find helpful information on titles,
                             races, and accessories to support your character
                             decisions. These features are here to guide you, but
                             the calculator remains the heart of the site.
@@ -150,7 +150,7 @@ export default function Home() {
                             </li>
                             <li>
                               <strong>🔎 Active Buffs:</strong> You can also see
-                              each active buff's buffs.
+                              each active buff&apos;s buffs.
                             </li>
                           </ul>
                         </div>

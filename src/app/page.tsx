@@ -96,7 +96,7 @@ export default function Home() {
                             🧾 Update Log — Initial Release (v1.0.0)
                           </h1>
                           <p className="text-sm text-gray-500 mt-1">
-                            📅 Release Date: June 8, 2025
+                            📅 Release Date: June 12, 2025
                           </p>
                           <h2 className="text-xl font-semibold mt-4">
                             🔥 Damage Calculator for A One Piece Game — First
@@ -128,23 +128,29 @@ export default function Home() {
                           </h3>
                           <ul className="list-disc list-inside space-y-2 text-gray-800 dark:text-gray-200">
                             <li>
-                              <strong>🌐 Weapon & Move System</strong>: Full
-                              weapon data with all associated moves and scaling
-                              types.
+                              <strong>🏷️ Title List:</strong> Browse all
+                              obtainable titles and their effects in a
+                              convenient accordion list.
                             </li>
                             <li>
-                              <strong>⚔️ Mode-Based Damage Scaling</strong>:
-                              Toggle between modes like Base and Awakened to
-                              preview damage changes.
+                              <strong>🧬 Race Cards:</strong> View all race
+                              buffs and passives in a card-based layout for easy
+                              comparison.
                             </li>
                             <li>
-                              <strong>🧮 Real-Time Damage Calculation</strong>:
-                              Input your stats and instantly view adjusted
-                              damage.
+                              <strong>💍 Accessories Table:</strong> Filter and
+                              compare all accessories by slot to optimize your
+                              build.
                             </li>
                             <li>
-                              <strong>📊 Clean UI</strong>: Fully responsive
-                              interface optimized for both desktop and mobile.
+                              <strong>🧮 Calculator:</strong> Shows your total
+                              stats, active buffs multipliers, buttons for best
+                              build on each buff, and lets you customize your
+                              current build.
+                            </li>
+                            <li>
+                              <strong>🔎 Active Buffs:</strong> You can also see
+                              each active buff's buffs.
                             </li>
                           </ul>
                         </div>
@@ -153,7 +159,7 @@ export default function Home() {
                             🛠️ Coming Soon
                           </h3>
                           <ul className="list-disc list-inside space-y-2 text-gray-800 dark:text-gray-200">
-                            <li>Build presets</li>
+                            <li>Damage of all weapons</li>
                             <li>Damage Over Time Computation</li>
                             <li>Save/load stats with local storage</li>
                             <li>Mobile-optimized UX improvements</li>
@@ -164,9 +170,9 @@ export default function Home() {
                             🧠 Feedback & Suggestions
                           </h3>
                           <p className="text-gray-700 dark:text-gray-300">
-                            Have ideas or find a bug? Use the{" "}
-                            <span className="font-semibold">feedback form</span>{" "}
-                            on the site or message the dev directly on Discord.
+                            Have ideas or find a bug? Contact me on Discord:{" "}
+                            <span className="font-semibold">kingcode99</span> (
+                            <span className="font-semibold">KingCode</span>)
                           </p>
                         </div>
                       </div>

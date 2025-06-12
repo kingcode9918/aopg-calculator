@@ -510,7 +510,7 @@ const Calculator = () => {
           </div>
         </div>
         <div className="stat">
-          <div className="stat-value">
+          {/* <div className="stat-value">
             <select
               value={selectedDamage}
               onChange={(e) => setSelectedDamage(Number(e.target.value))}
@@ -526,7 +526,7 @@ const Calculator = () => {
               ))}
             </select>
           </div>
-          <div className="stat-title">Main Damage</div>
+          <div className="stat-title">Main Damage</div> */}
           {dev && (
             <div className="flex items-center gap-2 mt-2">
               <span className="font-semibold">Custom Mode Buff:</span>
@@ -564,25 +564,28 @@ const Calculator = () => {
 
       <div className="flex flex-wrap gap-4 mb-4">
         <button
-          className="btn btn-primary"
-          onClick={() => setBestBuild("strength")}
+          className="btn custom-text-fruit"
+          onClick={() => setBestBuild("fruit")}
         >
-          Best Strength Build
-        </button>
-        <button className="btn btn-accent" onClick={() => setBestBuild("gun")}>
-          Best Gun Build
+          Best Fruit Build
         </button>
         <button
-          className="btn btn-secondary"
+          className="btn custom-text-sword"
           onClick={() => setBestBuild("sword")}
         >
           Best Sword Build
         </button>
         <button
-          className="btn btn-success"
-          onClick={() => setBestBuild("fruit")}
+          className="btn custom-text-gun"
+          onClick={() => setBestBuild("gun")}
         >
-          Best Fruit Build
+          Best Gun Build
+        </button>
+        <button
+          className="btn custom-text-strength"
+          onClick={() => setBestBuild("strength")}
+        >
+          Best Strength Build
         </button>
       </div>
 

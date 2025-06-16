@@ -128,8 +128,8 @@ export default function Home() {
                               fighting style as your main damage will
                               automatically disable any active fighting style
                               buff. If a fighting style buff is currently
-                              selected, it will be set to "none" after choosing
-                              a fighting style as main damage.
+                              selected, it will be set to $quot;none$quot; after
+                              choosing a fighting style as main damage.
                             </li>
                           </ul>
                         </div>

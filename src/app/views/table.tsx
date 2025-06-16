@@ -17,7 +17,7 @@ const emojiMap: Record<string, string> = {
 };
 
 const GenericTable = <T extends Record<string, any>>({
-  /* eslint-disable */
+  /* eslint-enable */
   data,
 }: GenericTableProps<T>) => {
   const [sortKey, setSortKey] = useState<string | null>(null);

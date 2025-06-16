@@ -161,6 +161,10 @@ export default function Home() {
                           <ul className="list-disc list-inside space-y-2 text-gray-800 dark:text-gray-200">
                             <li>Damage of all weapons</li>
                             <li>Damage Over Time Computation</li>
+                            <li>Dev Mode: Save damage computation</li>
+                            <li>
+                              Dev Mode: Saved damage will be put to a table
+                            </li>
                             <li>Save/load stats with local storage</li>
                             <li>Mobile-optimized UX improvements</li>
                           </ul>

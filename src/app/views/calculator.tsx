@@ -19,10 +19,16 @@ import {
   giantActiveBuffs,
   supportActiveBuffs,
 } from "../data/activebuff";
-// import { damageData, Weapon, Mode } from "../data/damage";
+import { damageData, Weapon, Mode } from "../data/damage";
+import { computeScaledDamage } from "../utils/computeDamage";
 import { titleBuffsData } from "../data/titlebuff";
 import { raceBuffsData } from "../data/racebuff";
 import { useDevMode } from "../hooks/devmode";
+import { stat } from "fs";
+import {
+  getScaleBuffForScaling,
+  getStatKeyForScaling,
+} from "../utils/damageScale";
 
 const statKeys = [
   { key: "strength", label: "Strength" },
@@ -39,69 +45,37 @@ const accKeys = [
     key: "selectedHeadAcc",
     label: "Head",
     data: headAccData,
-    color: "primary",
+    color: "select-primary",
   },
-  { key: "selectedTopAcc", label: "Top", data: topAccData, color: "secondary" },
-  { key: "selectedArmAcc", label: "Arm", data: armAccData, color: "accent" },
-  { key: "selectedBackAcc", label: "Back", data: backAccData, color: "info" },
+  {
+    key: "selectedTopAcc",
+    label: "Top",
+    data: topAccData,
+    color: "select-secondary",
+  },
+  {
+    key: "selectedArmAcc",
+    label: "Arm",
+    data: armAccData,
+    color: "select-accent",
+  },
+  {
+    key: "selectedBackAcc",
+    label: "Back",
+    data: backAccData,
+    color: "select-info",
+  },
   {
     key: "selectedWaistAcc",
     label: "Waist",
     data: waistAccData,
-    color: "error",
+    color: "select-error",
   },
   {
     key: "selectedLegsAcc",
     label: "Legs",
     data: legsAccData,
-    color: "warning",
-  },
-];
-
-const buffFieldsets = [
-  {
-    legend: "Active Buffs Details",
-    fields: [
-      { key: "supportBuff", label: "Support Style", data: supportActiveBuffs },
-      {
-        key: "fightingBuff",
-        label: "Fighting Style",
-        data: fightingActiveBuffs,
-        // disableIf: (selectedDamageData: Weapon[] | undefined) =>
-        //   selectedDamageData?.[0].type === "Fighting",
-      },
-      { key: "gunSBuff", label: "Gun Style", data: gunActiveBuffs },
-      { key: "swordSBuff", label: "Sword Style", data: swordActiveBuffs },
-      { key: "fruitSBuff", label: "Devil Fruit", data: fruitActiveBuffs },
-      { key: "suitBuff", label: "Suit", data: suitActiveBuffs },
-    ],
-  },
-  {
-    legend: "Active Buffs Details 2",
-    fields: [
-      { key: "titleBuff", label: "Title", data: titleBuffsData },
-      { key: "raceBuff", label: "Race", data: raceBuffsData },
-      {
-        key: "armamentBuff",
-        label: "Armament Haki",
-        data: armamentActiveBuffs,
-      },
-      {
-        key: "conquerorsBuff",
-        label: "Conqueror Haki",
-        data: conquerorsActiveBuffs,
-      },
-      {
-        key: "blacksmithBuff",
-        label: "Blacksmith Upgrade",
-        data: blacksmithActiveBuffs,
-      },
-      {
-        key: "giantBuff",
-        label: "Giant Blacksmith Upgrade",
-        data: giantActiveBuffs,
-      },
-    ],
+    color: "select-warning",
   },
 ];
 
@@ -220,12 +194,6 @@ const bestBuilds = {
 const Calculator = () => {
   const dev = useDevMode();
 
-  const setBestBuild = (type: keyof typeof bestBuilds) => {
-    setAcc(bestBuilds[type].acc);
-    setBuffs(bestBuilds[type].buffs);
-    setSelectedScale(bestBuilds[type].scale as keyof typeof damageBuffs);
-  };
-
   const [customModeBuff, setCustomModeBuff] = useState(1);
 
   // Stats and Accessories
@@ -279,8 +247,9 @@ const Calculator = () => {
   });
 
   // Damage
-  // const [selectedDamage, setSelectedDamage] = useState(0);
-  // const [selectedDamageData, setSelectedDamageData] = useState<Weapon[]>();
+  const [selectedDamage, setSelectedDamage] = useState(0);
+  const [selectedDamageData, setSelectedDamageData] = useState<Weapon[]>();
+  const [selectedModeIdx, setSelectedModeIdx] = useState(0);
   const [baseDamages, setBaseDamages] = useState<Record<string, number>>(() =>
     moveKeys.reduce((acc, key) => ({ ...acc, [key]: 0 }), {})
   );
@@ -294,6 +263,73 @@ const Calculator = () => {
     setBuffs((b) => ({ ...b, [key]: value }));
   const handleBaseDamageChange = (key: string, value: string) =>
     setBaseDamages((prev) => ({ ...prev, [key]: parseFloat(value) || 0 }));
+
+  const isFightingType =
+    selectedDamageData &&
+    selectedDamageData[0] &&
+    selectedDamageData[0].type === "Fighting";
+
+  const setBestBuild = (type: keyof typeof bestBuilds) => {
+    setAcc(bestBuilds[type].acc);
+    setBuffs((prev) => {
+      // If current selected main damage is fighting, keep fightingBuff as 0
+      if (isFightingType) {
+        return { ...bestBuilds[type].buffs, fightingBuff: 0 };
+      }
+      return { ...bestBuilds[type].buffs };
+    });
+    setSelectedScale(bestBuilds[type].scale as keyof typeof damageBuffs);
+  };
+
+  const buffFieldsets = [
+    {
+      legend: "Active Buffs Details",
+      fields: [
+        {
+          key: "supportBuff",
+          label: "Support Style",
+          data: supportActiveBuffs,
+        },
+        {
+          key: "fightingBuff",
+          label: "Fighting Style",
+          data: fightingActiveBuffs,
+          disableIf: () => isFightingType,
+        },
+        { key: "gunSBuff", label: "Gun Style", data: gunActiveBuffs },
+        { key: "swordSBuff", label: "Sword Style", data: swordActiveBuffs },
+        { key: "fruitSBuff", label: "Devil Fruit", data: fruitActiveBuffs },
+        { key: "suitBuff", label: "Suit", data: suitActiveBuffs },
+      ],
+    },
+    {
+      legend: "Active Buffs Details 2",
+      fields: [
+        { key: "titleBuff", label: "Title", data: titleBuffsData },
+        { key: "raceBuff", label: "Race", data: raceBuffsData },
+        {
+          key: "armamentBuff",
+          label: "Armament Haki",
+          data: armamentActiveBuffs,
+        },
+        {
+          key: "conquerorsBuff",
+          label: "Conqueror Haki",
+          data: conquerorsActiveBuffs,
+        },
+        {
+          key: "blacksmithBuff",
+          label: "Blacksmith Upgrade",
+          data: blacksmithActiveBuffs,
+        },
+        {
+          key: "giantBuff",
+          label: "Giant Blacksmith Upgrade",
+          data: giantActiveBuffs,
+        },
+      ],
+    },
+  ];
 
   const [selectedScale, setSelectedScale] =
     useState<keyof typeof damageBuffs>("fruitBuff");
@@ -424,9 +460,14 @@ const Calculator = () => {
     });
 
     // Damage
-    // const foundDamage = damageData.find((dmg) => dmg.id === selectedDamage);
-    // setSelectedDamageData(foundDamage ? [foundDamage] : undefined);
-  }, [acc, buffs, customModeBuff]);
+    const foundDamage = damageData.find((dmg) => dmg.id === selectedDamage);
+    setSelectedDamageData(foundDamage ? [foundDamage] : undefined);
+    setSelectedModeIdx(-1);
+
+    if (isFightingType && buffs.fightingBuff !== 0) {
+      setBuffs((prev) => ({ ...prev, fightingBuff: 0 }));
+    }
+  }, [acc, buffs, selectedDamage, customModeBuff, isFightingType]);
 
   const combinedStatValue =
     (stats as any)[selectedScale.replace("Buff", "")] +
@@ -460,48 +501,81 @@ const Calculator = () => {
           </div>
           <div className="stat-title">Active Buffs</div>
           <div className="flex gap-3">
-            <div className="flex flex-col gap-3">
-              {scaleTypes.slice(0, 2).map(({ key, label, className }) => (
-                <button
-                  key={key}
-                  className={`badge badge-lg w-full cursor-pointer ${className} ${
-                    selectedScale === key
-                      ? "ring ring-primary ring-offset-2"
-                      : ""
-                  }`}
-                  onClick={() =>
-                    setSelectedScale(key as keyof typeof damageBuffs)
-                  }
-                  type="button"
-                >
-                  {Number(
-                    damageBuffs[key as keyof typeof damageBuffs].toFixed(2)
-                  ).toLocaleString()}{" "}
-                  x {label} Damage
-                </button>
-              ))}
-            </div>
-            <div className="flex flex-col gap-3">
-              {scaleTypes.slice(2).map(({ key, label, className }) => (
-                <button
-                  key={key}
-                  className={`badge badge-lg w-full cursor-pointer ${className} ${
-                    selectedScale === key
-                      ? "ring ring-primary ring-offset-2"
-                      : ""
-                  }`}
-                  onClick={() =>
-                    setSelectedScale(key as keyof typeof damageBuffs)
-                  }
-                  type="button"
-                >
-                  {Number(
-                    damageBuffs[key as keyof typeof damageBuffs].toFixed(2)
-                  ).toLocaleString()}{" "}
-                  x {label} Damage
-                </button>
-              ))}
-            </div>
+            {dev ? (
+              <>
+                <div className="flex flex-col gap-3">
+                  {scaleTypes.slice(0, 2).map(({ key, label, className }) => (
+                    <button
+                      key={key}
+                      className={`badge badge-lg w-full cursor-pointer ${className} ${
+                        selectedScale === key
+                          ? "ring ring-primary ring-offset-2"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        setSelectedScale(key as keyof typeof damageBuffs)
+                      }
+                      type="button"
+                    >
+                      {Number(
+                        damageBuffs[key as keyof typeof damageBuffs].toFixed(2)
+                      ).toLocaleString()}{" "}
+                      x {label} Damage
+                    </button>
+                  ))}
+                </div>
+                <div className="flex flex-col gap-3">
+                  {scaleTypes.slice(2).map(({ key, label, className }) => (
+                    <button
+                      key={key}
+                      className={`badge badge-lg w-full cursor-pointer ${className} ${
+                        selectedScale === key
+                          ? "ring ring-primary ring-offset-2"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        setSelectedScale(key as keyof typeof damageBuffs)
+                      }
+                      type="button"
+                    >
+                      {Number(
+                        damageBuffs[key as keyof typeof damageBuffs].toFixed(2)
+                      ).toLocaleString()}{" "}
+                      x {label} Damage
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex flex-col gap-3">
+                  {scaleTypes.slice(0, 2).map(({ key, label, className }) => (
+                    <span
+                      key={key}
+                      className={`badge badge-lg w-full ${className}`}
+                    >
+                      {Number(
+                        damageBuffs[key as keyof typeof damageBuffs].toFixed(2)
+                      ).toLocaleString()}{" "}
+                      x {label} Damage
+                    </span>
+                  ))}
+                </div>
+                <div className="flex flex-col gap-3">
+                  {scaleTypes.slice(2).map(({ key, label, className }) => (
+                    <span
+                      key={key}
+                      className={`badge badge-lg w-full ${className}`}
+                    >
+                      {Number(
+                        damageBuffs[key as keyof typeof damageBuffs].toFixed(2)
+                      ).toLocaleString()}{" "}
+                      x {label} Damage
+                    </span>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
           <div className="stat-desc">
             {((Object.values(stats).reduce((a, b) => a + b, 0) / 10000) * 3)
@@ -511,7 +585,7 @@ const Calculator = () => {
           </div>
         </div>
         <div className="stat">
-          {/* <div className="stat-value">
+          <div className="stat-value">
             <select
               value={selectedDamage}
               onChange={(e) => setSelectedDamage(Number(e.target.value))}
@@ -527,7 +601,7 @@ const Calculator = () => {
               ))}
             </select>
           </div>
-          <div className="stat-title">Main Damage</div> */}
+          <div className="stat-title">Main Damage</div>
           {dev && (
             <div className="flex items-center gap-2 mt-2">
               <span className="font-semibold">Custom Mode Buff:</span>
@@ -542,27 +616,50 @@ const Calculator = () => {
               <span className="opacity-70">x (applies to all buffs)</span>
             </div>
           )}
-          {/* <div className="stat-desc text-secondary">
+          <div className="stat-desc text-secondary">
             {selectedDamageData && selectedDamageData.length > 0 ? (
               <div>
                 {selectedDamageData[0].modes &&
-                  selectedDamageData[0].modes.map((mode: Mode) => (
-                    <div key={mode.name}>
-                      <input
-                        type="checkbox"
-                        className="toggle toggle-warning toggle-xs"
-                      />
-                      <span className="ml-2">{mode.name}</span>
+                  selectedDamageData[0].modes.length > 0 && (
+                    <div className="gap-2 mb-2">
+                      {/* None option */}
+                      <label className="flex items-center gap-1 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="mode-toggle"
+                          className="radio radio-warning radio-xs"
+                          checked={selectedModeIdx === -1}
+                          onChange={() => setSelectedModeIdx(-1)}
+                        />
+                        <span className="ml-1">None</span>
+                      </label>
+                      {selectedDamageData[0].modes.map(
+                        (mode: Mode, idx: number) => (
+                          <label
+                            key={mode.name}
+                            className="flex items-center gap-1 cursor-pointer"
+                          >
+                            <input
+                              type="radio"
+                              name="mode-toggle"
+                              className="radio radio-warning radio-xs"
+                              checked={selectedModeIdx === idx}
+                              onChange={() => setSelectedModeIdx(idx)}
+                            />
+                            <span className="ml-1">{mode.name}</span>
+                          </label>
+                        )
+                      )}
                     </div>
-                  ))}
+                  )}
               </div>
             ) : (
               "No damage data selected"
             )}
-          </div> */}
+          </div>
         </div>
       </div>
-      <div className="flex flex-wrap gap-4 mb-4">
+      <div className="flex flex-wrap gap-4 mb-4 mt-4">
         <button
           className="btn custom-text-fruit"
           onClick={() => setBestBuild("fruit")}
@@ -656,7 +753,7 @@ const Calculator = () => {
               <select
                 value={acc[key as keyof typeof acc]}
                 onChange={(e) => handleAccChange(key, Number(e.target.value))}
-                className={`select select-${color}`}
+                className={`select ${color}`}
               >
                 <option value="" disabled>
                   Pick a {label.toLowerCase()} accessory
@@ -678,7 +775,7 @@ const Calculator = () => {
             className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4"
           >
             <legend className="fieldset-legend">{fieldset.legend}</legend>
-            {fieldset.fields.map(({ key, label, data }) => {
+            {fieldset.fields.map(({ key, label, data, disableIf }) => {
               // Get selected buff object
               const selectedBuffId = buffs[key as keyof typeof buffs];
               const selectedBuff = data.find(
@@ -745,7 +842,7 @@ const Calculator = () => {
                       handleBuffChange(key, Number(e.target.value))
                     }
                     className="select"
-                    // disabled={disableIf ? disableIf(selectedDamageData) : false}
+                    disabled={disableIf ? disableIf() : false}
                   >
                     <option value="" disabled>
                       Pick a {label.toLowerCase()}
@@ -798,10 +895,11 @@ const Calculator = () => {
                       baseDamages[key]
                         ? (() => {
                             const base = baseDamages[key];
-                            const scaled =
-                              ((base + combinedStatValue) / 2 +
-                                (base * combinedStatValue) / 12.5) *
-                              scaleFactor;
+                            const scaled = computeScaledDamage(
+                              base,
+                              combinedStatValue,
+                              scaleFactor
+                            );
                             return scaled
                               .toFixed(2)
                               .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -820,10 +918,133 @@ const Calculator = () => {
                 .reduce((sum, key) => {
                   const base = baseDamages[key];
                   if (!base) return sum;
-                  const scaled =
-                    ((base + combinedStatValue) / 2 +
-                      (base * combinedStatValue) / 12.5) *
-                    scaleFactor;
+                  const scaled = computeScaledDamage(
+                    base,
+                    combinedStatValue,
+                    scaleFactor
+                  );
+                  return sum + scaled;
+                }, 0)
+                .toLocaleString(undefined, { maximumFractionDigits: 2 })}
+            </div>
+          </div>
+        </div>
+      )}
+      {!dev && selectedDamageData && selectedDamageData[0] && (
+        <div className="w-full max-w-4xl mt-4 flex flex-col items-center">
+          <div className="divider w-full">Damage Computation</div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+            {moveKeys.map((key) => {
+              // Find the move in the selected weapon/mode
+              let move;
+              if (
+                selectedModeIdx !== -1 &&
+                selectedDamageData[0].modes &&
+                selectedDamageData[0].modes[selectedModeIdx]
+              ) {
+                move = selectedDamageData[0].modes[selectedModeIdx].moves.find(
+                  (m: any) => m.key === key
+                );
+              } else {
+                move = selectedDamageData[0].moves?.find(
+                  (m: any) => m.key === key
+                );
+              }
+              return (
+                <div
+                  key={key}
+                  className="space-y-4 border p-4 rounded-xl shadow"
+                >
+                  <div className="font-semibold text-center mb-2">
+                    {move?.name || key}
+                  </div>
+                  <label className="input">
+                    <span className="label">{key} Move</span>
+                    <input
+                      type="text"
+                      readOnly
+                      value={
+                        move && move.baseDamage
+                          ? Number(
+                              move.baseDamage * (move.numHits ?? 1)
+                            ).toLocaleString("en-US")
+                          : ""
+                      }
+                    />
+                  </label>
+                  <label className="input">
+                    <input
+                      type="text"
+                      readOnly
+                      value={
+                        move && move.baseDamage
+                          ? (() => {
+                              const base = move.baseDamage;
+                              const numHits = move.numHits ?? 1;
+                              const scale = move.scaling;
+                              const statKey = getStatKeyForScaling(
+                                scale,
+                                stats
+                              );
+                              const statValue = stats[statKey] || 1;
+                              const accValue = accBonus[statKey] || 0;
+                              const combined = statValue + accValue;
+                              const scaleBuff = getScaleBuffForScaling(
+                                scale,
+                                damageBuffs
+                              );
+                              let scaled = computeScaledDamage(
+                                base,
+                                combined,
+                                scaleBuff,
+                                numHits
+                              );
+                              return scaled
+                                .toFixed(2)
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            })()
+                          : ""
+                      }
+                    />
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+          <div className="w-full flex justify-end pr-8 mt-2 mb-2">
+            <div className="text-lg font-bold">
+              Total Damage:&nbsp;
+              {moveKeys
+                .reduce((sum, key) => {
+                  let move;
+                  if (
+                    selectedModeIdx !== -1 &&
+                    selectedDamageData[0].modes &&
+                    selectedDamageData[0].modes[selectedModeIdx]
+                  ) {
+                    move = selectedDamageData[0].modes[
+                      selectedModeIdx
+                    ].moves.find((m: any) => m.key === key);
+                  } else {
+                    move = selectedDamageData[0].moves?.find(
+                      (m: any) => m.key === key
+                    );
+                  }
+                  if (!move || !move.baseDamage) return sum;
+                  const base = move.baseDamage;
+                  const numHits = move.numHits ?? 1;
+                  const scale = move.scaling;
+                  const statKey = getStatKeyForScaling(scale, stats);
+                  const statValue = stats[statKey] || 1;
+                  const accValue = accBonus[statKey] || 0;
+                  const combined = statValue + accValue;
+                  const scaleBuff = getScaleBuffForScaling(scale, damageBuffs);
+                  let scaled = computeScaledDamage(
+                    base,
+                    combined,
+                    scaleBuff,
+                    numHits
+                  );
                   return sum + scaled;
                 }, 0)
                 .toLocaleString(undefined, { maximumFractionDigits: 2 })}

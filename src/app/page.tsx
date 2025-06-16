@@ -57,12 +57,12 @@ export default function Home() {
                   comparing gear—our{" "}
                   <span className="font-semibold text-primary">
                     damage calculator
-                  </span>{" "}
+                  </span>
                   helps you find the perfect setup to maximize your power.
                 </p>
                 <p className="pb-6 text-base sm:text-lg text-gray-700 dark:text-gray-300">
-                  You&apos;ll also find helpful information on{" "}
-                  <strong>titles</strong>, <strong>races</strong>, and{" "}
+                  You&apos;ll also find helpful information on
+                  <strong>titles</strong>, <strong>races</strong>, and
                   <strong>accessories</strong> to support your character
                   decisions. These features are here to guide you, but the
                   calculator remains the heart of the site.

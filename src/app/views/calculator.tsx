@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useState, useEffect } from "react";
 import {
   headAccData,
@@ -358,7 +359,6 @@ const Calculator = () => {
     });
 
     // Buffs
-    /* eslint-disable */
     const getBuff = (arr: any[], id: number) =>
       arr.find((b) => b.id === id) || {};
     const selected = {
@@ -859,7 +859,6 @@ const Calculator = () => {
           </fieldset>
         ))}
       </div>
-      {/* eslint-enable */}
       {/* Dev Mode: Base to Scale Damage */}
       {dev && (
         <div className="w-full max-w-4xl mt-4 flex flex-col items-center">
@@ -963,6 +962,7 @@ const Calculator = () => {
                     <input
                       type="text"
                       readOnly
+                      hidden
                       value={
                         move && move.baseDamage
                           ? Number(
@@ -1055,5 +1055,7 @@ const Calculator = () => {
     </div>
   );
 };
+
+/* eslint-enable */
 
 export default Calculator;

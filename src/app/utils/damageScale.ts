@@ -1,6 +1,8 @@
 /**
  * Get the stat key for a move's scaling type.
  */
+
+/* eslint-disable */
 export function getStatKeyForScaling<T extends Record<string, any>>(
   scaling: string,
   stats: T

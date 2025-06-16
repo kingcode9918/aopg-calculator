@@ -93,64 +93,43 @@ export default function Home() {
                       <div className="max-w-4xl mx-auto px-6 py-10 space-y-8">
                         <div>
                           <h1 className="text-3xl font-bold text-indigo-600">
-                            🧾 Update Log — Initial Release (v1.0.0)
+                            🧾 Update Log — Fighting Style (v1.1.0)
                           </h1>
                           <p className="text-sm text-gray-500 mt-1">
-                            📅 Release Date: June 12, 2025
+                            📅 Release Date: June 16, 2025
                           </p>
                           <h2 className="text-xl font-semibold mt-4">
-                            🔥 Damage Calculator for A One Piece Game — First
-                            Launch!
+                            🔥 Damage Calculator for A One Piece Game — Fighting
+                            Styles are now available!
                           </h2>
-                        </div>
-                        <div className="space-y-3 text-gray-700 dark:text-gray-300">
-                          <p>
-                            This site is your ultimate tool for mastering damage
-                            output in{" "}
-                            <span className="font-medium">
-                              A One Piece Game
-                            </span>{" "}
-                            on Roblox. Whether you&apos;re optimizing your
-                            build, testing different stats, or comparing
-                            gear—our damage calculator helps you find the
-                            perfect setup to maximize your power.
-                          </p>
-                          <p>
-                            You&apos;ll also find helpful information on titles,
-                            races, and accessories to support your character
-                            decisions. These features are here to guide you, but
-                            the calculator remains the heart of the site.
-                          </p>
                         </div>
                         <div>
                           <h3 className="text-lg font-semibold text-green-600 mb-2">
-                            ✅ New Features (v1.0.0)
+                            ✅ New Features (v1.1.0)
                           </h3>
                           <ul className="list-disc list-inside space-y-2 text-gray-800 dark:text-gray-200">
                             <li>
-                              <strong>🏷️ Title List:</strong> Browse all
-                              obtainable titles and their effects in a
-                              convenient accordion list.
+                              <strong>💪 Main Damage - Fighting Style:</strong>{" "}
+                              The calculator now includes a list of all
+                              available Fighting Styles in-game. Try out
+                              different styles to see your potential damage
+                              output.
                             </li>
                             <li>
-                              <strong>🧬 Race Cards:</strong> View all race
-                              buffs and passives in a card-based layout for easy
-                              comparison.
+                              <strong>⚖️ Damage Scales:</strong> Since there are
+                              a few moves that scale differently compared to the
+                              main stat, you can now view the scaling type for
+                              each Fighting Style move. This helps you
+                              understand which stats to focus on for maximum
+                              damage.
                             </li>
                             <li>
-                              <strong>💍 Accessories Table:</strong> Filter and
-                              compare all accessories by slot to optimize your
-                              build.
-                            </li>
-                            <li>
-                              <strong>🧮 Calculator:</strong> Shows your total
-                              stats, active buffs multipliers, buttons for best
-                              build on each buff, and lets you customize your
-                              current build.
-                            </li>
-                            <li>
-                              <strong>🔎 Active Buffs:</strong> You can also see
-                              each active buff&apos;s buffs.
+                              <strong>🌀 Interactive UI:</strong> Selecting a
+                              fighting style as your main damage will
+                              automatically disable any active fighting style
+                              buff. If a fighting style buff is currently
+                              selected, it will be set to "none" after choosing
+                              a fighting style as main damage.
                             </li>
                           </ul>
                         </div>
@@ -159,7 +138,7 @@ export default function Home() {
                             🛠️ Coming Soon
                           </h3>
                           <ul className="list-disc list-inside space-y-2 text-gray-800 dark:text-gray-200">
-                            <li>Damage of all weapons</li>
+                            <li>Damage of other weapons</li>
                             <li>Damage Over Time Computation</li>
                             <li>Dev Mode: Save damage computation</li>
                             <li>

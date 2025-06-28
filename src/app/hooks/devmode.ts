@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 
 export function useDevMode(
-  secrets: string[] | string = ["kingcode99", "zoro088502", "ivan_crysis"]
+  secrets: string[] | string = ["kingcode99", "cheff_arab_sonic", "ivan_crysis"]
 ) {
   const searchParams = useSearchParams();
   const [isDevMode, setIsDevMode] = useState(false);

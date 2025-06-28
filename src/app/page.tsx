@@ -88,15 +88,15 @@ export default function Home() {
                   <dialog id="update_modal" className="modal">
                     <div className="modal-box">
                       <h3 className="font-bold text-lg">
-                        AOPG Calculator v1.0
+                        AOPG Calculator v1.2.0
                       </h3>
                       <div className="max-w-4xl mx-auto px-6 py-10 space-y-8">
                         <div>
                           <h1 className="text-3xl font-bold text-indigo-600">
-                            🧾 Update Log — Fighting Style (v1.1.0)
+                            🧾 Update Log — Fighting Style (v1.2.0)
                           </h1>
                           <p className="text-sm text-gray-500 mt-1">
-                            📅 Release Date: June 16, 2025
+                            📅 Release Date: June 28, 2025
                           </p>
                           <h2 className="text-xl font-semibold mt-4">
                             🔥 Damage Calculator for A One Piece Game — Fighting
@@ -105,31 +105,22 @@ export default function Home() {
                         </div>
                         <div>
                           <h3 className="text-lg font-semibold text-green-600 mb-2">
-                            ✅ New Features (v1.1.0)
+                            ✅ New Features (v1.2.0)
                           </h3>
                           <ul className="list-disc list-inside space-y-2 text-gray-800 dark:text-gray-200">
                             <li>
-                              <strong>💪 Main Damage - Fighting Style:</strong>{" "}
-                              The calculator now includes a list of all
-                              available Fighting Styles in-game. Try out
-                              different styles to see your potential damage
-                              output.
+                              <strong>🔥 New Support Style:</strong> The
+                              calculator now have the latest update from AOPG
+                              Summer Update, Slayer of Dragon is now selectable
+                              as a support style.
                             </li>
                             <li>
-                              <strong>⚖️ Damage Scales:</strong> Since there are
-                              a few moves that scale differently compared to the
-                              main stat, you can now view the scaling type for
-                              each Fighting Style move. This helps you
-                              understand which stats to focus on for maximum
-                              damage.
-                            </li>
-                            <li>
-                              <strong>🌀 Interactive UI:</strong> Selecting a
-                              fighting style as your main damage will
-                              automatically disable any active fighting style
-                              buff. If a fighting style buff is currently
-                              selected, it will be set to $quot;none$quot; after
-                              choosing a fighting style as main damage.
+                              <strong>
+                                🪙 New Best Build and Accessories:
+                              </strong>{" "}
+                              Gold Update got part 2, includes few accessories.
+                              Those are now viewable in accessories tab and
+                              calculator tab.
                             </li>
                           </ul>
                         </div>

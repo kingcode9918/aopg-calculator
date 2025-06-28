@@ -142,7 +142,7 @@ const bestBuilds = {
   },
   sword: {
     acc: {
-      selectedHeadAcc: 20,
+      selectedHeadAcc: 34,
       selectedTopAcc: 8,
       selectedBackAcc: 5,
       selectedArmAcc: 6,
@@ -167,10 +167,10 @@ const bestBuilds = {
   },
   fruit: {
     acc: {
-      selectedHeadAcc: 11,
-      selectedTopAcc: 36,
-      selectedBackAcc: 12,
-      selectedArmAcc: 2,
+      selectedHeadAcc: 14,
+      selectedTopAcc: 3,
+      selectedBackAcc: 13,
+      selectedArmAcc: 4,
       selectedWaistAcc: 2,
       selectedLegsAcc: 3,
     },

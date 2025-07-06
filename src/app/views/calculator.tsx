@@ -93,11 +93,11 @@ const bestBuilds = {
   strength: {
     acc: {
       selectedHeadAcc: 7,
-      selectedTopAcc: 19,
+      selectedTopAcc: 20,
       selectedBackAcc: 1,
       selectedArmAcc: 4,
       selectedWaistAcc: 2,
-      selectedLegsAcc: 13,
+      selectedLegsAcc: 14,
     },
     buffs: {
       fightingBuff: 5,
@@ -118,11 +118,11 @@ const bestBuilds = {
   gun: {
     acc: {
       selectedHeadAcc: 42,
-      selectedTopAcc: 24,
+      selectedTopAcc: 9,
       selectedBackAcc: 5,
       selectedArmAcc: 4,
       selectedWaistAcc: 1,
-      selectedLegsAcc: 17,
+      selectedLegsAcc: 6,
     },
     buffs: {
       fightingBuff: 5,
@@ -143,11 +143,11 @@ const bestBuilds = {
   sword: {
     acc: {
       selectedHeadAcc: 34,
-      selectedTopAcc: 8,
+      selectedTopAcc: 9,
       selectedBackAcc: 5,
       selectedArmAcc: 6,
       selectedWaistAcc: 2,
-      selectedLegsAcc: 5,
+      selectedLegsAcc: 6,
     },
     buffs: {
       fightingBuff: 5,
@@ -926,6 +926,52 @@ const Calculator = () => {
                 }, 0)
                 .toLocaleString(undefined, { maximumFractionDigits: 2 })}
             </div>
+          </div>
+          {/* Save to localStorage & Delete All button */}
+          <div className="w-full flex justify-end pr-8 mb-4 gap-2">
+            <button
+              className="btn btn-info"
+              onClick={() => {
+                const computed = moveKeys.reduce((obj, key) => {
+                  const base = baseDamages[key];
+                  const scaled = computeScaledDamage(
+                    base,
+                    combinedStatValue,
+                    scaleFactor
+                  );
+                  obj[key] = {
+                    base,
+                    scaled,
+                  };
+                  return obj;
+                }, {} as Record<string, { base: number; scaled: number }>);
+
+                // Load existing records or start new array
+                const prev = JSON.parse(
+                  localStorage.getItem("aopg_calculator_dev_saved") || "[]"
+                );
+                prev.push({
+                  timestamp: Date.now(),
+                  moves: computed,
+                });
+                localStorage.setItem(
+                  "aopg_calculator_dev_saved",
+                  JSON.stringify(prev)
+                );
+                alert("Computed values saved to local storage!");
+              }}
+            >
+              Save Computed Values
+            </button>
+            <button
+              className="btn btn-error"
+              onClick={() => {
+                localStorage.removeItem("aopg_calculator_dev_saved");
+                alert("All saved records deleted!");
+              }}
+            >
+              Delete All Saved
+            </button>
           </div>
         </div>
       )}

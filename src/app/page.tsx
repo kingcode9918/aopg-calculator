@@ -88,39 +88,45 @@ export default function Home() {
                   <dialog id="update_modal" className="modal">
                     <div className="modal-box">
                       <h3 className="font-bold text-lg">
-                        AOPG Calculator v1.2.0
+                        AOPG Calculator v1.3.0
                       </h3>
                       <div className="max-w-4xl mx-auto px-6 py-10 space-y-8">
                         <div>
                           <h1 className="text-3xl font-bold text-indigo-600">
-                            🧾 Update Log — Fighting Style (v1.2.0)
+                            🧾 Update Log — Fighting Style (v1.3.0)
                           </h1>
                           <p className="text-sm text-gray-500 mt-1">
-                            📅 Release Date: June 28, 2025
+                            📅 Release Date: July 5, 2025
                           </p>
                           <h2 className="text-xl font-semibold mt-4">
-                            🔥 Damage Calculator for A One Piece Game — Fighting
-                            Styles are now available!
+                            🔥 Damage Calculator for A One Piece Game — Dante
+                            from Devil May Cry is now in AOPG!
                           </h2>
                         </div>
                         <div>
                           <h3 className="text-lg font-semibold text-green-600 mb-2">
-                            ✅ New Features (v1.2.0)
+                            ✅ New Features (v1.3.0)
                           </h3>
                           <ul className="list-disc list-inside space-y-2 text-gray-800 dark:text-gray-200">
                             <li>
-                              <strong>🔥 New Support Style:</strong> The
-                              calculator now have the latest update from AOPG
-                              Summer Update, Slayer of Dragon is now selectable
-                              as a support style.
+                              <strong>
+                                ⚙️ Dev Mode: Save damage computation
+                              </strong>{" "}
+                              Developers can now save their computed damage
+                              results directly to local storage for later
+                              reference or comparison. Saved computations can
+                              also be deleted at any time, making it easy to
+                              manage and review different builds or test cases.
                             </li>
                             <li>
                               <strong>
                                 🪙 New Best Build and Accessories:
                               </strong>{" "}
-                              Gold Update got part 2, includes few accessories.
-                              Those are now viewable in accessories tab and
-                              calculator tab.
+                              With the addition of new accessories from the
+                              Dante update, the best build recommendations have
+                              been updated. You can now view the latest optimal
+                              accessory combinations—including the newest
+                              items—in both the Accessories and Calculator tabs.
                             </li>
                           </ul>
                         </div>
@@ -131,7 +137,6 @@ export default function Home() {
                           <ul className="list-disc list-inside space-y-2 text-gray-800 dark:text-gray-200">
                             <li>Damage of other weapons</li>
                             <li>Damage Over Time Computation</li>
-                            <li>Dev Mode: Save damage computation</li>
                             <li>
                               Dev Mode: Saved damage will be put to a table
                             </li>

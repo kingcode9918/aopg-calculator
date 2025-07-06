@@ -708,6 +708,17 @@ export const topAccData: Accessories[] = [
   },
   {
     id: 9,
+    name: "Dante Top",
+    strength: 0,
+    stamina: 0,
+    defense: 2000,
+    sword: 3100,
+    gun: 2200,
+    haki: 0,
+    fruit: 0,
+  },
+  {
+    id: 10,
     name: "Death Top",
     strength: 0,
     stamina: 0,
@@ -718,7 +729,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 10,
+    id: 11,
     name: "Donut Shirt",
     strength: 0,
     stamina: 0,
@@ -729,7 +740,7 @@ export const topAccData: Accessories[] = [
     fruit: 1450,
   },
   {
-    id: 11,
+    id: 12,
     name: "Eminence Top",
     strength: 0,
     stamina: 0,
@@ -740,7 +751,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 12,
+    id: 13,
     name: "Emperors Cloak",
     strength: 600,
     stamina: 0,
@@ -751,7 +762,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 13,
+    id: 14,
     name: "Final Magma Top",
     strength: 0,
     stamina: 0,
@@ -762,7 +773,7 @@ export const topAccData: Accessories[] = [
     fruit: 1850,
   },
   {
-    id: 14,
+    id: 15,
     name: "Flame Cloak",
     strength: 0,
     stamina: 0,
@@ -773,7 +784,7 @@ export const topAccData: Accessories[] = [
     fruit: 2350,
   },
   {
-    id: 15,
+    id: 16,
     name: "Flame Emperor Cloak",
     strength: 0,
     stamina: 0,
@@ -784,7 +795,7 @@ export const topAccData: Accessories[] = [
     fruit: 1050,
   },
   {
-    id: 16,
+    id: 17,
     name: "Gild Tesoro Top",
     strength: 0,
     stamina: 0,
@@ -795,7 +806,7 @@ export const topAccData: Accessories[] = [
     fruit: 2800,
   },
   {
-    id: 17,
+    id: 18,
     name: "Golem Chestplate",
     strength: 900,
     stamina: 0,
@@ -806,7 +817,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 18,
+    id: 19,
     name: "Honored Shirt",
     strength: 1500,
     stamina: 0,
@@ -817,7 +828,7 @@ export const topAccData: Accessories[] = [
     fruit: 800,
   },
   {
-    id: 19,
+    id: 20,
     name: "Instinctual Top",
     strength: 2000,
     stamina: 0,
@@ -828,7 +839,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 20,
+    id: 21,
     name: "Jungle Garb",
     strength: 550,
     stamina: 0,
@@ -839,7 +850,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 21,
+    id: 22,
     name: "Lawed Top",
     strength: 0,
     stamina: 0,
@@ -850,7 +861,7 @@ export const topAccData: Accessories[] = [
     fruit: 2500,
   },
   {
-    id: 22,
+    id: 23,
     name: "Light Admiral Shirt",
     strength: 1000,
     stamina: 0,
@@ -861,7 +872,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 23,
+    id: 24,
     name: "Marco Top",
     strength: 0,
     stamina: 0,
@@ -872,7 +883,7 @@ export const topAccData: Accessories[] = [
     fruit: 2550,
   },
   {
-    id: 24,
+    id: 25,
     name: "Matrella Top",
     strength: 0,
     stamina: 0,
@@ -883,7 +894,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 25,
+    id: 26,
     name: "New Years Necklace",
     strength: 0,
     stamina: 0,
@@ -894,7 +905,7 @@ export const topAccData: Accessories[] = [
     fruit: 550,
   },
   {
-    id: 26,
+    id: 27,
     name: "Odens Cloak",
     strength: 0,
     stamina: 0,
@@ -905,7 +916,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 27,
+    id: 28,
     name: "Pirate Kings Shirt",
     strength: 0,
     stamina: 0,
@@ -916,7 +927,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 28,
+    id: 29,
     name: "Raigo Drums",
     strength: 0,
     stamina: 30,
@@ -927,7 +938,7 @@ export const topAccData: Accessories[] = [
     fruit: 65,
   },
   {
-    id: 29,
+    id: 30,
     name: "Raijin Drums",
     strength: 0,
     stamina: 0,
@@ -938,7 +949,7 @@ export const topAccData: Accessories[] = [
     fruit: 1325,
   },
   {
-    id: 30,
+    id: 31,
     name: "Rythmic Coat",
     strength: 500,
     stamina: 0,
@@ -949,7 +960,7 @@ export const topAccData: Accessories[] = [
     fruit: 1300,
   },
   {
-    id: 31,
+    id: 32,
     name: "Samurai Cloak",
     strength: 0,
     stamina: 0,
@@ -960,7 +971,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 32,
+    id: 33,
     name: "Scope Top",
     strength: 0,
     stamina: 0,
@@ -971,7 +982,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 33,
+    id: 34,
     name: "Seabeast Armor",
     strength: 300,
     stamina: 0,
@@ -982,7 +993,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 34,
+    id: 35,
     name: "Serpent Goddess Shirt",
     strength: 0,
     stamina: 0,
@@ -993,7 +1004,7 @@ export const topAccData: Accessories[] = [
     fruit: 1425,
   },
   {
-    id: 35,
+    id: 36,
     name: "Serpent Worshipper Shirt",
     strength: 0,
     stamina: 0,
@@ -1004,7 +1015,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 36,
+    id: 37,
     name: "Soul Scarf",
     strength: 0,
     stamina: 0,
@@ -1015,7 +1026,7 @@ export const topAccData: Accessories[] = [
     fruit: 550,
   },
   {
-    id: 37,
+    id: 38,
     name: "Spy Cloak",
     strength: 0,
     stamina: 0,
@@ -1026,7 +1037,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 38,
+    id: 39,
     name: "Swordsman Outfit",
     strength: 0,
     stamina: 0,
@@ -1037,7 +1048,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 39,
+    id: 40,
     name: "Toji Shirt",
     strength: 900,
     stamina: 0,
@@ -1048,7 +1059,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 40,
+    id: 41,
     name: "Vampire Cloak",
     strength: 400,
     stamina: 0,
@@ -1059,7 +1070,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 41,
+    id: 42,
     name: "Wanderers Accessories",
     strength: 0,
     stamina: 0,
@@ -1070,7 +1081,7 @@ export const topAccData: Accessories[] = [
     fruit: 2700,
   },
   {
-    id: 42,
+    id: 43,
     name: "White Scarf",
     strength: 0,
     stamina: 100,
@@ -1081,7 +1092,7 @@ export const topAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 43,
+    id: 44,
     name: "Whitebeard Cloak",
     strength: 900,
     stamina: 0,
@@ -1574,6 +1585,17 @@ export const legsAccData: Accessories[] = [
   },
   {
     id: 6,
+    name: "Dante Bottom",
+    strength: 0,
+    stamina: 0,
+    defense: 1800,
+    sword: 2200,
+    gun: 1900,
+    haki: 0,
+    fruit: 0,
+  },
+  {
+    id: 7,
     name: "Death Bottom",
     strength: 0,
     stamina: 0,
@@ -1584,7 +1606,7 @@ export const legsAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 7,
+    id: 8,
     name: "Donut Pants",
     strength: 0,
     stamina: 0,
@@ -1595,7 +1617,7 @@ export const legsAccData: Accessories[] = [
     fruit: 1525,
   },
   {
-    id: 8,
+    id: 9,
     name: "Eminence Bottom",
     strength: 0,
     stamina: 0,
@@ -1606,7 +1628,7 @@ export const legsAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 9,
+    id: 10,
     name: "Final Magma Pants",
     strength: 0,
     stamina: 0,
@@ -1617,7 +1639,7 @@ export const legsAccData: Accessories[] = [
     fruit: 1900,
   },
   {
-    id: 10,
+    id: 11,
     name: "Gild Tesoro Bottom",
     strength: 0,
     stamina: 0,
@@ -1628,7 +1650,7 @@ export const legsAccData: Accessories[] = [
     fruit: 2100,
   },
   {
-    id: 11,
+    id: 12,
     name: "Golden Boots",
     strength: 750,
     stamina: 0,
@@ -1639,7 +1661,7 @@ export const legsAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 12,
+    id: 13,
     name: "Honored Pants",
     strength: 0,
     stamina: 0,
@@ -1650,7 +1672,7 @@ export const legsAccData: Accessories[] = [
     fruit: 1850,
   },
   {
-    id: 13,
+    id: 14,
     name: "Instinctual Bottom",
     strength: 1850,
     stamina: 0,
@@ -1661,7 +1683,7 @@ export const legsAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 14,
+    id: 15,
     name: "Kamis Pants",
     strength: 0,
     stamina: 0,
@@ -1672,7 +1694,7 @@ export const legsAccData: Accessories[] = [
     fruit: 1150,
   },
   {
-    id: 15,
+    id: 16,
     name: "Light Admirals Pants",
     strength: 550,
     stamina: 0,
@@ -1683,7 +1705,7 @@ export const legsAccData: Accessories[] = [
     fruit: 1000,
   },
   {
-    id: 16,
+    id: 17,
     name: "Marco Bottom",
     strength: 0,
     stamina: 0,
@@ -1694,7 +1716,7 @@ export const legsAccData: Accessories[] = [
     fruit: 1950,
   },
   {
-    id: 17,
+    id: 18,
     name: "Matrella Bottom",
     strength: 0,
     stamina: 0,
@@ -1705,7 +1727,7 @@ export const legsAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 18,
+    id: 19,
     name: "Metal Boots",
     strength: 100,
     stamina: 0,
@@ -1716,7 +1738,7 @@ export const legsAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 19,
+    id: 20,
     name: "Odens Sandals",
     strength: 600,
     stamina: 0,
@@ -1727,7 +1749,7 @@ export const legsAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 20,
+    id: 21,
     name: "Pirate Kings Pants",
     strength: 0,
     stamina: 0,
@@ -1738,7 +1760,7 @@ export const legsAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 21,
+    id: 22,
     name: "Revolutionarys Boots",
     strength: 700,
     stamina: 0,
@@ -1749,7 +1771,7 @@ export const legsAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 22,
+    id: 23,
     name: "Sandals",
     strength: 550,
     stamina: 0,
@@ -1760,7 +1782,7 @@ export const legsAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 23,
+    id: 24,
     name: "Scope Pants",
     strength: 0,
     stamina: 0,
@@ -1771,7 +1793,7 @@ export const legsAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 24,
+    id: 25,
     name: "Serpent Goddess Pants",
     strength: 0,
     stamina: 0,
@@ -1782,7 +1804,7 @@ export const legsAccData: Accessories[] = [
     fruit: 1425,
   },
   {
-    id: 25,
+    id: 26,
     name: "Serpent Worshipper Pants",
     strength: 0,
     stamina: 0,
@@ -1793,7 +1815,7 @@ export const legsAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 26,
+    id: 27,
     name: "Toji Pants",
     strength: 900,
     stamina: 0,

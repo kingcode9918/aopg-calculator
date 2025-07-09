@@ -67,7 +67,7 @@ const GenericTable = <T extends Record<string, any>>({
               >
                 {emojiMap[key] && `${emojiMap[key]} `}
                 {key.replace(/([A-Z])/g, " $1")}
-                {sortKey === key && (sortDirection === "asc" ? " ▲" : " ▼")}
+                {sortKey === key && (sortDirection === "asc" ? " 🔼" : " 🔽")}
               </th>
             ))}
           </tr>

@@ -254,11 +254,6 @@ const Calculator = () => {
   const [baseDamages, setBaseDamages] = useState<Record<string, number>>(() =>
     moveKeys.reduce((acc, key) => ({ ...acc, [key]: 0 }), {})
   );
-  const [damageTitle, setDamageTitle] = useState("");
-
-  const [moveScales, setMoveScales] = useState<Record<string, string>>(() =>
-    moveKeys.reduce((acc, key) => ({ ...acc, [key]: "Fruit" }), {})
-  );
 
   // Handlers
   const handleStatChange = (key: string, value: number) =>
@@ -284,26 +279,7 @@ const Calculator = () => {
       }
       return { ...bestBuilds[type].buffs };
     });
-    let scaleLabel = "";
-    switch (type) {
-      case "fruit":
-        scaleLabel = "Fruit";
-        break;
-      case "sword":
-        scaleLabel = "Sword";
-        break;
-      case "gun":
-        scaleLabel = "Gun";
-        break;
-      case "strength":
-        scaleLabel = "Strength";
-        break;
-      default:
-        scaleLabel = "Fruit";
-    }
-    setMoveScales(
-      moveKeys.reduce((acc, key) => ({ ...acc, [key]: scaleLabel }), {})
-    );
+    setSelectedScale(bestBuilds[type].scale as keyof typeof damageBuffs);
   };
 
   const buffFieldsets = [
@@ -355,6 +331,11 @@ const Calculator = () => {
       ],
     },
   ];
+
+  const [selectedScale, setSelectedScale] =
+    useState<keyof typeof damageBuffs>("fruitBuff");
+
+  const scaleFactor = damageBuffs[selectedScale];
 
   // Effects
   useEffect(() => {
@@ -488,6 +469,10 @@ const Calculator = () => {
     }
   }, [acc, buffs, selectedDamage, customModeBuff, isFightingType]);
 
+  const combinedStatValue =
+    (stats as any)[selectedScale.replace("Buff", "")] +
+    (accBonus as any)[selectedScale.replace("Buff", "")];
+
   // Render
   return (
     <div className="w-full flex flex-col items-center">
@@ -522,7 +507,14 @@ const Calculator = () => {
                   {scaleTypes.slice(0, 2).map(({ key, label, className }) => (
                     <button
                       key={key}
-                      className={`badge badge-lg w-full cursor-pointer ${className}`}
+                      className={`badge badge-lg w-full cursor-pointer ${className} ${
+                        selectedScale === key
+                          ? "ring ring-primary ring-offset-2"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        setSelectedScale(key as keyof typeof damageBuffs)
+                      }
                       type="button"
                     >
                       {Number(
@@ -536,7 +528,14 @@ const Calculator = () => {
                   {scaleTypes.slice(2).map(({ key, label, className }) => (
                     <button
                       key={key}
-                      className={`badge badge-lg w-full cursor-pointer ${className} `}
+                      className={`badge badge-lg w-full cursor-pointer ${className} ${
+                        selectedScale === key
+                          ? "ring ring-primary ring-offset-2"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        setSelectedScale(key as keyof typeof damageBuffs)
+                      }
                       type="button"
                     >
                       {Number(
@@ -586,7 +585,7 @@ const Calculator = () => {
           </div>
         </div>
         <div className="stat">
-          {/* <div className="stat-value">
+          <div className="stat-value">
             <select
               value={selectedDamage}
               onChange={(e) => setSelectedDamage(Number(e.target.value))}
@@ -602,7 +601,7 @@ const Calculator = () => {
               ))}
             </select>
           </div>
-          <div className="stat-title">Main Damage</div> */}
+          <div className="stat-title">Main Damage</div>
           {dev && (
             <div className="flex items-center gap-2 mt-2">
               <span className="font-semibold">Custom Mode Buff:</span>
@@ -864,36 +863,9 @@ const Calculator = () => {
       {dev && (
         <div className="w-full max-w-4xl mt-4 flex flex-col items-center">
           <div className="divider w-full">Base Damage w/ Passive</div>
-          <div className="w-full flex justify-center mb-4">
-            <input
-              type="text"
-              className="input input-bordered w-full max-w-xs"
-              placeholder="Enter a name for this computation"
-              value={damageTitle}
-              onChange={(e) => setDamageTitle(e.target.value)}
-            />
-          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
             {moveKeys.map((key) => (
               <div key={key} className="space-y-4 border p-4 rounded-xl shadow">
-                <label className="input">
-                  <span className="label">{key} Scale</span>
-                  <select
-                    value={moveScales[key]}
-                    onChange={(e) =>
-                      setMoveScales((prev) => ({
-                        ...prev,
-                        [key]: e.target.value,
-                      }))
-                    }
-                    className="select select-bordered w-full"
-                  >
-                    <option value="Fruit">Fruit</option>
-                    <option value="Sword">Sword</option>
-                    <option value="Gun">Gun</option>
-                    <option value="Strength">Strength</option>
-                  </select>
-                </label>
                 <label className="input">
                   <span className="label">{key} Move</span>
                   <input
@@ -922,20 +894,10 @@ const Calculator = () => {
                       baseDamages[key]
                         ? (() => {
                             const base = baseDamages[key];
-                            // Find the move's scaling type from selectedDamageData
-                            const scale = moveScales[key];
-                            const statKey = getStatKeyForScaling(scale, stats);
-                            const statValue = stats[statKey] || 1;
-                            const accValue = accBonus[statKey] || 0;
-                            const combined = statValue + accValue;
-                            const scaleBuff = getScaleBuffForScaling(
-                              scale,
-                              damageBuffs
-                            );
                             const scaled = computeScaledDamage(
                               base,
-                              combined,
-                              scaleBuff
+                              combinedStatValue,
+                              scaleFactor
                             );
                             return scaled
                               .toFixed(2)
@@ -955,13 +917,11 @@ const Calculator = () => {
                 .reduce((sum, key) => {
                   const base = baseDamages[key];
                   if (!base) return sum;
-                  const scale = moveScales[key];
-                  const statKey = getStatKeyForScaling(scale, stats);
-                  const statValue = stats[statKey] || 1;
-                  const accValue = accBonus[statKey] || 0;
-                  const combined = statValue + accValue;
-                  const scaleBuff = getScaleBuffForScaling(scale, damageBuffs);
-                  const scaled = computeScaledDamage(base, combined, scaleBuff);
+                  const scaled = computeScaledDamage(
+                    base,
+                    combinedStatValue,
+                    scaleFactor
+                  );
                   return sum + scaled;
                 }, 0)
                 .toLocaleString(undefined, { maximumFractionDigits: 2 })}
@@ -974,23 +934,17 @@ const Calculator = () => {
               onClick={() => {
                 const computed = moveKeys.reduce((obj, key) => {
                   const base = baseDamages[key];
-                  const scale = moveScales[key]; // Use the selected scale for this move
-                  const statKey = getStatKeyForScaling(scale, stats);
-                  const statValue = stats[statKey] || 1;
-                  const accValue = accBonus[statKey] || 0;
-                  const combined = statValue + accValue;
-                  const scaleBuff = getScaleBuffForScaling(scale, damageBuffs);
-                  const scaled =
-                    base === 0
-                      ? 0
-                      : computeScaledDamage(base, combined, scaleBuff);
+                  const scaled = computeScaledDamage(
+                    base,
+                    combinedStatValue,
+                    scaleFactor
+                  );
                   obj[key] = {
                     base,
                     scaled,
-                    scale, // Optionally save the scale type used
                   };
                   return obj;
-                }, {} as Record<string, { base: number; scaled: number; scale: string }>);
+                }, {} as Record<string, { base: number; scaled: number }>);
 
                 // Load existing records or start new array
                 const prev = JSON.parse(
@@ -998,7 +952,6 @@ const Calculator = () => {
                 );
                 prev.push({
                   timestamp: Date.now(),
-                  title: damageTitle,
                   moves: computed,
                 });
                 localStorage.setItem(

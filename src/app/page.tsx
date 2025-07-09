@@ -4,9 +4,7 @@ import { useState } from "react";
 import Navbar from "./views/navbar";
 import GenericTable from "./views/table";
 import AccessorySelector from "./views/accselector";
-import BuffCardList from "./views/card";
-import BuffListAccordion from "./views/list";
-import { raceBuffsData } from "./data/racebuff";
+import DamageTable from "./views/damagetable";
 import {
   Accessories,
   headAccData,
@@ -29,7 +27,7 @@ const accessoryDataMap = {
 
 export default function Home() {
   const [pageSelected, setPageSelected] = useState<
-    "home" | "title" | "races" | "accessories" | "calculator"
+    "home" | "title" | "races" | "accessories" | "calculator" | "damagetable"
   >("home");
   const [accessorySelected, setAccessorySelected] = useState<
     "head" | "top" | "arm" | "back" | "waist" | "legs"
@@ -88,45 +86,71 @@ export default function Home() {
                   <dialog id="update_modal" className="modal">
                     <div className="modal-box">
                       <h3 className="font-bold text-lg">
-                        AOPG Calculator v1.3.0
+                        AOPG Calculator v1.4.0
                       </h3>
                       <div className="max-w-4xl mx-auto px-6 py-10 space-y-8">
                         <div>
                           <h1 className="text-3xl font-bold text-indigo-600">
-                            🧾 Update Log — Fighting Style (v1.3.0)
+                            🧾 Update Log — Dev Mode Overhaul (v1.4.0)
                           </h1>
                           <p className="text-sm text-gray-500 mt-1">
-                            📅 Release Date: July 5, 2025
+                            📅 Release Date: July 9, 2025
                           </p>
                           <h2 className="text-xl font-semibold mt-4">
-                            🔥 Damage Calculator for A One Piece Game — Dante
-                            from Devil May Cry is now in AOPG!
+                            🔥 Damage Calculator for A One Piece Game — Dev Mode
+                            Overhaul
                           </h2>
                         </div>
                         <div>
                           <h3 className="text-lg font-semibold text-green-600 mb-2">
-                            ✅ New Features (v1.3.0)
+                            ✅ New Features & Improvements (v1.4.0)
                           </h3>
                           <ul className="list-disc list-inside space-y-2 text-gray-800 dark:text-gray-200">
                             <li>
-                              <strong>
-                                ⚙️ Dev Mode: Save damage computation
-                              </strong>{" "}
-                              Developers can now save their computed damage
-                              results directly to local storage for later
-                              reference or comparison. Saved computations can
-                              also be deleted at any time, making it easy to
-                              manage and review different builds or test cases.
+                              <strong>📝 Per-Move Scale Selection:</strong> In
+                              Dev Mode, you can now select a specific scale
+                              (Fruit, Sword, Gun, Strength) for each move. The
+                              calculator computes each move&apos;s damage based
+                              on its selected scale.
+                            </li>
+                            <li>
+                              <strong>📊 Saved Computations Table:</strong> All
+                              saved computations are now displayed in a sortable
+                              table (Damage Table tab). You can sort by title,
+                              total damage, or any move&apos;s base, scaled, or
+                              scale type.
                             </li>
                             <li>
                               <strong>
-                                🪙 New Best Build and Accessories:
+                                🏷️ Computation Title & Attack Type:
                               </strong>{" "}
-                              With the addition of new accessories from the
-                              Dante update, the best build recommendations have
-                              been updated. You can now view the latest optimal
-                              accessory combinations—including the newest
-                              items—in both the Accessories and Calculator tabs.
+                              You can add a custom title and select the attack
+                              type for each computation. Selecting an attack
+                              type automatically disables the corresponding
+                              buff.
+                            </li>
+                            <li>
+                              <strong>
+                                💾 Save & Manage Multiple Records:
+                              </strong>{" "}
+                              Save multiple computations to local storage, each
+                              with its own title, per-move scale, and all
+                              move/base/scaled values. You can also delete all
+                              saved records at once.
+                            </li>
+                            <li>
+                              <strong>🔄 Best Build Integration:</strong>{" "}
+                              Clicking a Best Build button now sets all move
+                              scales to match the selected build&apos;s type.
+                            </li>
+                            <li>
+                              <strong>🗑️ Delete All:</strong> Added a button to
+                              clear all saved computations from local storage.
+                            </li>
+                            <li>
+                              <strong>🪄 Quality of Life:</strong> Table now
+                              shows the scale used for each move, and total
+                              damage is always shown as the last column.
                             </li>
                           </ul>
                         </div>
@@ -137,10 +161,6 @@ export default function Home() {
                           <ul className="list-disc list-inside space-y-2 text-gray-800 dark:text-gray-200">
                             <li>Damage of other weapons</li>
                             <li>Damage Over Time Computation</li>
-                            <li>
-                              Dev Mode: Saved damage will be put to a table
-                            </li>
-                            <li>Save/load stats with local storage</li>
                             <li>Mobile-optimized UX improvements</li>
                           </ul>
                         </div>
@@ -178,13 +198,15 @@ export default function Home() {
           </>
         )}
 
-        {pageSelected === "title" && <BuffListAccordion />}
+        {/* {pageSelected === "title" && <BuffListAccordion />} */}
 
-        {pageSelected === "races" && (
+        {/* {pageSelected === "races" && (
           <BuffCardList data={raceBuffsData.filter((buff) => buff.id !== 0)} />
-        )}
+        )} */}
 
         {pageSelected === "calculator" && <Calculator />}
+
+        {pageSelected === "damagetable" && <DamageTable />}
       </main>
     </div>
   );

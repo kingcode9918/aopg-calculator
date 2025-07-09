@@ -1,11 +1,19 @@
+import { useDevMode } from "../hooks/devmode";
 interface NavbarProps {
   onSelect: (
-    value: "home" | "title" | "races" | "accessories" | "calculator"
+    value:
+      | "home"
+      | "title"
+      | "races"
+      | "accessories"
+      | "calculator"
+      | "damagetable"
   ) => void;
   selected: string;
 }
 
 const Navbar = ({ onSelect, selected }: NavbarProps) => {
+  const dev = useDevMode();
   return (
     <div className="navbar bg-base-100 shadow-sm w-full top-0 left-0 z-50">
       <div className="flex-1">
@@ -21,7 +29,7 @@ const Navbar = ({ onSelect, selected }: NavbarProps) => {
               Home
             </a>
           </li>
-          <li>
+          {/* <li>
             <a
               className={selected === "title" ? "font-bold text-primary" : ""}
               onClick={() => onSelect("title")}
@@ -36,7 +44,7 @@ const Navbar = ({ onSelect, selected }: NavbarProps) => {
             >
               Races
             </a>
-          </li>
+          </li> */}
           <li>
             <a
               className={
@@ -57,6 +65,18 @@ const Navbar = ({ onSelect, selected }: NavbarProps) => {
               Calculator
             </a>
           </li>
+          {dev && (
+            <li>
+              <a
+                className={
+                  selected === "damagetable" ? "font-bold text-primary" : ""
+                }
+                onClick={() => onSelect("damagetable")}
+              >
+                Damage Table
+              </a>
+            </li>
+          )}
         </ul>
       </div>
     </div>

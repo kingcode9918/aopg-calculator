@@ -1,6 +1,12 @@
 interface NavbarProps {
   onSelect: (
-    value: "home" | "title" | "races" | "accessories" | "calculator"
+    value:
+      | "home"
+      | "title"
+      | "races"
+      | "accessories"
+      | "calculator"
+      | "damagetable"
   ) => void;
   selected: string;
 }
@@ -55,6 +61,16 @@ const Navbar = ({ onSelect, selected }: NavbarProps) => {
               onClick={() => onSelect("calculator")}
             >
               Calculator
+            </a>
+          </li>
+          <li>
+            <a
+              className={
+                selected === "damagetable" ? "font-bold text-primary" : ""
+              }
+              onClick={() => onSelect("damagetable")}
+            >
+              Damage Table
             </a>
           </li>
         </ul>

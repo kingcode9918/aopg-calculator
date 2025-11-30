@@ -690,7 +690,7 @@ const Calculator = () => {
       {/* Fieldsets */}
       <div className="flex flex-wrap gap-4 mt-4">
         {/* Stats Fieldset */}
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+        {/* <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
           <legend className="fieldset-legend">Stats Details</legend>
           {statKeys.map(({ key, label }) => (
             <div key={key}>
@@ -742,7 +742,7 @@ const Calculator = () => {
               Maximum
             </button>
           </div>
-        </fieldset>
+        </fieldset> */}
 
         {/* Accessories Fieldset */}
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">

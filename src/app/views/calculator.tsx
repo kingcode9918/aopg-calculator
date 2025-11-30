@@ -24,7 +24,7 @@ import { damageData, Weapon, Mode } from "../data/damage";
 import { computeScaledDamage } from "../utils/computeDamage";
 import { titleBuffsData } from "../data/titlebuff";
 import { raceBuffsData } from "../data/racebuff";
-import { useDevMode } from "../hooks/devmode";
+// import { useDevMode } from "../hooks/devmode";
 import { stat } from "fs";
 import {
   getScaleBuffForScaling,
@@ -193,7 +193,7 @@ const bestBuilds = {
 };
 
 const Calculator = () => {
-  const dev = useDevMode();
+  // const dev = useDevMode();
 
   const [customModeBuff, setCustomModeBuff] = useState(1);
 
@@ -494,7 +494,7 @@ const Calculator = () => {
     <div className="w-full flex flex-col items-center">
       {/* Stats */}
       <div className="stats shadow">
-        <div className="stat">
+        {/* <div className="stat">
           <div className="stat-figure text-primary">
             <span className="text-4xl">📊</span>
           </div>
@@ -510,14 +510,14 @@ const Calculator = () => {
               .reduce((a, b) => a + b, 0)
               .toLocaleString()}
           </div>
-        </div>
+        </div> */}
         <div className="stat">
           <div className="stat-figure text-secondary">
             <span className="text-4xl">🔱</span>
           </div>
           <div className="stat-title">Active Buffs</div>
           <div className="flex gap-3">
-            {dev ? (
+            {/* {dev ? (
               <>
                 <div className="flex flex-col gap-3">
                   {scaleTypes.slice(0, 2).map(({ key, label, className }) => (
@@ -549,42 +549,42 @@ const Calculator = () => {
                 </div>
               </>
             ) : (
-              <>
-                <div className="flex flex-col gap-3">
-                  {scaleTypes.slice(0, 2).map(({ key, label, className }) => (
-                    <span
-                      key={key}
-                      className={`badge badge-lg w-full ${className}`}
-                    >
-                      {Number(
-                        damageBuffs[key as keyof typeof damageBuffs].toFixed(2)
-                      ).toLocaleString()}{" "}
-                      x {label} Damage
-                    </span>
-                  ))}
-                </div>
-                <div className="flex flex-col gap-3">
-                  {scaleTypes.slice(2).map(({ key, label, className }) => (
-                    <span
-                      key={key}
-                      className={`badge badge-lg w-full ${className}`}
-                    >
-                      {Number(
-                        damageBuffs[key as keyof typeof damageBuffs].toFixed(2)
-                      ).toLocaleString()}{" "}
-                      x {label} Damage
-                    </span>
-                  ))}
-                </div>
-              </>
-            )}
+              <> */}
+            <div className="flex flex-col gap-3">
+              {scaleTypes.slice(0, 2).map(({ key, label, className }) => (
+                <span
+                  key={key}
+                  className={`badge badge-lg w-full ${className}`}
+                >
+                  {Number(
+                    damageBuffs[key as keyof typeof damageBuffs].toFixed(2)
+                  ).toLocaleString()}{" "}
+                  x {label} Damage
+                </span>
+              ))}
+            </div>
+            <div className="flex flex-col gap-3">
+              {scaleTypes.slice(2).map(({ key, label, className }) => (
+                <span
+                  key={key}
+                  className={`badge badge-lg w-full ${className}`}
+                >
+                  {Number(
+                    damageBuffs[key as keyof typeof damageBuffs].toFixed(2)
+                  ).toLocaleString()}{" "}
+                  x {label} Damage
+                </span>
+              ))}
+            </div>
+            {/* </>
+            )} */}
           </div>
-          <div className="stat-desc">
+          {/* <div className="stat-desc">
             {((Object.values(stats).reduce((a, b) => a + b, 0) / 10000) * 3)
               .toFixed(4)
               .toLocaleString()}{" "}
             x from Pinpoint Artifact
-          </div>
+          </div> */}
         </div>
         <div className="stat">
           {/* <div className="stat-value">
@@ -603,8 +603,8 @@ const Calculator = () => {
               ))}
             </select>
           </div> */}
-          <div className="stat-title">Main Damage</div>
-          {dev && (
+          {/* <div className="stat-title">Main Damage</div> */}
+          {/* {dev && (
             <div className="flex items-center gap-2 mt-2">
               <span className="font-semibold">Custom Mode Buff:</span>
               <input
@@ -617,7 +617,7 @@ const Calculator = () => {
               />
               <span className="opacity-70">x (applies to all buffs)</span>
             </div>
-          )}
+          )} */}
           <div className="stat-desc text-secondary">
             {selectedDamageData && selectedDamageData.length > 0 ? (
               <div>
@@ -862,167 +862,167 @@ const Calculator = () => {
         ))}
       </div>
       {/* Dev Mode: Base to Scale Damage */}
-      {dev && (
-        <div className="w-full max-w-4xl mt-4 flex flex-col items-center">
-          <div className="divider w-full">Base Damage w/ Passive</div>
-          <div className="w-full flex justify-center mb-4">
-            <input
-              type="text"
-              className="input input-bordered w-full max-w-xs"
-              placeholder="Enter a name for this computation"
-              value={damageTitle}
-              onChange={(e) => setDamageTitle(e.target.value)}
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
-            {moveKeys.map((key) => (
-              <div key={key} className="space-y-4 border p-4 rounded-xl shadow">
-                <label className="input">
-                  <span className="label">{key} Scale</span>
-                  <select
-                    value={moveScales[key]}
-                    onChange={(e) =>
-                      setMoveScales((prev) => ({
-                        ...prev,
-                        [key]: e.target.value,
-                      }))
-                    }
-                    className="select select-bordered w-full"
-                  >
-                    <option value="Fruit">Fruit</option>
-                    <option value="Sword">Sword</option>
-                    <option value="Gun">Gun</option>
-                    <option value="Strength">Strength</option>
-                  </select>
-                </label>
-                <label className="input">
-                  <span className="label">{key} Move</span>
-                  <input
-                    type="text"
-                    placeholder="0.00"
-                    min={0}
-                    max={10000000}
-                    step="100"
-                    value={
-                      baseDamages[key]
-                        ? baseDamages[key].toLocaleString("en-US")
-                        : ""
-                    }
-                    onChange={(e) => {
-                      // Remove commas before parsing
-                      const raw = e.target.value.replace(/,/g, "");
-                      handleBaseDamageChange(key, raw);
-                    }}
-                  />
-                </label>
-                <label className="input">
-                  <input
-                    type="text"
-                    readOnly
-                    value={
-                      baseDamages[key]
-                        ? (() => {
-                            const base = baseDamages[key];
-                            const scale = moveScales[key];
-                            const statKey = getStatKeyForScaling(scale, stats);
-                            const statValue = stats[statKey] || 1;
-                            const accValue = accBonus[statKey] || 0;
-                            const combined = statValue + accValue;
-                            const scaleBuff = getScaleBuffForScaling(
-                              scale,
-                              damageBuffs
-                            );
-                            const scaled = computeScaledDamage(
-                              base,
-                              combined,
-                              scaleBuff
-                            );
-                            return scaled
-                              .toFixed(2)
-                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                          })()
-                        : ""
-                    }
-                  />
-                </label>
-              </div>
-            ))}
-          </div>
-          <div className="w-full flex justify-end pr-8 mt-2 mb-2">
-            <div className="text-lg font-bold">
-              Total Damage:&nbsp;
-              {moveKeys
-                .reduce((sum, key) => {
-                  const base = baseDamages[key];
-                  if (!base) return sum;
-                  const scale = moveScales[key];
-                  const statKey = getStatKeyForScaling(scale, stats);
-                  const statValue = stats[statKey] || 1;
-                  const accValue = accBonus[statKey] || 0;
-                  const combined = statValue + accValue;
-                  const scaleBuff = getScaleBuffForScaling(scale, damageBuffs);
-                  const scaled = computeScaledDamage(base, combined, scaleBuff);
-                  return sum + scaled;
-                }, 0)
-                .toLocaleString(undefined, { maximumFractionDigits: 2 })}
+      {/* {dev && ( */}
+      <div className="w-full max-w-4xl mt-4 flex flex-col items-center">
+        {/* <div className="divider w-full">Base Damage w/ Passive</div> */}
+        {/* <div className="w-full flex justify-center mb-4">
+          <input
+            type="text"
+            className="input input-bordered w-full max-w-xs"
+            placeholder="Enter a name for this computation"
+            value={damageTitle}
+            onChange={(e) => setDamageTitle(e.target.value)}
+          />
+        </div> */}
+        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+          {moveKeys.map((key) => (
+            <div key={key} className="space-y-4 border p-4 rounded-xl shadow">
+              <label className="input">
+                <span className="label">{key} Scale</span>
+                <select
+                  value={moveScales[key]}
+                  onChange={(e) =>
+                    setMoveScales((prev) => ({
+                      ...prev,
+                      [key]: e.target.value,
+                    }))
+                  }
+                  className="select select-bordered w-full"
+                >
+                  <option value="Fruit">Fruit</option>
+                  <option value="Sword">Sword</option>
+                  <option value="Gun">Gun</option>
+                  <option value="Strength">Strength</option>
+                </select>
+              </label>
+              <label className="input">
+                <span className="label">{key} Move</span>
+                <input
+                  type="text"
+                  placeholder="0.00"
+                  min={0}
+                  max={10000000}
+                  step="100"
+                  value={
+                    baseDamages[key]
+                      ? baseDamages[key].toLocaleString("en-US")
+                      : ""
+                  }
+                  onChange={(e) => {
+                    // Remove commas before parsing
+                    const raw = e.target.value.replace(/,/g, "");
+                    handleBaseDamageChange(key, raw);
+                  }}
+                />
+              </label>
+              <label className="input">
+                <input
+                  type="text"
+                  readOnly
+                  value={
+                    baseDamages[key]
+                      ? (() => {
+                          const base = baseDamages[key];
+                          const scale = moveScales[key];
+                          const statKey = getStatKeyForScaling(scale, stats);
+                          const statValue = stats[statKey] || 1;
+                          const accValue = accBonus[statKey] || 0;
+                          const combined = statValue + accValue;
+                          const scaleBuff = getScaleBuffForScaling(
+                            scale,
+                            damageBuffs
+                          );
+                          const scaled = computeScaledDamage(
+                            base,
+                            combined,
+                            scaleBuff
+                          );
+                          return scaled
+                            .toFixed(2)
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        })()
+                      : ""
+                  }
+                />
+              </label>
             </div>
+          ))}
+        </div> */}
+        {/* <div className="w-full flex justify-end pr-8 mt-2 mb-2">
+          <div className="text-lg font-bold">
+            Total Damage:&nbsp;
+            {moveKeys
+              .reduce((sum, key) => {
+                const base = baseDamages[key];
+                if (!base) return sum;
+                const scale = moveScales[key];
+                const statKey = getStatKeyForScaling(scale, stats);
+                const statValue = stats[statKey] || 1;
+                const accValue = accBonus[statKey] || 0;
+                const combined = statValue + accValue;
+                const scaleBuff = getScaleBuffForScaling(scale, damageBuffs);
+                const scaled = computeScaledDamage(base, combined, scaleBuff);
+                return sum + scaled;
+              }, 0)
+              .toLocaleString(undefined, { maximumFractionDigits: 2 })}
           </div>
-          {/* Save to localStorage & Delete All button */}
-          <div className="w-full flex justify-end pr-8 mb-4 gap-2">
-            <button
-              className="btn btn-info"
-              onClick={() => {
-                const computed = moveKeys.reduce((obj, key) => {
-                  const base = baseDamages[key];
-                  const scale = moveScales[key]; // Use the selected scale for this move
-                  const statKey = getStatKeyForScaling(scale, stats);
-                  const statValue = stats[statKey] || 1;
-                  const accValue = accBonus[statKey] || 0;
-                  const combined = statValue + accValue;
-                  const scaleBuff = getScaleBuffForScaling(scale, damageBuffs);
-                  const scaled =
-                    base === 0
-                      ? 0
-                      : computeScaledDamage(base, combined, scaleBuff);
-                  obj[key] = {
-                    base,
-                    scaled,
-                    scale,
-                  };
-                  return obj;
-                }, {} as Record<string, { base: number; scaled: number; scale: string }>);
+        </div> */}
+        {/* Save to localStorage & Delete All button */}
+        {/* <div className="w-full flex justify-end pr-8 mb-4 gap-2">
+          <button
+            className="btn btn-info"
+            onClick={() => {
+              const computed = moveKeys.reduce((obj, key) => {
+                const base = baseDamages[key];
+                const scale = moveScales[key]; // Use the selected scale for this move
+                const statKey = getStatKeyForScaling(scale, stats);
+                const statValue = stats[statKey] || 1;
+                const accValue = accBonus[statKey] || 0;
+                const combined = statValue + accValue;
+                const scaleBuff = getScaleBuffForScaling(scale, damageBuffs);
+                const scaled =
+                  base === 0
+                    ? 0
+                    : computeScaledDamage(base, combined, scaleBuff);
+                obj[key] = {
+                  base,
+                  scaled,
+                  scale,
+                };
+                return obj;
+              }, {} as Record<string, { base: number; scaled: number; scale: string }>);
 
-                // Load existing records or start new array
-                const prev = JSON.parse(
-                  localStorage.getItem("aopg_calculator_dev_saved") || "[]"
-                );
-                prev.push({
-                  timestamp: Date.now(),
-                  title: damageTitle,
-                  moves: computed,
-                });
-                localStorage.setItem(
-                  "aopg_calculator_dev_saved",
-                  JSON.stringify(prev)
-                );
-                alert("Computed values saved to local storage!");
-              }}
-            >
-              Save Computed Values
-            </button>
-            <button
-              className="btn btn-error"
-              onClick={() => {
-                localStorage.removeItem("aopg_calculator_dev_saved");
-                alert("All saved records deleted!");
-              }}
-            >
-              Delete All Saved
-            </button>
-          </div>
-        </div>
-      )}
-      {!dev && selectedDamageData && selectedDamageData[0] && (
+              // Load existing records or start new array
+              const prev = JSON.parse(
+                localStorage.getItem("aopg_calculator_dev_saved") || "[]"
+              );
+              prev.push({
+                timestamp: Date.now(),
+                title: damageTitle,
+                moves: computed,
+              });
+              localStorage.setItem(
+                "aopg_calculator_dev_saved",
+                JSON.stringify(prev)
+              );
+              alert("Computed values saved to local storage!");
+            }}
+          >
+            Save Computed Values
+          </button>
+          <button
+            className="btn btn-error"
+            onClick={() => {
+              localStorage.removeItem("aopg_calculator_dev_saved");
+              alert("All saved records deleted!");
+            }}
+          >
+            Delete All Saved
+          </button>
+        </div> */}
+      </div>
+      {/* )} */}
+      {/* {!dev && selectedDamageData && selectedDamageData[0] && (
         <div className="w-full max-w-4xl mt-4 flex flex-col items-center">
           <div className="divider w-full">Damage Computation</div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
@@ -1144,7 +1144,7 @@ const Calculator = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

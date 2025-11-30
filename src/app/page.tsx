@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useState } from "react";
 import Navbar from "./views/navbar";
 import GenericTable from "./views/table";
@@ -42,9 +44,9 @@ export default function Home() {
 
   return (
     <div className="items-center justify-items-center min-h-screen font-[family-name:var(--font-geist-sans)]">
-      <Navbar onSelect={setPageSelected} selected={pageSelected} />
+      {/* <Navbar onSelect={setPageSelected} selected={pageSelected} /> */}
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        {pageSelected === "home" && (
+        {/* {pageSelected === "home" && (
           <div className="hero">
             <div className="hero-content text-center">
               <div>
@@ -189,9 +191,9 @@ export default function Home() {
               </div>
             </div>
           </div>
-        )}
+        )} */}
 
-        {pageSelected === "accessories" && (
+        {/* {pageSelected === "accessories" && (
           <>
             <AccessorySelector
               onSelect={setAccessorySelected}
@@ -205,11 +207,12 @@ export default function Home() {
 
         {pageSelected === "races" && (
           <BuffCardList data={raceBuffsData.filter((buff) => buff.id !== 0)} />
-        )}
+        )} */}
 
-        {pageSelected === "calculator" && <Calculator />}
+        {/* {pageSelected === "calculator" && <Calculator />} */}
+        <Calculator />
 
-        {pageSelected === "damagetable" && <DamageTable />}
+        {/* {pageSelected === "damagetable" && <DamageTable />} */}
       </main>
     </div>
   );

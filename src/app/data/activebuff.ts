@@ -32,6 +32,14 @@ export const fruitActiveBuffs: ActiveBuffs[] = [
     gunbuff: 1.2,
     strengthbuff: 1.2,
   },
+  {
+    id: 3,
+    name: "Final Gear 5 (Sun God Nika)",
+    fruitbuff: 15,
+    swordbuff: 3,
+    gunbuff: 3,
+    strengthbuff: 3,
+  },
 ];
 
 export const fightingActiveBuffs: ActiveBuffs[] = [

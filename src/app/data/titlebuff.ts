@@ -485,4 +485,13 @@ export const titleBuffsData: titleBuffs[] = [
     strengthbuff: 1,
     rank: "divine",
   },
+  {
+    id: 53,
+    name: "Control Devil",
+    fruitbuff: 3.7,
+    swordbuff: 3.7,
+    gunbuff: 3.7,
+    strengthbuff: 3.7,
+    rank: "divine",
+  },
 ];

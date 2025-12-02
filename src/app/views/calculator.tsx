@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useState, useEffect } from "react";
 import {
   headAccData,
@@ -20,26 +19,8 @@ import {
   giantActiveBuffs,
   supportActiveBuffs,
 } from "../data/activebuff";
-import { damageData, Weapon, Mode } from "../data/damage";
-import { computeScaledDamage } from "../utils/computeDamage";
 import { titleBuffsData } from "../data/titlebuff";
 import { raceBuffsData } from "../data/racebuff";
-// import { useDevMode } from "../hooks/devmode";
-import { stat } from "fs";
-import {
-  getScaleBuffForScaling,
-  getStatKeyForScaling,
-} from "../utils/damageScale";
-
-const statKeys = [
-  { key: "strength", label: "Strength" },
-  { key: "stamina", label: "Stamina" },
-  { key: "defense", label: "Defense" },
-  { key: "sword", label: "Sword" },
-  { key: "gun", label: "Gun" },
-  { key: "haki", label: "Haki" },
-  { key: "fruit", label: "Fruit" },
-];
 
 const accKeys = [
   {
@@ -79,8 +60,6 @@ const accKeys = [
     color: "select-warning",
   },
 ];
-
-const moveKeys = ["M1", "Q", "E", "R", "F", "G", "T", "U", "Y"];
 
 const scaleTypes = [
   { key: "fruitBuff", label: "Fruit", className: "custom-text-fruit" },
@@ -195,18 +174,7 @@ const bestBuilds = {
 const Calculator = () => {
   // const dev = useDevMode();
 
-  const [customModeBuff, setCustomModeBuff] = useState(1);
-
   // Stats and Accessories
-  const [stats, setStats] = useState({
-    strength: 1,
-    stamina: 1,
-    defense: 1,
-    sword: 1,
-    gun: 1,
-    haki: 1,
-    fruit: 1,
-  });
   const [acc, setAcc] = useState({
     selectedHeadAcc: 0,
     selectedTopAcc: 0,
@@ -248,63 +216,19 @@ const Calculator = () => {
   });
 
   // Damage
-  const [selectedDamage, setSelectedDamage] = useState(0);
-  const [selectedDamageData, setSelectedDamageData] = useState<Weapon[]>();
-  const [selectedModeIdx, setSelectedModeIdx] = useState(0);
-  const [baseDamages, setBaseDamages] = useState<Record<string, number>>(() =>
-    moveKeys.reduce((acc, key) => ({ ...acc, [key]: 0 }), {})
-  );
-
-  const [damageTitle, setDamageTitle] = useState("");
-
-  const [moveScales, setMoveScales] = useState<Record<string, string>>(() =>
-    moveKeys.reduce((acc, key) => ({ ...acc, [key]: "Fruit" }), {})
-  );
 
   // Handlers
-  const handleStatChange = (key: string, value: number) =>
-    setStats((s) => ({ ...s, [key]: value }));
   const handleAccChange = (key: string, value: number) =>
     setAcc((a) => ({ ...a, [key]: value }));
   const handleBuffChange = (key: string, value: number) =>
     setBuffs((b) => ({ ...b, [key]: value }));
-  const handleBaseDamageChange = (key: string, value: string) =>
-    setBaseDamages((prev) => ({ ...prev, [key]: parseFloat(value) || 0 }));
-
-  const isFightingType =
-    selectedDamageData &&
-    selectedDamageData[0] &&
-    selectedDamageData[0].type === "Fighting";
 
   const setBestBuild = (type: keyof typeof bestBuilds) => {
     setAcc(bestBuilds[type].acc);
-    setBuffs((prev) => {
+    setBuffs(() => {
       // If current selected main damage is fighting, keep fightingBuff as 0
-      if (isFightingType) {
-        return { ...bestBuilds[type].buffs, fightingBuff: 0 };
-      }
       return { ...bestBuilds[type].buffs };
     });
-    let scaleLabel = "";
-    switch (type) {
-      case "fruit":
-        scaleLabel = "Fruit";
-        break;
-      case "sword":
-        scaleLabel = "Sword";
-        break;
-      case "gun":
-        scaleLabel = "Gun";
-        break;
-      case "strength":
-        scaleLabel = "Strength";
-        break;
-      default:
-        scaleLabel = "Fruit";
-    }
-    setMoveScales(
-      moveKeys.reduce((acc, key) => ({ ...acc, [key]: scaleLabel }), {})
-    );
   };
 
   const buffFieldsets = [
@@ -320,7 +244,6 @@ const Calculator = () => {
           key: "fightingBuff",
           label: "Fighting Style",
           data: fightingActiveBuffs,
-          disableIf: () => isFightingType,
         },
         { key: "gunSBuff", label: "Gun Style", data: gunActiveBuffs },
         { key: "swordSBuff", label: "Sword Style", data: swordActiveBuffs },
@@ -378,7 +301,8 @@ const Calculator = () => {
       fruit: accObjs.reduce((sum, a) => sum + (a?.fruit || 0), 0),
     });
 
-    // Buffs
+    //
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const getBuff = (arr: any[], id: number) =>
       arr.find((b) => b.id === id) || {};
     const selected = {
@@ -412,8 +336,7 @@ const Calculator = () => {
               (selected.conquerors[type] || 1) *
               (selected.blacksmith[type] || 1) *
               (selected.giant[type] || 1) *
-              (selected.support[type] || 1) *
-              (customModeBuff || 1)
+              (selected.support[type] || 1)
             : prod,
         1
       ),
@@ -432,8 +355,7 @@ const Calculator = () => {
               (selected.conquerors[type] || 1) *
               (selected.blacksmith[type] || 1) *
               (selected.giant[type] || 1) *
-              (selected.support[type] || 1) *
-              (customModeBuff || 1)
+              (selected.support[type] || 1)
             : prod,
         1
       ),
@@ -452,8 +374,7 @@ const Calculator = () => {
               (selected.conquerors[type] || 1) *
               (selected.blacksmith[type] || 1) *
               (selected.giant[type] || 1) *
-              (selected.support[type] || 1) *
-              (customModeBuff || 1)
+              (selected.support[type] || 1)
             : prod,
         1
       ),
@@ -472,45 +393,57 @@ const Calculator = () => {
               (selected.conquerors[type] || 1) *
               (selected.blacksmith[type] || 1) *
               (selected.giant[type] || 1) *
-              (selected.support[type] || 1) *
-              (customModeBuff || 1)
+              (selected.support[type] || 1)
             : prod,
         1
       ),
     });
 
     // Damage
-    const foundDamage = damageData.find((dmg) => dmg.id === selectedDamage);
-    setSelectedDamageData(foundDamage ? [foundDamage] : undefined);
-    setSelectedModeIdx(-1);
-
-    if (isFightingType && buffs.fightingBuff !== 0) {
-      setBuffs((prev) => ({ ...prev, fightingBuff: 0 }));
-    }
-  }, [acc, buffs, selectedDamage, customModeBuff, isFightingType]);
+  }, [acc, buffs]);
 
   // Render
   return (
     <div className="w-full flex flex-col items-center">
       {/* Stats */}
       <div className="stats shadow">
-        {/* <div className="stat">
+        <div className="stat">
           <div className="stat-figure text-primary">
             <span className="text-4xl">📊</span>
           </div>
+
           <div className="stat-title">Total Stats</div>
-          <div className="stat-value text-primary">
+
+          {/* <div className="stat-value text-primary">
             {Object.values(stats)
               .reduce((a, b) => a + b, 0)
               .toLocaleString()}
-          </div>
+          </div> */}
+
           <div className="stat-desc">
-            +
+            {/* +
             {Object.values(accBonus)
               .reduce((a, b) => a + b, 0)
-              .toLocaleString()}
+              .toLocaleString()} */}
+            {/* --- Horizontal Stats Here --- */}
+            <div className="mt-1 grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+              <span className="custom-text-strength">
+                STR: {accBonus.strength}
+              </span>
+              <span className="custom-text-stamina">
+                STA: {accBonus.stamina}
+              </span>
+              <span className="custom-text-defense">
+                DEF: {accBonus.defense}
+              </span>
+              <span className="custom-text-sword">SWD: {accBonus.sword}</span>
+              <span className="custom-text-gun">GUN: {accBonus.gun}</span>
+              <span className="custom-text-haki">HKI: {accBonus.haki}</span>
+              <span className="custom-text-fruit">FRT: {accBonus.fruit}</span>
+            </div>
           </div>
-        </div> */}
+        </div>
+
         <div className="stat">
           <div className="stat-figure text-secondary">
             <span className="text-4xl">🔱</span>
@@ -618,47 +551,6 @@ const Calculator = () => {
               <span className="opacity-70">x (applies to all buffs)</span>
             </div>
           )} */}
-          <div className="stat-desc text-secondary">
-            {selectedDamageData && selectedDamageData.length > 0 ? (
-              <div>
-                {selectedDamageData[0].modes &&
-                  selectedDamageData[0].modes.length > 0 && (
-                    <div className="gap-2 mb-2">
-                      {/* None option */}
-                      <label className="flex items-center gap-1 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="mode-toggle"
-                          className="radio radio-warning radio-xs"
-                          checked={selectedModeIdx === -1}
-                          onChange={() => setSelectedModeIdx(-1)}
-                        />
-                        <span className="ml-1">None</span>
-                      </label>
-                      {selectedDamageData[0].modes.map(
-                        (mode: Mode, idx: number) => (
-                          <label
-                            key={mode.name}
-                            className="flex items-center gap-1 cursor-pointer"
-                          >
-                            <input
-                              type="radio"
-                              name="mode-toggle"
-                              className="radio radio-warning radio-xs"
-                              checked={selectedModeIdx === idx}
-                              onChange={() => setSelectedModeIdx(idx)}
-                            />
-                            <span className="ml-1">{mode.name}</span>
-                          </label>
-                        )
-                      )}
-                    </div>
-                  )}
-              </div>
-            ) : (
-              "No damage data selected"
-            )}
-          </div>
         </div>
       </div>
       <div className="flex flex-wrap gap-4 mb-4 mt-4">
@@ -777,10 +669,11 @@ const Calculator = () => {
             className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4"
           >
             <legend className="fieldset-legend">{fieldset.legend}</legend>
-            {fieldset.fields.map(({ key, label, data, disableIf }) => {
+            {fieldset.fields.map(({ key, label, data }) => {
               // Get selected buff object
               const selectedBuffId = buffs[key as keyof typeof buffs];
               const selectedBuff = data.find(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (buff: any) => buff.id === selectedBuffId
               );
 
@@ -844,16 +737,18 @@ const Calculator = () => {
                       handleBuffChange(key, Number(e.target.value))
                     }
                     className="select"
-                    disabled={disableIf ? disableIf() : false}
                   >
                     <option value="" disabled>
                       Pick a {label.toLowerCase()}
                     </option>
-                    {data.map((buff: any) => (
-                      <option key={buff.id} value={buff.id}>
-                        {buff.name}
-                      </option>
-                    ))}
+                    {
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      data.map((buff: any) => (
+                        <option key={buff.id} value={buff.id}>
+                          {buff.name}
+                        </option>
+                      ))
+                    }
                   </select>
                 </div>
               );
@@ -1148,7 +1043,5 @@ const Calculator = () => {
     </div>
   );
 };
-
-/* eslint-enable */
 
 export default Calculator;

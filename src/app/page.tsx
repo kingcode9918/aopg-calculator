@@ -1,47 +1,7 @@
 "use client";
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-import { useState } from "react";
-import Navbar from "./views/navbar";
-import GenericTable from "./views/table";
-import AccessorySelector from "./views/accselector";
-import BuffCardList from "./views/card";
-import BuffListAccordion from "./views/list";
-import { raceBuffsData } from "./data/racebuff";
-import DamageTable from "./views/damagetable";
-import {
-  Accessories,
-  headAccData,
-  topAccData,
-  armAccData,
-  backAccData,
-  waistAccData,
-  legsAccData,
-} from "./data/accessories";
 import Calculator from "./views/calculator";
 
-const accessoryDataMap = {
-  head: headAccData,
-  top: topAccData,
-  arm: armAccData,
-  back: backAccData,
-  waist: waistAccData,
-  legs: legsAccData,
-};
-
 export default function Home() {
-  const [pageSelected, setPageSelected] = useState<
-    "home" | "title" | "races" | "accessories" | "calculator" | "damagetable"
-  >("home");
-  const [accessorySelected, setAccessorySelected] = useState<
-    "head" | "top" | "arm" | "back" | "waist" | "legs"
-  >("head");
-
-  // Helper to get filtered accessory data
-  const getAccessoryData = () =>
-    accessoryDataMap[accessorySelected]?.filter((buff) => buff.id !== 0) ?? [];
-
   return (
     <div className="items-center justify-items-center min-h-screen font-[family-name:var(--font-geist-sans)]">
       {/* <Navbar onSelect={setPageSelected} selected={pageSelected} /> */}

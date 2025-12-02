@@ -491,7 +491,7 @@ export const titleBuffsData: titleBuffs[] = [
     fruitbuff: 3.7,
     swordbuff: 3.7,
     gunbuff: 3.7,
-    strengthbuff: 3.7,
+    strengthbuff: 14.8,
     rank: "divine",
   },
 ];

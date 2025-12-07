@@ -184,7 +184,7 @@ export default function Home() {
 
           {/* Hover tooltip */}
           <div className="absolute bottom-6 right-0 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md shadow-lg w-44">
-            If there's a wrong value, DM me on Discord:
+            If there`@apos`s a wrong value, DM me on Discord:
             <span className="font-semibold block mt-1">kingcode99</span>
           </div>
         </div>

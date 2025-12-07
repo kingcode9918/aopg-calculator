@@ -604,6 +604,17 @@ export const headAccData: Accessories[] = [
     haki: 10,
     fruit: 0,
   },
+  {
+    id: 54,
+    name: "Santa Straw Hat",
+    strength: 1300,
+    stamina: 0,
+    defense: 0,
+    sword: 1100,
+    gun: 850,
+    haki: 0,
+    fruit: 2650,
+  },
 ];
 
 export const topAccData: Accessories[] = [
@@ -1101,6 +1112,28 @@ export const topAccData: Accessories[] = [
     gun: 0,
     haki: 0,
     fruit: 1000,
+  },
+  {
+    id: 45,
+    name: "Santa's Suit (Male)",
+    strength: 0,
+    stamina: 0,
+    defense: 0,
+    sword: 3100,
+    gun: 0,
+    haki: 0,
+    fruit: 3175,
+  },
+  {
+    id: 46,
+    name: "Santa's Suit (Female)",
+    strength: 2125,
+    stamina: 0,
+    defense: 0,
+    sword: 0,
+    gun: 2125,
+    haki: 0,
+    fruit: 0,
   },
 ];
 export const armAccData: Accessories[] = [
@@ -1677,9 +1710,9 @@ export const legsAccData: Accessories[] = [
     strength: 1850,
     stamina: 0,
     defense: 850,
-    sword: 1480,
+    sword: 0,
     gun: 0,
-    haki: 0,
+    haki: 1480,
     fruit: 0,
   },
   {

@@ -174,6 +174,14 @@ export const gunActiveBuffs: ActiveBuffs[] = [
     gunbuff: 2,
     strengthbuff: 1,
   },
+  {
+    id: 2,
+    name: "Frost Bazooka (Subzero)",
+    fruitbuff: 2,
+    swordbuff: 2,
+    gunbuff: 2,
+    strengthbuff: 2,
+  },
 ];
 
 export const swordActiveBuffs: ActiveBuffs[] = [

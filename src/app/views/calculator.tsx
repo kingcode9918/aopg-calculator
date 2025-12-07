@@ -72,7 +72,7 @@ const bestBuilds = {
   strength: {
     acc: {
       selectedHeadAcc: 7,
-      selectedTopAcc: 20,
+      selectedTopAcc: 46,
       selectedBackAcc: 1,
       selectedArmAcc: 4,
       selectedWaistAcc: 2,
@@ -80,7 +80,7 @@ const bestBuilds = {
     },
     buffs: {
       fightingBuff: 5,
-      gunSBuff: 0,
+      gunSBuff: 2,
       swordSBuff: 1,
       fruitSBuff: 3,
       suitBuff: 6,
@@ -105,7 +105,7 @@ const bestBuilds = {
     },
     buffs: {
       fightingBuff: 5,
-      gunSBuff: 1,
+      gunSBuff: 2,
       swordSBuff: 1,
       fruitSBuff: 3,
       suitBuff: 2,
@@ -130,7 +130,7 @@ const bestBuilds = {
     },
     buffs: {
       fightingBuff: 5,
-      gunSBuff: 0,
+      gunSBuff: 2,
       swordSBuff: 4,
       fruitSBuff: 3,
       suitBuff: 7,
@@ -147,7 +147,7 @@ const bestBuilds = {
   fruit: {
     acc: {
       selectedHeadAcc: 14,
-      selectedTopAcc: 3,
+      selectedTopAcc: 45,
       selectedBackAcc: 13,
       selectedArmAcc: 4,
       selectedWaistAcc: 2,
@@ -155,7 +155,7 @@ const bestBuilds = {
     },
     buffs: {
       fightingBuff: 5,
-      gunSBuff: 0,
+      gunSBuff: 2,
       swordSBuff: 1,
       fruitSBuff: 3,
       suitBuff: 1,
@@ -402,6 +402,9 @@ const Calculator = () => {
     // Damage
   }, [acc, buffs]);
 
+  const firstGroup = accKeys.slice(0, 3); // first 3
+  const secondGroup = accKeys.slice(3, 6); // next 3
+
   // Render
   return (
     <div className="w-full flex flex-col items-center">
@@ -636,30 +639,126 @@ const Calculator = () => {
           </div>
         </fieldset> */}
 
-        {/* Accessories Fieldset */}
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-          <legend className="fieldset-legend">Accessories Details</legend>
-          {accKeys.map(({ key, label, data, color }) => (
-            <div key={key}>
-              <label className="label mt-2">
-                <span>{label} Accessory</span>
-              </label>
-              <select
-                value={acc[key as keyof typeof acc]}
-                onChange={(e) => handleAccChange(key, Number(e.target.value))}
-                className={`select ${color}`}
-              >
-                <option value="" disabled>
-                  Pick a {label.toLowerCase()} accessory
-                </option>
-                {data.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.name}
+        {/* GROUP 1 — First 3 accessories */}
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 mb-4">
+          <legend className="fieldset-legend">Accessories (1-3)</legend>
+
+          {firstGroup.map(({ key, label, data, color }) => {
+            const selectedId = acc[key as keyof typeof acc];
+            const selectedAccessory = data.find(
+              (item) => item.id === selectedId
+            );
+
+            return (
+              <div key={key} className="mb-4">
+                <label className="label mt-2">
+                  <span>{label} Accessory</span>
+                </label>
+
+                <select
+                  value={selectedId}
+                  onChange={(e) => handleAccChange(key, Number(e.target.value))}
+                  className={`select ${color} w-full`}
+                >
+                  <option value="" disabled>
+                    Pick a {label.toLowerCase()} accessory
                   </option>
-                ))}
-              </select>
-            </div>
-          ))}
+                  {data.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+
+                {selectedAccessory && (
+                  <div className="mt-2 bg-base-300 p-2 rounded-lg text-sm flex flex-wrap gap-x-3 gap-y-1 w-full">
+                    <span className="custom-text-strength">
+                      STR: {selectedAccessory.strength}
+                    </span>
+                    <span className="custom-text-stamina">
+                      STA: {selectedAccessory.stamina}
+                    </span>
+                    <span className="custom-text-defense">
+                      DEF: {selectedAccessory.defense}
+                    </span>
+                    <span className="custom-text-sword">
+                      SWD: {selectedAccessory.sword}
+                    </span>
+                    <span className="custom-text-gun">
+                      GUN: {selectedAccessory.gun}
+                    </span>
+                    <span className="custom-text-haki">
+                      HKI: {selectedAccessory.haki}
+                    </span>
+                    <span className="custom-text-fruit">
+                      FRT: {selectedAccessory.fruit}
+                    </span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </fieldset>
+
+        {/* GROUP 2 — Next 3 accessories */}
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+          <legend className="fieldset-legend">Accessories (4-6)</legend>
+
+          {secondGroup.map(({ key, label, data, color }) => {
+            const selectedId = acc[key as keyof typeof acc];
+            const selectedAccessory = data.find(
+              (item) => item.id === selectedId
+            );
+
+            return (
+              <div key={key} className="mb-4">
+                <label className="label mt-2">
+                  <span>{label} Accessory</span>
+                </label>
+
+                <select
+                  value={selectedId}
+                  onChange={(e) => handleAccChange(key, Number(e.target.value))}
+                  className={`select ${color} w-full`}
+                >
+                  <option value="" disabled>
+                    Pick a {label.toLowerCase()} accessory
+                  </option>
+                  {data.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+
+                {selectedAccessory && (
+                  <div className="mt-2 bg-base-300 p-2 rounded-lg text-sm flex flex-wrap gap-x-3 gap-y-1 w-full">
+                    <span className="custom-text-strength">
+                      STR: {selectedAccessory.strength}
+                    </span>
+                    <span className="custom-text-stamina">
+                      STA: {selectedAccessory.stamina}
+                    </span>
+                    <span className="custom-text-defense">
+                      DEF: {selectedAccessory.defense}
+                    </span>
+                    <span className="custom-text-sword">
+                      SWD: {selectedAccessory.sword}
+                    </span>
+                    <span className="custom-text-gun">
+                      GUN: {selectedAccessory.gun}
+                    </span>
+                    <span className="custom-text-haki">
+                      HKI: {selectedAccessory.haki}
+                    </span>
+                    <span className="custom-text-fruit">
+                      FRT: {selectedAccessory.fruit}
+                    </span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </fieldset>
 
         {/* Buffs Fieldsets */}

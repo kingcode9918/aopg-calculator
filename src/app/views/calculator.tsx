@@ -72,8 +72,8 @@ const bestBuilds = {
   strength: {
     acc: {
       selectedHeadAcc: 7,
-      selectedTopAcc: 46,
-      selectedBackAcc: 1,
+      selectedTopAcc: 47,
+      selectedBackAcc: 26,
       selectedArmAcc: 4,
       selectedWaistAcc: 2,
       selectedLegsAcc: 14,

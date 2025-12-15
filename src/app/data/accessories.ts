@@ -1135,6 +1135,17 @@ export const topAccData: Accessories[] = [
     haki: 0,
     fruit: 0,
   },
+  {
+    id: 47,
+    name: "Ragged Suit",
+    strength: 2150,
+    stamina: 0,
+    defense: 2025,
+    sword: 0,
+    gun: 0,
+    haki: 0,
+    fruit: 0,
+  },
 ];
 export const armAccData: Accessories[] = [
   {
@@ -1511,6 +1522,17 @@ export const backAccData: Accessories[] = [
     sword: 1500,
     gun: 0,
     haki: 800,
+    fruit: 0,
+  },
+  {
+    id: 26,
+    name: "Withered Cape",
+    strength: 1750,
+    stamina: 0,
+    defense: 1250,
+    sword: 0,
+    gun: 0,
+    haki: 0,
     fruit: 0,
   },
 ];

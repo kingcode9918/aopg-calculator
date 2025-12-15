@@ -155,6 +155,14 @@ export const fightingActiveBuffs: ActiveBuffs[] = [
     gunbuff: 1.5,
     strengthbuff: 1.6,
   },
+  {
+    id: 14,
+    name: "Bald Crusader (Serious Series)",
+    fruitbuff: 2,
+    swordbuff: 2,
+    gunbuff: 2,
+    strengthbuff: 3.2,
+  },
 ];
 
 export const gunActiveBuffs: ActiveBuffs[] = [

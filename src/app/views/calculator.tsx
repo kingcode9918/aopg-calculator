@@ -79,7 +79,7 @@ const bestBuilds = {
       selectedLegsAcc: 14,
     },
     buffs: {
-      fightingBuff: 5,
+      fightingBuff: 14,
       gunSBuff: 2,
       swordSBuff: 1,
       fruitSBuff: 3,

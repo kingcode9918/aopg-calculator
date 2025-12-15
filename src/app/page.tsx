@@ -174,7 +174,7 @@ export default function Home() {
 
         {/* Floating UI Elements */}
         <div className="fixed bottom-3 left-3 text-xs text-gray-500 dark:text-gray-400">
-          v125 | Last updated: December 8, 2025
+          v125 | Last updated: December 15, 2025
         </div>
 
         <div className="fixed bottom-3 right-3 group cursor-help">

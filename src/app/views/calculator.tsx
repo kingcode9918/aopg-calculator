@@ -84,7 +84,7 @@ const bestBuilds = {
       swordSBuff: 1,
       fruitSBuff: 3,
       suitBuff: 6,
-      titleBuff: 53,
+      titleBuff: 54,
       raceBuff: 27,
       armamentBuff: 11,
       conquerorsBuff: 3,

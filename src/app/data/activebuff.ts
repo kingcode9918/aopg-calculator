@@ -161,7 +161,7 @@ export const fightingActiveBuffs: ActiveBuffs[] = [
     fruitbuff: 2,
     swordbuff: 2,
     gunbuff: 2,
-    strengthbuff: 3.2,
+    strengthbuff: 2,
   },
 ];
 

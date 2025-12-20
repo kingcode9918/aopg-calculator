@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { titleBuffs, titleBuffsData } from "../data/titlebuff";
+import { TitleBuffs, titleBuffsData } from "../data/titlebuff";
 
 // Group titles by rank
 const groupedByRank = titleBuffsData
   .filter((item) => item.id !== 0)
-  .reduce<Record<string, titleBuffs[]>>((acc, item) => {
+  .reduce<Record<string, TitleBuffs[]>>((acc, item) => {
     if (!acc[item.rank]) acc[item.rank] = [];
     acc[item.rank].push(item);
     return acc;

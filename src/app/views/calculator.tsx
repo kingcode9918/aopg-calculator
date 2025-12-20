@@ -72,11 +72,11 @@ const bestBuilds = {
   strength: {
     acc: {
       selectedHeadAcc: 7,
-      selectedTopAcc: 47,
+      selectedTopAcc: 20,
       selectedBackAcc: 26,
       selectedArmAcc: 4,
       selectedWaistAcc: 2,
-      selectedLegsAcc: 14,
+      selectedLegsAcc: 30,
     },
     buffs: {
       fightingBuff: 5,
@@ -84,7 +84,7 @@ const bestBuilds = {
       swordSBuff: 1,
       fruitSBuff: 3,
       suitBuff: 6,
-      titleBuff: 54,
+      titleBuff: 50,
       raceBuff: 27,
       armamentBuff: 11,
       conquerorsBuff: 3,
@@ -98,10 +98,10 @@ const bestBuilds = {
     acc: {
       selectedHeadAcc: 42,
       selectedTopAcc: 9,
-      selectedBackAcc: 5,
+      selectedBackAcc: 26,
       selectedArmAcc: 4,
       selectedWaistAcc: 1,
-      selectedLegsAcc: 6,
+      selectedLegsAcc: 29,
     },
     buffs: {
       fightingBuff: 5,
@@ -126,7 +126,7 @@ const bestBuilds = {
       selectedBackAcc: 5,
       selectedArmAcc: 6,
       selectedWaistAcc: 2,
-      selectedLegsAcc: 6,
+      selectedLegsAcc: 28,
     },
     buffs: {
       fightingBuff: 5,
@@ -134,7 +134,7 @@ const bestBuilds = {
       swordSBuff: 4,
       fruitSBuff: 3,
       suitBuff: 7,
-      titleBuff: 53,
+      titleBuff: 54,
       raceBuff: 27,
       armamentBuff: 11,
       conquerorsBuff: 3,
@@ -147,11 +147,11 @@ const bestBuilds = {
   fruit: {
     acc: {
       selectedHeadAcc: 14,
-      selectedTopAcc: 45,
+      selectedTopAcc: 3,
       selectedBackAcc: 13,
       selectedArmAcc: 4,
       selectedWaistAcc: 2,
-      selectedLegsAcc: 3,
+      selectedLegsAcc: 28,
     },
     buffs: {
       fightingBuff: 5,
@@ -159,7 +159,7 @@ const bestBuilds = {
       swordSBuff: 1,
       fruitSBuff: 3,
       suitBuff: 1,
-      titleBuff: 53,
+      titleBuff: 54,
       raceBuff: 27,
       armamentBuff: 11,
       conquerorsBuff: 3,

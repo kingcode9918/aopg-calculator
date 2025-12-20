@@ -1,13 +1,10 @@
-export interface titleBuffs {
-  id: number;
-  name: string;
-  fruitbuff: number;
-  swordbuff: number;
-  gunbuff: number;
-  strengthbuff: number;
+import { BaseBuff } from "./basebuff";
+
+export interface TitleBuffs extends BaseBuff {
   rank: string;
 }
-export const titleBuffsData: titleBuffs[] = [
+
+export const titleBuffsData: TitleBuffs[] = [
   {
     id: 0,
     name: "None",
@@ -443,10 +440,10 @@ export const titleBuffsData: titleBuffs[] = [
   {
     id: 48,
     name: "Hero of Marines",
-    fruitbuff: 2.75,
-    swordbuff: 2.75,
-    gunbuff: 2.75,
-    strengthbuff: 2.75,
+    fruitbuff: 3.2,
+    swordbuff: 3.2,
+    gunbuff: 3.2,
+    strengthbuff: 3.2,
     rank: "divine",
   },
   {
@@ -464,16 +461,16 @@ export const titleBuffsData: titleBuffs[] = [
     fruitbuff: 1.0,
     swordbuff: 1.0,
     gunbuff: 1.0,
-    strengthbuff: 3.25,
+    strengthbuff: 4.0,
     rank: "divine",
   },
   {
     id: 51,
     name: "Monarch",
-    fruitbuff: 3,
-    swordbuff: 3,
-    gunbuff: 3,
-    strengthbuff: 3,
+    fruitbuff: 3.5,
+    swordbuff: 3.5,
+    gunbuff: 3.5,
+    strengthbuff: 3.5,
     rank: "divine",
   },
   {
@@ -488,18 +485,18 @@ export const titleBuffsData: titleBuffs[] = [
   {
     id: 53,
     name: "Control Devil",
-    fruitbuff: 3.5,
-    swordbuff: 3.5,
-    gunbuff: 3.5,
-    strengthbuff: 3.5,
+    fruitbuff: 3.7,
+    swordbuff: 3.7,
+    gunbuff: 3.7,
+    strengthbuff: 3.7,
     rank: "divine",
   },
   {
     id: 54,
     name: "B Rank Hero",
-    fruitbuff: 1,
-    swordbuff: 1,
-    gunbuff: 1,
+    fruitbuff: 3.75,
+    swordbuff: 3.75,
+    gunbuff: 3.75,
     strengthbuff: 3.75,
     rank: "divine",
   },

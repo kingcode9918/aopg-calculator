@@ -1,13 +1,10 @@
-export interface RaceBuffs {
-  id: number;
-  name: string;
-  fruitbuff: number;
-  swordbuff: number;
-  gunbuff: number;
-  strengthbuff: number;
+import { BaseBuff } from "./basebuff";
+
+export interface RaceBuffs extends BaseBuff {
   note: string;
   image: string;
 }
+
 export const raceBuffsData: RaceBuffs[] = [
   {
     id: 0,

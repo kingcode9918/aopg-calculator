@@ -33,48 +33,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.custom-table thead tr th:nth-child(2) {
-  color: var(--strengthcolor);
-}
-.custom-table tbody tr td:nth-child(2) {
-  color: var(--strengthcolor);
-}
-.custom-table thead tr th:nth-child(3) {
-  color: var(--staminacolor);
-}
-.custom-table tbody tr td:nth-child(3) {
-  color: var(--staminacolor);
-}
-.custom-table thead tr th:nth-child(4) {
-  color: var(--defensecolor);
-}
-.custom-table tbody tr td:nth-child(4) {
-  color: var(--defensecolor);
-}
-.custom-table thead tr th:nth-child(5) {
-  color: var(--swordcolor);
-}
-.custom-table tbody tr td:nth-child(5) {
-  color: var(--swordcolor);
-}
-.custom-table thead tr th:nth-child(6) {
-  color: var(--guncolor);
-}
-.custom-table tbody tr td:nth-child(6) {
-  color: var(--guncolor);
-}
-.custom-table thead tr th:nth-child(7) {
-  color: var(--hakicolor);
-}
-.custom-table tbody tr td:nth-child(7) {
-  color: var(--hakicolor);
-}
-.custom-table thead tr th:nth-child(8) {
-  color: var(--fruitcolor);
-}
-.custom-table tbody tr td:nth-child(8) {
-  color: var(--fruitcolor);
-}
 .custom-text-strength {
   color: var(--strengthcolor);
 }

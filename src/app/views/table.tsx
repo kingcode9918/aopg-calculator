@@ -4,9 +4,13 @@ import { useState } from "react";
 interface GenericTableProps<T extends Record<string, any>> {
   data: T[];
 }
+/* eslint-enable */
 
+/* Emoji mapping – supports BOTH accessories & buffs */
 const emojiMap: Record<string, string> = {
   name: "",
+
+  // Accessory stats
   strength: "💪",
   stamina: "⚡",
   defense: "🛡️",
@@ -14,23 +18,58 @@ const emojiMap: Record<string, string> = {
   gun: "🔫",
   haki: "👑",
   fruit: "🍇",
+
+  // Buff stats
+  strengthbuff: "💪",
+  swordbuff: "🗡️",
+  gunbuff: "🔫",
+  fruitbuff: "🍇",
 };
 
+const statClassMap: Record<string, string> = {
+  strength: "custom-text-strength",
+  stamina: "custom-text-stamina",
+  defense: "custom-text-defense",
+  sword: "custom-text-sword",
+  gun: "custom-text-gun",
+  haki: "custom-text-haki",
+  fruit: "custom-text-fruit",
+
+  // Buff fields
+  strengthbuff: "custom-text-strength",
+  swordbuff: "custom-text-sword",
+  gunbuff: "custom-text-gun",
+  fruitbuff: "custom-text-fruit",
+};
+
+/* Keys that should never appear as table columns */
+const HIDDEN_KEYS = ["image", "note", "rank"];
+
+/* Header formatter (handles buff + normal fields) */
+const formatHeader = (key: string) =>
+  key
+    .replace(/buff$/i, "")
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, (s) => s.toUpperCase());
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const GenericTable = <T extends Record<string, any>>({
-  /* eslint-enable */
   data,
 }: GenericTableProps<T>) => {
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
-  if (!data.length)
+  if (!data.length) {
     return (
       <div className="flex justify-center items-center py-8 opacity-60">
         <span>No data available.</span>
       </div>
     );
+  }
 
-  const headers = Object.keys(data[0]).filter((key) => key !== "id");
+  const headers = Object.keys(data[0]).filter(
+    (key) => !HIDDEN_KEYS.includes(key)
+  );
 
   const handleSort = (key: string) => {
     setSortDirection(
@@ -43,9 +82,11 @@ const GenericTable = <T extends Record<string, any>>({
     ? [...data].sort((a, b) => {
         const aVal = a[sortKey];
         const bVal = b[sortKey];
+
         if (typeof aVal === "number" && typeof bVal === "number") {
           return sortDirection === "asc" ? aVal - bVal : bVal - aVal;
         }
+
         return sortDirection === "asc"
           ? String(aVal).localeCompare(String(bVal))
           : String(bVal).localeCompare(String(aVal));
@@ -53,49 +94,41 @@ const GenericTable = <T extends Record<string, any>>({
     : data;
 
   return (
-    <div className="overflow-x-auto flex justify-center">
-      <table className="table table-zebra bg-base-100 custom-table min-w-[600px]">
+    <div className="overflow-x-auto w-full">
+      <table className="table table-zebra bg-base-100 w-full">
         <thead className="sticky top-0 z-10 bg-base-100">
           <tr>
             {headers.map((key) => (
               <th
                 key={key}
-                className={`capitalize cursor-pointer select-none ${
+                className={`cursor-pointer select-none ${
                   typeof data[0][key] === "number" ? "text-right" : ""
-                }`}
+                } ${statClassMap[key] || ""}`}
                 onClick={() => handleSort(key)}
               >
                 {emojiMap[key] && `${emojiMap[key]} `}
-                {key.replace(/([A-Z])/g, " $1")}
+                {formatHeader(key)}
                 {sortKey === key && (sortDirection === "asc" ? " ▲" : " ▼")}
               </th>
             ))}
           </tr>
         </thead>
+
         <tbody>
-          {sortedData.length === 0 ? (
-            <tr>
-              <td
-                colSpan={headers.length}
-                className="text-center opacity-60 py-8"
-              >
-                No data available.
-              </td>
+          {sortedData.map((row, idx) => (
+            <tr key={idx} className="hover">
+              {headers.map((key) => (
+                <td
+                  key={key}
+                  className={`${
+                    typeof row[key] === "number" ? "text-right font-medium" : ""
+                  } ${statClassMap[key] || ""}`}
+                >
+                  {row[key]}
+                </td>
+              ))}
             </tr>
-          ) : (
-            sortedData.map((row, idx) => (
-              <tr key={idx}>
-                {headers.map((key) => (
-                  <td
-                    key={key}
-                    className={typeof row[key] === "number" ? "text-right" : ""}
-                  >
-                    {row[key]}
-                  </td>
-                ))}
-              </tr>
-            ))
-          )}
+          ))}
         </tbody>
       </table>
     </div>

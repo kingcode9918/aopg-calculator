@@ -1,11 +1,7 @@
-export interface ActiveBuffs {
-  id: number;
-  name: string;
-  fruitbuff: number;
-  swordbuff: number;
-  gunbuff: number;
-  strengthbuff: number;
-}
+import { BaseBuff } from "./basebuff";
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ActiveBuffs extends BaseBuff {}
 
 export const fruitActiveBuffs: ActiveBuffs[] = [
   {

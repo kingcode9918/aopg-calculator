@@ -43,7 +43,7 @@ const statClassMap: Record<string, string> = {
 };
 
 /* Keys that should never appear as table columns */
-const HIDDEN_KEYS = ["image", "note", "rank"];
+const HIDDEN_KEYS = ["id", "image", "note", "rank"];
 
 /* Header formatter (handles buff + normal fields) */
 const formatHeader = (key: string) =>

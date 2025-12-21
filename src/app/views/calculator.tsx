@@ -484,11 +484,14 @@ const Calculator = () => {
                   <option value="" disabled>
                     Pick a {label.toLowerCase()} accessory
                   </option>
-                  {data.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.name}
-                    </option>
-                  ))}
+
+                  {[...data]
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
                 </select>
 
                 {selectedAccessory && (
@@ -545,11 +548,14 @@ const Calculator = () => {
                   <option value="" disabled>
                     Pick a {label.toLowerCase()} accessory
                   </option>
-                  {data.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.name}
-                    </option>
-                  ))}
+
+                  {[...data]
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
                 </select>
 
                 {selectedAccessory && (
@@ -661,14 +667,16 @@ const Calculator = () => {
                     <option value="" disabled>
                       Pick a {label.toLowerCase()}
                     </option>
-                    {
+
+                    {[...data]
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      data.map((buff: any) => (
+                      .sort((a: any, b: any) => a.name.localeCompare(b.name))
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      .map((buff: any) => (
                         <option key={buff.id} value={buff.id}>
                           {buff.name}
                         </option>
-                      ))
-                    }
+                      ))}
                   </select>
                 </div>
               );

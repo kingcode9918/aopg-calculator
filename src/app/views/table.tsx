@@ -124,7 +124,12 @@ const GenericTable = <T extends Record<string, any>>({
                     typeof row[key] === "number" ? "text-right font-medium" : ""
                   } ${statClassMap[key] || ""}`}
                 >
-                  {row[key]}
+                  {typeof row[key] === "number"
+                    ? row[key].toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })
+                    : row[key]}
                 </td>
               ))}
             </tr>

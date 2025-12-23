@@ -3,8 +3,9 @@ import Calculator from "./views/calculator";
 import GenericTable from "./views/table";
 import { useState } from "react";
 import AccessorySelector from "./views/accselector";
-import { BuffCategory } from "./views/buffselector";
-import BuffSelector from "./views/buffselector";
+import BuffSelector, { BuffCategory } from "./views/buffselector";
+import MoveSelector, { MoveCategory } from "./views/moveselector";
+import Navbar from "./views/navbar";
 import {
   Accessories,
   headAccData,
@@ -28,6 +29,14 @@ import {
   supportActiveBuffs,
   swordActiveBuffs,
 } from "./data/activebuff";
+import { gunStyleMoveDamage } from "./data/gunstyleMoveDamage";
+import { swordDamageMoveDamage } from "./data/sworddamageMoveDamage";
+import { fightingStyleMoveDamage } from "./data/fightingstyleMoveDamage";
+import { supportStyleMoveDamage } from "./data/supportstyleMoveDamage";
+import { devilFruitMoveDamage } from "./data/devilfruitMoveDamage";
+import { getMoveTotal } from "./data/move";
+
+type Page = "build" | "accessory" | "buff" | "move";
 
 const accessoryDataMap = {
   head: headAccData,
@@ -54,31 +63,70 @@ const buffDataMap: Record<BuffCategory, any[]> = {
   support: supportActiveBuffs,
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const moveDataMap: Record<MoveCategory, any[]> = {
+  fighting: fightingStyleMoveDamage,
+  sword: swordDamageMoveDamage,
+  gun: gunStyleMoveDamage,
+  support: supportStyleMoveDamage,
+  fruit: devilFruitMoveDamage,
+};
+
 export default function Home() {
+  const [currentPage, setCurrentPage] = useState<Page>("build");
   const [accessorySelected, setAccessorySelected] = useState<
     "head" | "top" | "arm" | "back" | "waist" | "legs"
   >("head");
-
   const [buffSelected, setBuffSelected] = useState<BuffCategory>("title");
-
+  const [moveSelected, setMoveSelected] = useState<MoveCategory>("support");
   const getAccessoryData = () =>
     accessoryDataMap[accessorySelected]?.filter((buff) => buff.id !== 0) ?? [];
-
   const getBuffData = () =>
     buffDataMap[buffSelected]?.filter((buff) => buff.id !== 0) ?? [];
+  const getMoveData = () =>
+    (moveDataMap[moveSelected] ?? [])
+      .map((move) => ({
+        ...move,
+        total: getMoveTotal(move), // add total damage
+      }))
+      .sort((a, b) => b.total - a.total); // sort descending by total
 
   return (
-    <div className="items-center justify-items-center min-h-screen font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Calculator />
-        <AccessorySelector
-          onSelect={setAccessorySelected}
-          selected={accessorySelected}
-        />
-        <GenericTable<Accessories> data={getAccessoryData()} />
-        <BuffSelector selected={buffSelected} onSelect={setBuffSelected} />
-        <GenericTable data={getBuffData()} />
+    <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
+      {/* Navbar */}
+      <Navbar
+        selected={currentPage}
+        onSelect={(page) => setCurrentPage(page as Page)}
+      />
 
+      <main className="flex flex-col gap-8 items-center sm:items-start p-4">
+        {currentPage === "build" && <Calculator />}
+
+        {currentPage === "accessory" && (
+          <>
+            <AccessorySelector
+              selected={accessorySelected}
+              onSelect={setAccessorySelected}
+            />
+            <GenericTable<Accessories> data={getAccessoryData()} />
+          </>
+        )}
+
+        {currentPage === "buff" && (
+          <>
+            <BuffSelector selected={buffSelected} onSelect={setBuffSelected} />
+            <GenericTable data={getBuffData()} />
+          </>
+        )}
+
+        {currentPage === "move" && (
+          <>
+            <MoveSelector selected={moveSelected} onSelect={setMoveSelected} />
+            <GenericTable data={getMoveData()} />
+          </>
+        )}
+
+        {/* Footer / info */}
         <div className="fixed bottom-3 left-3 text-xs text-gray-500 dark:text-gray-400">
           v125 | Last updated: December 21, 2025
         </div>

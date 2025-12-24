@@ -178,7 +178,7 @@ const Calculator = () => {
     // ===== Buffs =====
     setBuffs({
       fightingBuff: pickBestBuff(fightingActiveBuffs, scaleKey),
-      gunSBuff: 2,
+      gunSBuff: pickBestBuff(gunActiveBuffs, scaleKey),
       swordSBuff: pickBestBuff(swordActiveBuffs, scaleKey),
       fruitSBuff: pickBestBuff(fruitActiveBuffs, scaleKey),
       suitBuff: pickBestBuff(suitActiveBuffs, scaleKey),

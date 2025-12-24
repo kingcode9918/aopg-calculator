@@ -36,6 +36,14 @@ export const fruitActiveBuffs: ActiveBuffs[] = [
     gunbuff: 3,
     strengthbuff: 3,
   },
+  {
+    id: 4,
+    name: "Snow (Arctic Hawk)",
+    fruitbuff: 4,
+    swordbuff: 4,
+    gunbuff: 4,
+    strengthbuff: 4,
+  },
 ];
 
 export const fightingActiveBuffs: ActiveBuffs[] = [
@@ -185,6 +193,14 @@ export const gunActiveBuffs: ActiveBuffs[] = [
     swordbuff: 2,
     gunbuff: 2,
     strengthbuff: 2,
+  },
+  {
+    id: 3,
+    name: "Jolly Rapier V2 (Krampus Awakening)",
+    fruitbuff: 1,
+    swordbuff: 1,
+    gunbuff: 2.75,
+    strengthbuff: 1,
   },
 ];
 

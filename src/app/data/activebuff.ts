@@ -1007,4 +1007,12 @@ export const supportActiveBuffs: ActiveBuffs[] = [
     gunbuff: 3.9,
     strengthbuff: 3.9,
   },
+  {
+    id: 37,
+    name: "God of Stands (Reality Overwrite)",
+    fruitbuff: 1.3,
+    swordbuff: 1.3,
+    gunbuff: 1.3,
+    strengthbuff: 1.3,
+  },
 ];

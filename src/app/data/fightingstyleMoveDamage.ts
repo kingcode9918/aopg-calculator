@@ -31,7 +31,7 @@ export const fightingStyleMoveDamage: MoveDamage[] = [
     id: 2,
     name: "Bald Crusader",
     M1: 25000,
-    Q: 512000,
+    Q: 32000,
     E: 35000,
     R: 28000,
     F: 0,

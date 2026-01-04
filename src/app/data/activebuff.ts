@@ -277,6 +277,14 @@ export const swordActiveBuffs: ActiveBuffs[] = [
     gunbuff: 1.7,
     strengthbuff: 1.7,
   },
+  {
+    id: 9,
+    name: "Sin of Pride (The One)",
+    fruitbuff: 3,
+    swordbuff: 3,
+    gunbuff: 3,
+    strengthbuff: 3,
+  },
 ];
 
 export const armamentActiveBuffs: ActiveBuffs[] = [
@@ -700,14 +708,14 @@ export const suitActiveBuffs: ActiveBuffs[] = [
     gunbuff: 1.0,
     strengthbuff: 1.0,
   },
-  {
-    id: 13,
-    name: "Vegapunk Suit: Yellow",
-    fruitbuff: 1.0,
-    swordbuff: 1.0,
-    gunbuff: 1.0,
-    strengthbuff: 1.0,
-  },
+  // {
+  //   id: 13,
+  //   name: "Vegapunk Suit: Yellow",
+  //   fruitbuff: 1.0,
+  //   swordbuff: 1.0,
+  //   gunbuff: 1.0,
+  //   strengthbuff: 1.0,
+  // },
 ];
 
 export const supportActiveBuffs: ActiveBuffs[] = [
@@ -883,9 +891,9 @@ export const supportActiveBuffs: ActiveBuffs[] = [
     id: 21,
     name: "Shadow Necromancer (Shadow Armour)",
     fruitbuff: 3.2,
-    swordbuff: 6.3,
-    gunbuff: 8.1,
-    strengthbuff: 7.3,
+    swordbuff: 4,
+    gunbuff: 5,
+    strengthbuff: 4,
   },
   {
     id: 22,
@@ -895,30 +903,30 @@ export const supportActiveBuffs: ActiveBuffs[] = [
     gunbuff: 1.5,
     strengthbuff: 1.5,
   },
-  {
-    id: 23,
-    name: "Slayer of Dragons (Dragon Force + Fire Dragon King)",
-    fruitbuff: 2.04,
-    swordbuff: 2.04,
-    gunbuff: 2.04,
-    strengthbuff: 7.14,
-  },
-  {
-    id: 24,
-    name: "Slayer of Dragons (Dragon Force)",
-    fruitbuff: 1.2,
-    swordbuff: 1.2,
-    gunbuff: 1.2,
-    strengthbuff: 1.68,
-  },
-  {
-    id: 25,
-    name: "Slayer of Dragons (Fire Dragon King)",
-    fruitbuff: 1.7,
-    swordbuff: 1.7,
-    gunbuff: 1.7,
-    strengthbuff: 4.25,
-  },
+  // {
+  //   id: 23,
+  //   name: "Slayer of Dragons (Dragon Force + Fire Dragon King)",
+  //   fruitbuff: 1,
+  //   swordbuff: 1,
+  //   gunbuff: 1,
+  //   strengthbuff: 1,
+  // },
+  // {
+  //   id: 24,
+  //   name: "Slayer of Dragons (Dragon Force)",
+  //   fruitbuff: 1,
+  //   swordbuff: 1,
+  //   gunbuff: 1,
+  //   strengthbuff: 1,
+  // },
+  // {
+  //   id: 25,
+  //   name: "Slayer of Dragons (Fire Dragon King)",
+  //   fruitbuff: 1,
+  //   swordbuff: 1,
+  //   gunbuff: 1,
+  //   strengthbuff: 1,
+  // },
   {
     id: 26,
     name: "Sniper King (Transform)",

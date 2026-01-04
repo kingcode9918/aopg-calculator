@@ -1135,6 +1135,17 @@ export const topAccData: Accessories[] = [
     haki: 0,
     fruit: 0,
   },
+  {
+    id: 47,
+    name: "Sun Encrusted Chestplate",
+    strength: 1900,
+    stamina: 850,
+    defense: 2000,
+    sword: 2900,
+    gun: 0,
+    haki: 0,
+    fruit: 0,
+  },
 ];
 export const armAccData: Accessories[] = [
   {
@@ -1920,6 +1931,17 @@ export const legsAccData: Accessories[] = [
     stamina: 500,
     defense: 2050,
     sword: 0,
+    gun: 0,
+    haki: 0,
+    fruit: 0,
+  },
+  {
+    id: 33,
+    name: "Sun Encrusted Pants",
+    strength: 1700,
+    stamina: 850,
+    defense: 2000,
+    sword: 2800,
     gun: 0,
     haki: 0,
     fruit: 0,

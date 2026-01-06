@@ -24,6 +24,7 @@ const emojiMap: Record<string, string> = {
   swordbuff: "🗡️",
   gunbuff: "🔫",
   fruitbuff: "🍇",
+  hakibuff: "👑",
 };
 
 const statClassMap: Record<string, string> = {
@@ -40,6 +41,7 @@ const statClassMap: Record<string, string> = {
   swordbuff: "custom-text-sword",
   gunbuff: "custom-text-gun",
   fruitbuff: "custom-text-fruit",
+  hakibuff: "custom-text-haki",
 };
 
 /* Keys that should never appear as table columns */

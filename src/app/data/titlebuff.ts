@@ -12,6 +12,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1,
     gunbuff: 1,
     strengthbuff: 1,
+    hakibuff: 1,
     rank: "",
   },
   {
@@ -21,6 +22,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.2,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "common",
   },
   {
@@ -30,6 +32,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "common",
   },
   {
@@ -39,6 +42,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.2,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "common",
   },
   {
@@ -48,6 +52,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "common",
   },
   {
@@ -57,6 +62,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "common",
   },
   {
@@ -66,6 +72,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.3,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "uncommon",
   },
   {
@@ -75,6 +82,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.3,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "uncommon",
   },
   {
@@ -84,6 +92,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "uncommon",
   },
   {
@@ -93,6 +102,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.3,
+    hakibuff: 1,
     rank: "uncommon",
   },
   {
@@ -102,6 +112,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.4,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "rare",
   },
   {
@@ -111,6 +122,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.4,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "rare",
   },
   {
@@ -120,6 +132,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "rare",
   },
   {
@@ -129,6 +142,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "rare",
   },
   {
@@ -138,6 +152,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.5,
+    hakibuff: 1,
     rank: "rare",
   },
   {
@@ -147,6 +162,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "rare",
   },
   {
@@ -156,6 +172,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.5,
     gunbuff: 1.5,
     strengthbuff: 1.5,
+    hakibuff: 1.5,
     rank: "rare",
   },
   {
@@ -165,6 +182,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.5,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "epic",
   },
   {
@@ -174,6 +192,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.5,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "epic",
   },
   {
@@ -183,6 +202,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "epic",
   },
   {
@@ -192,6 +212,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "epic",
   },
   {
@@ -201,6 +222,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "epic",
   },
   {
@@ -210,6 +232,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "epic",
   },
   {
@@ -219,6 +242,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "epic",
   },
   {
@@ -228,6 +252,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "epic",
   },
   {
@@ -237,6 +262,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.7,
     gunbuff: 1.7,
     strengthbuff: 1.7,
+    hakibuff: 1.7,
     rank: "epic",
   },
   {
@@ -246,6 +272,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "epic",
   },
   {
@@ -255,6 +282,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.9,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "legendary",
   },
   {
@@ -264,6 +292,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.8,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "legendary",
   },
   {
@@ -273,6 +302,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.8,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "legendary",
   },
   {
@@ -282,6 +312,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.5,
     gunbuff: 1.5,
     strengthbuff: 1.5,
+    hakibuff: 1.5,
     rank: "legendary",
   },
   {
@@ -291,6 +322,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "legendary",
   },
   {
@@ -300,15 +332,17 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.5,
     gunbuff: 1.5,
     strengthbuff: 1.5,
+    hakibuff: 1.5,
     rank: "legendary",
   },
   {
     id: 33,
-    name: "Mad Scientist ",
+    name: "Mad Scientist",
     fruitbuff: 1.3,
     swordbuff: 1.3,
     gunbuff: 1.3,
     strengthbuff: 1.3,
+    hakibuff: 1.3,
     rank: "legendary",
   },
   {
@@ -318,6 +352,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "mythical",
   },
   {
@@ -327,6 +362,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 2.5,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "mythical",
   },
   {
@@ -336,6 +372,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.5,
     gunbuff: 1.5,
     strengthbuff: 1.5,
+    hakibuff: 1.5,
     rank: "mythical",
   },
   {
@@ -345,6 +382,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 3.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "mythical",
   },
   {
@@ -354,6 +392,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 4.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "mythical",
   },
   {
@@ -363,6 +402,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.6,
     gunbuff: 1.6,
     strengthbuff: 1.6,
+    hakibuff: 1.6,
     rank: "mythical",
   },
   {
@@ -372,6 +412,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "mythical",
   },
   {
@@ -381,15 +422,17 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.3,
     gunbuff: 1.3,
     strengthbuff: 1.75,
+    hakibuff: 1.3,
     rank: "mythical",
   },
   {
     id: 42,
     name: "Blood Scourge",
     fruitbuff: 2.0,
-    swordbuff: 2.0,
-    gunbuff: 2.0,
-    strengthbuff: 2.0,
+    swordbuff: 1.0,
+    gunbuff: 1.0,
+    strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "mythical",
   },
   {
@@ -399,6 +442,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 2.5,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 1,
     rank: "mythical",
   },
   {
@@ -408,6 +452,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 2.0,
+    hakibuff: 1,
     rank: "mythical",
   },
   {
@@ -417,6 +462,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 2.0,
     gunbuff: 2.0,
     strengthbuff: 2.0,
+    hakibuff: 2,
     rank: "mythical",
   },
   {
@@ -426,6 +472,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 2.0,
     gunbuff: 2.0,
     strengthbuff: 3.0,
+    hakibuff: 2,
     rank: "mythical",
   },
   {
@@ -435,6 +482,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 2.0,
     gunbuff: 2.0,
     strengthbuff: 2.0,
+    hakibuff: 2,
     rank: "mythical",
   },
   {
@@ -444,6 +492,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 3.2,
     gunbuff: 3.2,
     strengthbuff: 3.2,
+    hakibuff: 5.76,
     rank: "divine",
   },
   {
@@ -453,6 +502,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 3.5,
     gunbuff: 1.0,
     strengthbuff: 1.0,
+    hakibuff: 2,
     rank: "divine",
   },
   {
@@ -462,6 +512,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 4.0,
+    hakibuff: 1,
     rank: "divine",
   },
   {
@@ -471,6 +522,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 3.5,
     gunbuff: 3.5,
     strengthbuff: 3.5,
+    hakibuff: 7.7,
     rank: "divine",
   },
   {
@@ -480,6 +532,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 1,
     gunbuff: 1,
     strengthbuff: 1,
+    hakibuff: 1,
     rank: "divine",
   },
   {
@@ -489,6 +542,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 3.7,
     gunbuff: 3.7,
     strengthbuff: 3.7,
+    hakibuff: 3.7,
     rank: "divine",
   },
   {
@@ -498,6 +552,7 @@ export const titleBuffsData: TitleBuffs[] = [
     swordbuff: 3.75,
     gunbuff: 3.75,
     strengthbuff: 3.75,
+    hakibuff: 3.75,
     rank: "divine",
   },
 ];

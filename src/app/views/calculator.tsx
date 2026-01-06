@@ -23,6 +23,12 @@ import {
 import { titleBuffsData } from "../data/titlebuff";
 import { raceBuffsData } from "../data/racebuff";
 import { BaseBuff } from "../data/basebuff";
+import { MoveDamage, getMoveTotal } from "../data/move";
+import { devilFruitMoveDamage } from "../data/devilfruitMoveDamage";
+import { swordStyleMoveDamage } from "../data/swordstyleMoveDamage";
+import { gunStyleMoveDamage } from "../data/gunstyleMoveDamage";
+import { fightingStyleMoveDamage } from "../data/fightingstyleMoveDamage";
+import { supportStyleMoveDamage } from "../data/supportstyleMoveDamage";
 
 const accKeys = [
   {
@@ -130,6 +136,42 @@ const Calculator = () => {
     gunBuff: 1,
     strengthBuff: 1,
   });
+  let idCounter = 0;
+
+  const allMoves = [
+    ...devilFruitMoveDamage.map((m) => ({ ...m, id: idCounter++ })),
+    ...fightingStyleMoveDamage.map((m) => ({ ...m, id: idCounter++ })),
+    ...gunStyleMoveDamage.map((m) => ({ ...m, id: idCounter++ })),
+    ...supportStyleMoveDamage.map((m) => ({ ...m, id: idCounter++ })),
+    ...swordStyleMoveDamage.map((m) => ({ ...m, id: idCounter++ })),
+  ];
+  const [selectedMoveId, setSelectedMoveId] = useState<number>(
+    allMoves[0]?.id || 0
+  );
+  const [selectedScale, setSelectedScale] = useState<DamageScale>("fruitbuff");
+
+  const selectedMove = allMoves.find((m) => m.id === selectedMoveId);
+
+  const scaleToBuffKey: Record<DamageScale, keyof typeof damageBuffs> = {
+    fruitbuff: "fruitBuff",
+    swordbuff: "swordBuff",
+    gunbuff: "gunBuff",
+    strengthbuff: "strengthBuff",
+  };
+
+  const buffMultiplier = damageBuffs[scaleToBuffKey[selectedScale]] || 1;
+
+  const moveKeys: (keyof MoveDamage)[] = [
+    "M1",
+    "Q",
+    "E",
+    "R",
+    "F",
+    "G",
+    "T",
+    "U",
+    "Y",
+  ];
 
   // Damage
 
@@ -176,11 +218,13 @@ const Calculator = () => {
     });
 
     // ===== Buffs =====
-    setBuffs({
-      fightingBuff: pickBestBuff(fightingActiveBuffs, scaleKey),
-      gunSBuff: pickBestBuff(gunActiveBuffs, scaleKey),
+    setBuffs((prev) => ({
+      ...prev,
       swordSBuff: pickBestBuff(swordActiveBuffs, scaleKey),
       fruitSBuff: pickBestBuff(fruitActiveBuffs, scaleKey),
+      fightingBuff: pickBestBuff(fightingActiveBuffs, scaleKey),
+      gunSBuff: pickBestBuff(gunActiveBuffs, scaleKey),
+      supportBuff: pickBestBuff(supportActiveBuffs, scaleKey),
       suitBuff: pickBestBuff(suitActiveBuffs, scaleKey),
       titleBuff: pickBestBuff(titleBuffsData, scaleKey),
       raceBuff: pickBestBuff(raceBuffsData, scaleKey),
@@ -188,8 +232,45 @@ const Calculator = () => {
       conquerorsBuff: 3,
       blacksmithBuff: pickBestBuff(blacksmithActiveBuffs, scaleKey),
       giantBuff: pickBestBuff(giantActiveBuffs, scaleKey),
-      supportBuff: pickBestBuff(supportActiveBuffs, scaleKey),
-    });
+    }));
+  };
+
+  const BASE_STAT = 14285;
+
+  const getScaledAccBonus = () => {
+    switch (selectedScale) {
+      case "fruitbuff":
+        return accBonus.fruit;
+      case "swordbuff":
+        return accBonus.sword;
+      case "gunbuff":
+        return accBonus.gun;
+      case "strengthbuff":
+        return accBonus.strength;
+      default:
+        return 0;
+    }
+  };
+
+  const getFinalDamage = (baseDamage: number) => {
+    const scaledAccBonus = getScaledAccBonus();
+
+    if (baseDamage === 0) return 0; // ✅ fixed syntax
+
+    return (
+      (baseDamage +
+        (BASE_STAT + scaledAccBonus) / 2 +
+        (baseDamage * (BASE_STAT + scaledAccBonus)) / 12.5) *
+      buffMultiplier
+    );
+  };
+
+  // Compute total max damage
+  const getMaxDamageTotal = (move: MoveDamage) => {
+    return moveKeys.reduce(
+      (sum, key) => sum + getFinalDamage(Number(move[key])),
+      0
+    );
   };
 
   const buffFieldsets = [
@@ -595,6 +676,7 @@ const Calculator = () => {
             className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4"
           >
             <legend className="fieldset-legend">{fieldset.legend}</legend>
+
             {fieldset.fields.map(({ key, label, data }) => {
               // Get selected buff object
               const selectedBuffId = buffs[key as keyof typeof buffs];
@@ -606,7 +688,6 @@ const Calculator = () => {
               // Prepare buff display
               let buffDisplay = "";
               if (selectedBuff) {
-                // Collect all buff multipliers
                 const buffsArr = [
                   {
                     icon: "🍇",
@@ -633,6 +714,7 @@ const Calculator = () => {
                     value: selectedBuff.strengthbuff,
                   },
                 ];
+
                 const allSame =
                   buffsArr.every((b) => b.value === buffsArr[0].value) &&
                   buffsArr[0].value !== 1;
@@ -664,10 +746,6 @@ const Calculator = () => {
                     }
                     className="select"
                   >
-                    <option value="" disabled>
-                      Pick a {label.toLowerCase()}
-                    </option>
-
                     {[...data]
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       .sort((a: any, b: any) => a.name.localeCompare(b.name))
@@ -683,6 +761,124 @@ const Calculator = () => {
             })}
           </fieldset>
         ))}
+      </div>
+      <div className="w-full flex justify-center">
+        <div className="w-full max-w-5xl space-y-6 mt-6">
+          {/* Inputs */}
+          <div className="flex flex-wrap gap-4">
+            {/* Move selector */}
+            <div className="flex-1 min-w-[260px]">
+              <label className="label">
+                <span>Move</span>
+              </label>
+              <select
+                className="select w-full"
+                value={selectedMoveId}
+                onChange={(e) => setSelectedMoveId(Number(e.target.value))}
+              >
+                {allMoves
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((move) => (
+                    <option key={move.id} value={move.id}>
+                      {move.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+
+            {/* Scale selector */}
+            <div className="flex-1 min-w-[220px]">
+              <label className="label">
+                <span>Damage Scale</span>
+              </label>
+              <select
+                className="select w-full"
+                value={selectedScale}
+                onChange={(e) =>
+                  setSelectedScale(e.target.value as DamageScale)
+                }
+              >
+                <option value="fruitbuff">Fruit</option>
+                <option value="swordbuff">Sword</option>
+                <option value="gunbuff">Gun</option>
+                <option value="strengthbuff">Strength</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* DAMAGE TABLES SIDE BY SIDE */}
+      <div className="w-full flex justify-center mt-8">
+        <div className="flex gap-6 max-w-5xl w-full">
+          {/* Base Damage Table */}
+          <div className="flex-1 overflow-x-auto">
+            <table className="table table-zebra w-full text-center">
+              <thead>
+                <tr>
+                  <th>Move</th>
+                  <th>Base Damage</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selectedMove &&
+                  moveKeys.map((key, idx) => (
+                    <tr key={`base-${key}-${idx}`}>
+                      <td>{key}</td>
+                      <td>
+                        {Number(
+                          selectedMove[key as keyof MoveDamage]
+                        ).toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+                <tr className="font-bold border-t">
+                  <td>Total</td>
+                  <td>
+                    {selectedMove
+                      ? getMoveTotal(selectedMove).toLocaleString()
+                      : 0}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* Max Damage Table */}
+          <div className="flex-1 overflow-x-auto">
+            <table className="table table-zebra w-full text-center">
+              <thead>
+                <tr>
+                  <th>Move</th>
+                  <th>Max Damage</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selectedMove &&
+                  moveKeys.map((key, idx) => (
+                    <tr key={`max-${key}-${idx}`}>
+                      <td>{key}</td>
+                      <td>
+                        {Math.round(
+                          getFinalDamage(
+                            Number(selectedMove[key as keyof MoveDamage])
+                          )
+                        ).toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+                <tr className="font-bold border-t">
+                  <td>Total</td>
+                  <td>
+                    {selectedMove
+                      ? getMaxDamageTotal(selectedMove).toLocaleString()
+                      : 0}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );

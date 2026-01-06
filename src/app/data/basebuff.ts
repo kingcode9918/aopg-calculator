@@ -5,4 +5,5 @@ export interface BaseBuff {
   swordbuff: number;
   gunbuff: number;
   strengthbuff: number;
+  hakibuff: number;
 }

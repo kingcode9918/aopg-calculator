@@ -30,7 +30,7 @@ import {
   swordActiveBuffs,
 } from "./data/activebuff";
 import { gunStyleMoveDamage } from "./data/gunstyleMoveDamage";
-import { swordDamageMoveDamage } from "./data/sworddamageMoveDamage";
+import { swordStyleMoveDamage } from "./data/swordstyleMoveDamage";
 import { fightingStyleMoveDamage } from "./data/fightingstyleMoveDamage";
 import { supportStyleMoveDamage } from "./data/supportstyleMoveDamage";
 import { devilFruitMoveDamage } from "./data/devilfruitMoveDamage";
@@ -66,7 +66,7 @@ const buffDataMap: Record<BuffCategory, any[]> = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const moveDataMap: Record<MoveCategory, any[]> = {
   fighting: fightingStyleMoveDamage,
-  sword: swordDamageMoveDamage,
+  sword: swordStyleMoveDamage,
   gun: gunStyleMoveDamage,
   support: supportStyleMoveDamage,
   fruit: devilFruitMoveDamage,

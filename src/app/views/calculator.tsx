@@ -136,15 +136,38 @@ const Calculator = () => {
     gunBuff: 1,
     strengthBuff: 1,
   });
+  type MoveSource = "fighting" | "fruit" | "support" | "gun" | "sword";
+
   let idCounter = 0;
 
   const allMoves = [
-    ...devilFruitMoveDamage.map((m) => ({ ...m, id: idCounter++ })),
-    ...fightingStyleMoveDamage.map((m) => ({ ...m, id: idCounter++ })),
-    ...gunStyleMoveDamage.map((m) => ({ ...m, id: idCounter++ })),
-    ...supportStyleMoveDamage.map((m) => ({ ...m, id: idCounter++ })),
-    ...swordStyleMoveDamage.map((m) => ({ ...m, id: idCounter++ })),
+    ...devilFruitMoveDamage.map((m) => ({
+      ...m,
+      id: idCounter++,
+      source: "fruit" as MoveSource,
+    })),
+    ...fightingStyleMoveDamage.map((m) => ({
+      ...m,
+      id: idCounter++,
+      source: "fighting" as MoveSource,
+    })),
+    ...gunStyleMoveDamage.map((m) => ({
+      ...m,
+      id: idCounter++,
+      source: "gun" as MoveSource,
+    })),
+    ...supportStyleMoveDamage.map((m) => ({
+      ...m,
+      id: idCounter++,
+      source: "support" as MoveSource,
+    })),
+    ...swordStyleMoveDamage.map((m) => ({
+      ...m,
+      id: idCounter++,
+      source: "sword" as MoveSource,
+    })),
   ];
+
   const [selectedMoveId, setSelectedMoveId] = useState<number>(
     allMoves[0]?.id || 0
   );
@@ -157,6 +180,22 @@ const Calculator = () => {
     swordbuff: "swordBuff",
     gunbuff: "gunBuff",
     strengthbuff: "strengthBuff",
+  };
+
+  const sourceToBuffKey: Record<MoveSource, keyof typeof buffs> = {
+    fighting: "fightingBuff",
+    fruit: "fruitSBuff",
+    support: "supportBuff",
+    gun: "gunSBuff",
+    sword: "swordSBuff",
+  };
+
+  const sourceToDamageScale: Record<MoveSource, DamageScale> = {
+    fighting: "strengthbuff",
+    support: "strengthbuff",
+    fruit: "fruitbuff",
+    sword: "swordbuff",
+    gun: "gunbuff",
   };
 
   const buffMultiplier = damageBuffs[scaleToBuffKey[selectedScale]] || 1;
@@ -217,14 +256,35 @@ const Calculator = () => {
       ),
     });
 
+    const disabledBuff = selectedMove && sourceToBuffKey[selectedMove.source];
+
     // ===== Buffs =====
     setBuffs((prev) => ({
       ...prev,
-      swordSBuff: pickBestBuff(swordActiveBuffs, scaleKey),
-      fruitSBuff: pickBestBuff(fruitActiveBuffs, scaleKey),
-      fightingBuff: pickBestBuff(fightingActiveBuffs, scaleKey),
-      gunSBuff: pickBestBuff(gunActiveBuffs, scaleKey),
-      supportBuff: pickBestBuff(supportActiveBuffs, scaleKey),
+      fightingBuff:
+        disabledBuff === "fightingBuff"
+          ? 0
+          : pickBestBuff(fightingActiveBuffs, scaleKey),
+
+      gunSBuff:
+        disabledBuff === "gunSBuff"
+          ? 0
+          : pickBestBuff(gunActiveBuffs, scaleKey),
+
+      swordSBuff:
+        disabledBuff === "swordSBuff"
+          ? 0
+          : pickBestBuff(swordActiveBuffs, scaleKey),
+
+      fruitSBuff:
+        disabledBuff === "fruitSBuff"
+          ? 0
+          : pickBestBuff(fruitActiveBuffs, scaleKey),
+
+      supportBuff:
+        disabledBuff === "supportBuff"
+          ? 0
+          : pickBestBuff(supportActiveBuffs, scaleKey),
       suitBuff: pickBestBuff(suitActiveBuffs, scaleKey),
       titleBuff: pickBestBuff(titleBuffsData, scaleKey),
       raceBuff: pickBestBuff(raceBuffsData, scaleKey),
@@ -443,6 +503,21 @@ const Calculator = () => {
 
     // Damage
   }, [acc, buffs]);
+
+  useEffect(() => {
+    if (!selectedMove) return;
+
+    const buffToDisable = sourceToBuffKey[selectedMove.source];
+
+    const forcedScale = sourceToDamageScale[selectedMove.source];
+
+    setBuffs((prev) => ({
+      ...prev,
+      [buffToDisable]: 0, // 👈 force NONE
+    }));
+
+    setSelectedScale(forcedScale);
+  }, [selectedMove]);
 
   const firstGroup = accKeys.slice(0, 3); // first 3
   const secondGroup = accKeys.slice(3, 6); // next 3
@@ -678,6 +753,8 @@ const Calculator = () => {
             <legend className="fieldset-legend">{fieldset.legend}</legend>
 
             {fieldset.fields.map(({ key, label, data }) => {
+              const isDisabled =
+                selectedMove && sourceToBuffKey[selectedMove.source] === key;
               // Get selected buff object
               const selectedBuffId = buffs[key as keyof typeof buffs];
               const selectedBuff = data.find(
@@ -740,11 +817,12 @@ const Calculator = () => {
                     )}
                   </label>
                   <select
+                    disabled={isDisabled}
                     value={buffs[key as keyof typeof buffs]}
                     onChange={(e) =>
                       handleBuffChange(key, Number(e.target.value))
                     }
-                    className="select"
+                    className="select disabled:opacity-50"
                   >
                     {[...data]
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any

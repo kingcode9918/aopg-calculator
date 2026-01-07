@@ -29,6 +29,7 @@ import { swordStyleMoveDamage } from "../data/swordstyleMoveDamage";
 import { gunStyleMoveDamage } from "../data/gunstyleMoveDamage";
 import { fightingStyleMoveDamage } from "../data/fightingstyleMoveDamage";
 import { supportStyleMoveDamage } from "../data/supportstyleMoveDamage";
+import { hakiMoveDamage } from "../data/hakiMoveDamage";
 
 const accKeys = [
   {
@@ -74,9 +75,15 @@ const scaleTypes = [
   { key: "swordBuff", label: "Sword", className: "custom-text-sword" },
   { key: "gunBuff", label: "Gun", className: "custom-text-gun" },
   { key: "strengthBuff", label: "Strength", className: "custom-text-strength" },
+  { key: "hakiBuff", label: "Haki", className: "custom-text-haki" },
 ];
 
-type DamageScale = "fruitbuff" | "swordbuff" | "gunbuff" | "strengthbuff";
+type DamageScale =
+  | "fruitbuff"
+  | "swordbuff"
+  | "gunbuff"
+  | "strengthbuff"
+  | "hakibuff";
 
 const Calculator = () => {
   // const dev = useDevMode();
@@ -135,6 +142,7 @@ const Calculator = () => {
     swordBuff: 1,
     gunBuff: 1,
     strengthBuff: 1,
+    hakiBuff: 1,
   });
   type MoveSource = "fighting" | "fruit" | "support" | "gun" | "sword";
 
@@ -166,6 +174,11 @@ const Calculator = () => {
       id: idCounter++,
       source: "sword" as MoveSource,
     })),
+    ...hakiMoveDamage.map((m) => ({
+      ...m,
+      id: idCounter++,
+      source: "haki" as MoveSource,
+    })),
   ];
 
   const [selectedMoveId, setSelectedMoveId] = useState<number>(
@@ -180,6 +193,7 @@ const Calculator = () => {
     swordbuff: "swordBuff",
     gunbuff: "gunBuff",
     strengthbuff: "strengthBuff",
+    hakibuff: "hakiBuff",
   };
 
   const sourceToBuffKey: Record<MoveSource, keyof typeof buffs> = {
@@ -421,7 +435,13 @@ const Calculator = () => {
       giant: getBuff(giantActiveBuffs, buffs.giantBuff),
       support: getBuff(supportActiveBuffs, buffs.supportBuff),
     };
-    const buffTypes = ["fruitbuff", "swordbuff", "gunbuff", "strengthbuff"];
+    const buffTypes = [
+      "fruitbuff",
+      "swordbuff",
+      "gunbuff",
+      "strengthbuff",
+      "hakibuff",
+    ];
     setDamageBuffs({
       fruitBuff: buffTypes.reduce(
         (prod, type, i) =>
@@ -499,6 +519,25 @@ const Calculator = () => {
             : prod,
         1
       ),
+      hakiBuff: buffTypes.reduce(
+        (prod, type, i) =>
+          i === 4
+            ? prod *
+              (selected.fighting[type] || 1) *
+              (selected.gunS[type] || 1) *
+              (selected.swordS[type] || 1) *
+              (selected.fruitS[type] || 1) *
+              (selected.suit[type] || 1) *
+              (selected.title[type] || 1) *
+              (selected.race[type] || 1) *
+              (selected.armament[type] || 1) *
+              (selected.conquerors[type] || 1) *
+              (selected.blacksmith[type] || 1) *
+              (selected.giant[type] || 1) *
+              (selected.support[type] || 1)
+            : prod,
+        1
+      ),
     });
 
     // Damage
@@ -509,15 +548,13 @@ const Calculator = () => {
 
     const buffToDisable = sourceToBuffKey[selectedMove.source];
 
-    const forcedScale = sourceToDamageScale[selectedMove.source];
-
     setBuffs((prev) => ({
       ...prev,
       [buffToDisable]: 0, // 👈 force NONE
     }));
 
-    setSelectedScale(forcedScale);
-  }, [selectedMove]);
+    setSelectedScale(sourceToDamageScale[selectedMove.source]);
+  }, [selectedMoveId]);
 
   const firstGroup = accKeys.slice(0, 3); // first 3
   const secondGroup = accKeys.slice(3, 6); // next 3
@@ -612,6 +649,12 @@ const Calculator = () => {
           onClick={() => buildAutoBest("strengthbuff")}
         >
           Best Strength Build
+        </button>
+        <button
+          className="btn custom-text-haki"
+          onClick={() => buildAutoBest("hakibuff")}
+        >
+          Best Haki Build
         </button>
       </div>
       {/* Fieldsets */}
@@ -790,6 +833,12 @@ const Calculator = () => {
                     label: "Strength",
                     value: selectedBuff.strengthbuff,
                   },
+                  {
+                    icon: "👑",
+                    name: "hakibuff",
+                    label: "Haki",
+                    value: selectedBuff.hakibuff,
+                  },
                 ];
 
                 const allSame =
@@ -880,6 +929,7 @@ const Calculator = () => {
                 <option value="swordbuff">Sword</option>
                 <option value="gunbuff">Gun</option>
                 <option value="strengthbuff">Strength</option>
+                <option value="hakibuff">Haki</option>
               </select>
             </div>
           </div>

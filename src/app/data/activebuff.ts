@@ -488,7 +488,7 @@ export const blacksmithActiveBuffs: ActiveBuffs[] = [
     swordbuff: 1.1,
     gunbuff: 1.1,
     strengthbuff: 1.1,
-    hakibuff: 1,
+    hakibuff: 1.1,
   },
   {
     id: 2,
@@ -497,7 +497,7 @@ export const blacksmithActiveBuffs: ActiveBuffs[] = [
     swordbuff: 1.2,
     gunbuff: 1.2,
     strengthbuff: 1.2,
-    hakibuff: 1,
+    hakibuff: 1.2,
   },
   {
     id: 3,
@@ -506,7 +506,7 @@ export const blacksmithActiveBuffs: ActiveBuffs[] = [
     swordbuff: 1.35,
     gunbuff: 1.35,
     strengthbuff: 1.35,
-    hakibuff: 1,
+    hakibuff: 1.35,
   },
   {
     id: 4,
@@ -515,7 +515,7 @@ export const blacksmithActiveBuffs: ActiveBuffs[] = [
     swordbuff: 1.5,
     gunbuff: 1.5,
     strengthbuff: 1.5,
-    hakibuff: 1,
+    hakibuff: 1.5,
   },
   {
     id: 5,
@@ -524,7 +524,7 @@ export const blacksmithActiveBuffs: ActiveBuffs[] = [
     swordbuff: 1.7,
     gunbuff: 1.7,
     strengthbuff: 1.7,
-    hakibuff: 1,
+    hakibuff: 1.7,
   },
 ];
 
@@ -545,7 +545,7 @@ export const giantActiveBuffs: ActiveBuffs[] = [
     swordbuff: 1.1,
     gunbuff: 1.1,
     strengthbuff: 1.1,
-    hakibuff: 1,
+    hakibuff: 1.1,
   },
   {
     id: 2,
@@ -554,7 +554,7 @@ export const giantActiveBuffs: ActiveBuffs[] = [
     swordbuff: 1.2,
     gunbuff: 1.2,
     strengthbuff: 1.2,
-    hakibuff: 1,
+    hakibuff: 1.2,
   },
   {
     id: 3,
@@ -563,7 +563,7 @@ export const giantActiveBuffs: ActiveBuffs[] = [
     swordbuff: 1.3,
     gunbuff: 1.3,
     strengthbuff: 1.3,
-    hakibuff: 1,
+    hakibuff: 1.3,
   },
   {
     id: 4,
@@ -572,7 +572,7 @@ export const giantActiveBuffs: ActiveBuffs[] = [
     swordbuff: 1.4,
     gunbuff: 1.4,
     strengthbuff: 1.4,
-    hakibuff: 1,
+    hakibuff: 1.4,
   },
   {
     id: 5,
@@ -581,7 +581,7 @@ export const giantActiveBuffs: ActiveBuffs[] = [
     swordbuff: 1.5,
     gunbuff: 1.5,
     strengthbuff: 1.5,
-    hakibuff: 1,
+    hakibuff: 1.5,
   },
   {
     id: 6,
@@ -590,7 +590,7 @@ export const giantActiveBuffs: ActiveBuffs[] = [
     swordbuff: 1.6,
     gunbuff: 1.6,
     strengthbuff: 1.6,
-    hakibuff: 1,
+    hakibuff: 1.6,
   },
   {
     id: 7,
@@ -599,7 +599,7 @@ export const giantActiveBuffs: ActiveBuffs[] = [
     swordbuff: 1.7,
     gunbuff: 1.7,
     strengthbuff: 1.7,
-    hakibuff: 1,
+    hakibuff: 1.7,
   },
   {
     id: 8,
@@ -608,7 +608,7 @@ export const giantActiveBuffs: ActiveBuffs[] = [
     swordbuff: 1.8,
     gunbuff: 1.8,
     strengthbuff: 1.8,
-    hakibuff: 1,
+    hakibuff: 1.8,
   },
   {
     id: 9,
@@ -617,7 +617,7 @@ export const giantActiveBuffs: ActiveBuffs[] = [
     swordbuff: 1.9,
     gunbuff: 1.9,
     strengthbuff: 1.9,
-    hakibuff: 1,
+    hakibuff: 1.9,
   },
   {
     id: 10,
@@ -626,7 +626,7 @@ export const giantActiveBuffs: ActiveBuffs[] = [
     swordbuff: 2.0,
     gunbuff: 2.0,
     strengthbuff: 2.0,
-    hakibuff: 1,
+    hakibuff: 2,
   },
   {
     id: 11,
@@ -635,7 +635,7 @@ export const giantActiveBuffs: ActiveBuffs[] = [
     swordbuff: 2.1,
     gunbuff: 2.1,
     strengthbuff: 2.1,
-    hakibuff: 1,
+    hakibuff: 2.1,
   },
   {
     id: 12,
@@ -644,7 +644,7 @@ export const giantActiveBuffs: ActiveBuffs[] = [
     swordbuff: 2.2,
     gunbuff: 2.2,
     strengthbuff: 2.2,
-    hakibuff: 1,
+    hakibuff: 2.2,
   },
   {
     id: 13,
@@ -653,7 +653,7 @@ export const giantActiveBuffs: ActiveBuffs[] = [
     swordbuff: 2.3,
     gunbuff: 2.3,
     strengthbuff: 2.3,
-    hakibuff: 1,
+    hakibuff: 2.3,
   },
   {
     id: 14,
@@ -662,7 +662,7 @@ export const giantActiveBuffs: ActiveBuffs[] = [
     swordbuff: 2.4,
     gunbuff: 2.4,
     strengthbuff: 2.4,
-    hakibuff: 1,
+    hakibuff: 2.4,
   },
   {
     id: 15,
@@ -671,7 +671,7 @@ export const giantActiveBuffs: ActiveBuffs[] = [
     swordbuff: 2.5,
     gunbuff: 2.5,
     strengthbuff: 2.5,
-    hakibuff: 1,
+    hakibuff: 2.5,
   },
 ];
 

@@ -136,6 +136,7 @@ const Calculator = () => {
     blacksmithBuff: 0,
     giantBuff: 0,
     supportBuff: 0,
+    hakiBuff: 0,
   });
   const [damageBuffs, setDamageBuffs] = useState({
     fruitBuff: 1,
@@ -144,7 +145,7 @@ const Calculator = () => {
     strengthBuff: 1,
     hakiBuff: 1,
   });
-  type MoveSource = "fighting" | "fruit" | "support" | "gun" | "sword";
+  type MoveSource = "fighting" | "fruit" | "support" | "gun" | "sword" | "haki";
 
   let idCounter = 0;
 
@@ -202,6 +203,7 @@ const Calculator = () => {
     support: "supportBuff",
     gun: "gunSBuff",
     sword: "swordSBuff",
+    haki: "hakiBuff",
   };
 
   const sourceToDamageScale: Record<MoveSource, DamageScale> = {
@@ -210,6 +212,7 @@ const Calculator = () => {
     fruit: "fruitbuff",
     sword: "swordbuff",
     gun: "gunbuff",
+    haki: "hakibuff",
   };
 
   const buffMultiplier = damageBuffs[scaleToBuffKey[selectedScale]] || 1;
@@ -321,6 +324,8 @@ const Calculator = () => {
         return accBonus.gun;
       case "strengthbuff":
         return accBonus.strength;
+      case "hakibuff":
+        return accBonus.haki;
       default:
         return 0;
     }

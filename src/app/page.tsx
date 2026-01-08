@@ -34,6 +34,7 @@ import { swordStyleMoveDamage } from "./data/swordstyleMoveDamage";
 import { fightingStyleMoveDamage } from "./data/fightingstyleMoveDamage";
 import { supportStyleMoveDamage } from "./data/supportstyleMoveDamage";
 import { devilFruitMoveDamage } from "./data/devilfruitMoveDamage";
+import { hakiMoveDamage } from "./data/hakiMoveDamage";
 import { getMoveTotal } from "./data/move";
 
 type Page = "build" | "accessory" | "buff" | "move";
@@ -70,6 +71,7 @@ const moveDataMap: Record<MoveCategory, any[]> = {
   gun: gunStyleMoveDamage,
   support: supportStyleMoveDamage,
   fruit: devilFruitMoveDamage,
+  haki: hakiMoveDamage,
 };
 
 export default function Home() {

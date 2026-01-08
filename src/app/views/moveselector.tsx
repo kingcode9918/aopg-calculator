@@ -1,4 +1,10 @@
-export type MoveCategory = "fighting" | "sword" | "gun" | "support" | "fruit";
+export type MoveCategory =
+  | "fighting"
+  | "sword"
+  | "gun"
+  | "support"
+  | "fruit"
+  | "haki";
 
 interface MoveSelectorProps {
   onSelect: (value: MoveCategory) => void;
@@ -15,6 +21,7 @@ const moveTabs: {
   { key: "sword", label: "Sword", text: "text-warning" },
   { key: "gun", label: "Gun", text: "text-error" },
   { key: "fruit", label: "Devil Fruit", text: "text-accent" },
+  { key: "haki", label: "Haki", text: "text-purple-600" },
 ];
 
 const MoveSelector = ({ onSelect, selected }: MoveSelectorProps) => (

@@ -19,6 +19,7 @@ import {
   blacksmithActiveBuffs,
   giantActiveBuffs,
   supportActiveBuffs,
+  artifactActiveBuffs,
 } from "../data/activebuff";
 import { titleBuffsData } from "../data/titlebuff";
 import { raceBuffsData } from "../data/racebuff";
@@ -137,6 +138,7 @@ const Calculator = () => {
     giantBuff: 0,
     supportBuff: 0,
     hakiBuff: 0,
+    artifactBuff: 0,
   });
   const [damageBuffs, setDamageBuffs] = useState({
     fruitBuff: 1,
@@ -309,6 +311,7 @@ const Calculator = () => {
       conquerorsBuff: 3,
       blacksmithBuff: pickBestBuff(blacksmithActiveBuffs, scaleKey),
       giantBuff: pickBestBuff(giantActiveBuffs, scaleKey),
+      artifactBuff: pickBestBuff(artifactActiveBuffs, scaleKey),
     }));
   };
 
@@ -397,6 +400,11 @@ const Calculator = () => {
           label: "Giant Blacksmith Upgrade",
           data: giantActiveBuffs,
         },
+        {
+          key: "artifactBuff",
+          label: "Artifact",
+          data: artifactActiveBuffs,
+        },
       ],
     },
   ];
@@ -439,6 +447,7 @@ const Calculator = () => {
       blacksmith: getBuff(blacksmithActiveBuffs, buffs.blacksmithBuff),
       giant: getBuff(giantActiveBuffs, buffs.giantBuff),
       support: getBuff(supportActiveBuffs, buffs.supportBuff),
+      artifact: getBuff(artifactActiveBuffs, buffs.artifactBuff),
     };
     const buffTypes = [
       "fruitbuff",
@@ -463,7 +472,8 @@ const Calculator = () => {
               (selected.conquerors[type] || 1) *
               (selected.blacksmith[type] || 1) *
               (selected.giant[type] || 1) *
-              (selected.support[type] || 1)
+              (selected.support[type] || 1) *
+              (selected.artifact[type] || 1)
             : prod,
         1
       ),
@@ -482,7 +492,8 @@ const Calculator = () => {
               (selected.conquerors[type] || 1) *
               (selected.blacksmith[type] || 1) *
               (selected.giant[type] || 1) *
-              (selected.support[type] || 1)
+              (selected.support[type] || 1) *
+              (selected.artifact[type] || 1)
             : prod,
         1
       ),
@@ -501,7 +512,8 @@ const Calculator = () => {
               (selected.conquerors[type] || 1) *
               (selected.blacksmith[type] || 1) *
               (selected.giant[type] || 1) *
-              (selected.support[type] || 1)
+              (selected.support[type] || 1) *
+              (selected.artifact[type] || 1)
             : prod,
         1
       ),
@@ -520,7 +532,8 @@ const Calculator = () => {
               (selected.conquerors[type] || 1) *
               (selected.blacksmith[type] || 1) *
               (selected.giant[type] || 1) *
-              (selected.support[type] || 1)
+              (selected.support[type] || 1) *
+              (selected.artifact[type] || 1)
             : prod,
         1
       ),
@@ -539,7 +552,8 @@ const Calculator = () => {
               (selected.conquerors[type] || 1) *
               (selected.blacksmith[type] || 1) *
               (selected.giant[type] || 1) *
-              (selected.support[type] || 1)
+              (selected.support[type] || 1) *
+              (selected.artifact[type] || 1)
             : prod,
         1
       ),

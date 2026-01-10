@@ -87,11 +87,14 @@ export default function Home() {
     buffDataMap[buffSelected]?.filter((buff) => buff.id !== 0) ?? [];
   const getMoveData = () =>
     (moveDataMap[moveSelected] ?? [])
+      .filter(
+        (move) => !move.name?.toLowerCase().includes("title") // hide moves with "title" in text
+      )
       .map((move) => ({
         ...move,
-        total: getMoveTotal(move), // add total damage
+        total: getMoveTotal(move),
       }))
-      .sort((a, b) => b.total - a.total); // sort descending by total
+      .sort((a, b) => b.total - a.total);
 
   return (
     <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">

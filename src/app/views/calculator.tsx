@@ -305,7 +305,9 @@ const Calculator = () => {
           ? 0
           : pickBestBuff(supportActiveBuffs, scaleKey),
       suitBuff: pickBestBuff(suitActiveBuffs, scaleKey),
-      titleBuff: pickBestBuff(titleBuffsData, scaleKey),
+      titleBuff: selectedMove?.name?.toLowerCase().includes("title")
+        ? 0
+        : pickBestBuff(titleBuffsData, scaleKey),
       raceBuff: pickBestBuff(raceBuffsData, scaleKey),
       armamentBuff: pickBestBuff(armamentActiveBuffs, scaleKey),
       conquerorsBuff: 3,
@@ -816,7 +818,10 @@ const Calculator = () => {
 
             {fieldset.fields.map(({ key, label, data }) => {
               const isDisabled =
-                selectedMove && sourceToBuffKey[selectedMove.source] === key;
+                !!selectedMove &&
+                (sourceToBuffKey[selectedMove.source] === key ||
+                  (key === "titleBuff" &&
+                    selectedMove.name?.toLowerCase().includes("title")));
               // Get selected buff object
               const selectedBuffId = buffs[key as keyof typeof buffs];
               const selectedBuff = data.find(

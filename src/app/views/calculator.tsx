@@ -152,6 +152,11 @@ const Calculator = () => {
   let idCounter = 0;
 
   const allMoves = [
+    ...hakiMoveDamage.map((m) => ({
+      ...m,
+      id: idCounter++,
+      source: "haki" as MoveSource,
+    })),
     ...devilFruitMoveDamage.map((m) => ({
       ...m,
       id: idCounter++,
@@ -176,11 +181,6 @@ const Calculator = () => {
       ...m,
       id: idCounter++,
       source: "sword" as MoveSource,
-    })),
-    ...hakiMoveDamage.map((m) => ({
-      ...m,
-      id: idCounter++,
-      source: "haki" as MoveSource,
     })),
   ];
 

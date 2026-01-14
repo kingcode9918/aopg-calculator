@@ -342,7 +342,7 @@ export const headAccData: Accessories[] = [
   },
   {
     id: 30,
-    name: "New Years Cake Hat",
+    name: "2023 Cake Hat",
     strength: 500,
     stamina: 0,
     defense: 300,
@@ -796,7 +796,7 @@ export const topAccData: Accessories[] = [
   },
   {
     id: 16,
-    name: "Flame Emperor Cloak",
+    name: "Flame Emperors Cloak",
     strength: 0,
     stamina: 0,
     defense: 1200,
@@ -873,7 +873,7 @@ export const topAccData: Accessories[] = [
   },
   {
     id: 23,
-    name: "Light Admiral Shirt",
+    name: "Light Admirals Shirt",
     strength: 1000,
     stamina: 0,
     defense: 1200,
@@ -906,7 +906,7 @@ export const topAccData: Accessories[] = [
   },
   {
     id: 26,
-    name: "New Years Necklace",
+    name: "2023 Necklace",
     strength: 0,
     stamina: 0,
     defense: 150,
@@ -1394,7 +1394,7 @@ export const backAccData: Accessories[] = [
   },
   {
     id: 14,
-    name: "Light Admiral Cape",
+    name: "Light Admirals Cape",
     strength: 0,
     stamina: 0,
     defense: 900,

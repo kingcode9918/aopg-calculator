@@ -104,6 +104,7 @@ export const swordStyleMoveDamage: MoveDamage[] = [
     T: 15600,
     U: 0,
     Y: 0,
+    scale: "gunbuff",
   },
   {
     id: 8,

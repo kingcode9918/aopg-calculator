@@ -39,6 +39,7 @@ export const supportStyleMoveDamage: MoveDamage[] = [
     T: 0,
     U: 0,
     Y: 315000,
+    scale: "swordbuff",
   },
   // {
   //   id: 3,
@@ -104,6 +105,7 @@ export const supportStyleMoveDamage: MoveDamage[] = [
     T: 0,
     U: 0,
     Y: 50000,
+    scale: "swordbuff",
   },
   {
     id: 8,
@@ -117,6 +119,7 @@ export const supportStyleMoveDamage: MoveDamage[] = [
     T: 0,
     U: 0,
     Y: 0,
+    scale: "swordbuff",
   },
   {
     id: 9,
@@ -156,6 +159,7 @@ export const supportStyleMoveDamage: MoveDamage[] = [
     T: 0,
     U: 0,
     Y: 0,
+    scale: "fruitbuff",
   },
   {
     id: 12,
@@ -182,6 +186,8 @@ export const supportStyleMoveDamage: MoveDamage[] = [
     T: 0,
     U: 0,
     Y: 0,
+    scale: "swordbuff",
+    scales: { R: "gunbuff" },
   },
   {
     id: 14,
@@ -195,6 +201,7 @@ export const supportStyleMoveDamage: MoveDamage[] = [
     T: 0,
     U: 0,
     Y: 0,
+    scale: "swordbuff",
   },
   {
     id: 15,
@@ -208,6 +215,7 @@ export const supportStyleMoveDamage: MoveDamage[] = [
     T: 0,
     U: 0,
     Y: 0,
+    scale: "swordbuff",
   },
   {
     id: 16,
@@ -286,6 +294,7 @@ export const supportStyleMoveDamage: MoveDamage[] = [
     T: 0,
     U: 0,
     Y: 0,
+    scale: "fruitbuff",
   },
   {
     id: 22,
@@ -338,6 +347,7 @@ export const supportStyleMoveDamage: MoveDamage[] = [
     T: 0,
     U: 0,
     Y: 0,
+    scale: "swordbuff",
   },
   {
     id: 26,

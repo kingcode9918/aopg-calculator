@@ -13,6 +13,24 @@ export const fightingStyleMoveDamage: MoveDamage[] = [
     T: 0,
     U: 0,
     Y: 561600,
+    // Example of split damage - uncomment to test
+    // scales: {
+    //   // Scenario 1: M1 = 1000 total, but uses 1000 for fruit AND 1000 for strength (summed)
+    //   M1: [
+    //     { scale: "fruitbuff", damage: 1000 },
+    //     { scale: "strengthbuff", damage: 1000 }
+    //   ],
+    //   // Scenario 2: Q = 5000 total, split 2000 fruit / 3000 strength
+    //   Q: [
+    //     { scale: "fruitbuff", damage: 2000 },
+    //     { scale: "strengthbuff", damage: 3000 }
+    //   ],
+    //   // Scenario 3: E = 5000, 50-50 split
+    //   E: [
+    //     { scale: "fruitbuff", damage: 2500 },
+    //     { scale: "strengthbuff", damage: 2500 }
+    //   ],
+    // }
   },
   {
     id: 1,
@@ -78,6 +96,7 @@ export const fightingStyleMoveDamage: MoveDamage[] = [
     T: 0,
     U: 0,
     Y: 0,
+    scale: "swordbuff",
   },
   {
     id: 6,
@@ -91,6 +110,7 @@ export const fightingStyleMoveDamage: MoveDamage[] = [
     T: 0,
     U: 0,
     Y: 0,
+    scale: "swordbuff",
   },
   {
     id: 7,
@@ -104,6 +124,7 @@ export const fightingStyleMoveDamage: MoveDamage[] = [
     T: 0,
     U: 0,
     Y: 0,
+    scale: "swordbuff",
   },
   {
     id: 8,
@@ -143,6 +164,7 @@ export const fightingStyleMoveDamage: MoveDamage[] = [
     T: 0,
     U: 0,
     Y: 0,
+    scale: "swordbuff",
   },
   {
     id: 11,
@@ -221,6 +243,7 @@ export const fightingStyleMoveDamage: MoveDamage[] = [
     T: 0,
     U: 0,
     Y: 0,
+    scale: "swordbuff",
   },
   {
     id: 17,

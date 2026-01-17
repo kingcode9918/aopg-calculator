@@ -24,7 +24,7 @@ import {
 import { titleBuffsData } from "../data/titlebuff";
 import { raceBuffsData } from "../data/racebuff";
 import { BaseBuff } from "../data/basebuff";
-import { MoveDamage, getMoveTotal } from "../data/move";
+import { MoveDamage, getMoveTotal, DamageScale, MoveKey } from "../data/move";
 import { devilFruitMoveDamage } from "../data/devilfruitMoveDamage";
 import { swordStyleMoveDamage } from "../data/swordstyleMoveDamage";
 import { gunStyleMoveDamage } from "../data/gunstyleMoveDamage";
@@ -78,13 +78,6 @@ const scaleTypes = [
   { key: "strengthBuff", label: "Strength", className: "custom-text-strength" },
   { key: "hakiBuff", label: "Haki", className: "custom-text-haki" },
 ];
-
-type DamageScale =
-  | "fruitbuff"
-  | "swordbuff"
-  | "gunbuff"
-  | "strengthbuff"
-  | "hakibuff";
 
 const Calculator = () => {
   // const dev = useDevMode();
@@ -217,7 +210,10 @@ const Calculator = () => {
     haki: "hakibuff",
   };
 
-  const buffMultiplier = damageBuffs[scaleToBuffKey[selectedScale]] || 1;
+  // Determine the active scale: use move's scale if specified, otherwise use source's default scale, fallback to selectedScale
+  const activeScale: DamageScale = selectedMove
+    ? selectedMove.scale || sourceToDamageScale[selectedMove.source]
+    : selectedScale;
 
   const moveKeys: (keyof MoveDamage)[] = [
     "M1",
@@ -315,12 +311,27 @@ const Calculator = () => {
       giantBuff: pickBestBuff(giantActiveBuffs, scaleKey),
       artifactBuff: pickBestBuff(artifactActiveBuffs, scaleKey),
     }));
+
+    // ===== Base Stats =====
+    setBaseStats({
+      fruit: 14285,
+      sword: 14285,
+      gun: 14285,
+      strength: 14285,
+      haki: 14285,
+    });
   };
 
-  const BASE_STAT = 14285;
+  const [baseStats, setBaseStats] = useState({
+    fruit: 1,
+    sword: 1,
+    gun: 1,
+    strength: 1,
+    haki: 1,
+  });
 
-  const getScaledAccBonus = () => {
-    switch (selectedScale) {
+  const getScaledAccBonus = (scale: DamageScale) => {
+    switch (scale) {
       case "fruitbuff":
         return accBonus.fruit;
       case "swordbuff":
@@ -336,23 +347,97 @@ const Calculator = () => {
     }
   };
 
-  const getFinalDamage = (baseDamage: number) => {
-    const scaledAccBonus = getScaledAccBonus();
-
-    if (baseDamage === 0) return 0; // ✅ fixed syntax
-
+  // Helper to check if a value is SplitDamage
+  const isSplitDamage = (
+    value: any
+  ): value is { scale: DamageScale; damage: number }[] => {
     return (
-      (baseDamage +
-        (BASE_STAT + scaledAccBonus) / 2 +
-        (baseDamage * (BASE_STAT + scaledAccBonus)) / 12.5) *
-      buffMultiplier
+      Array.isArray(value) &&
+      value.length > 0 &&
+      typeof value[0] === "object" &&
+      "scale" in value[0] &&
+      "damage" in value[0]
     );
+  };
+
+  // Get the scale(s) for a specific move key
+  const getScaleForMoveKey = (moveKey: MoveKey) => {
+    if (!selectedMove) return activeScale;
+
+    // Check if there's a per-key scale defined
+    if (selectedMove.scales && selectedMove.scales[moveKey]) {
+      return selectedMove.scales[moveKey]!;
+    }
+
+    // Fall back to move-wide scale or source default
+    return activeScale;
+  };
+
+  const getBaseStat = (scale: DamageScale) => {
+    switch (scale) {
+      case "fruitbuff":
+        return baseStats.fruit;
+      case "swordbuff":
+        return baseStats.sword;
+      case "gunbuff":
+        return baseStats.gun;
+      case "strengthbuff":
+        return baseStats.strength;
+      case "hakibuff":
+        return baseStats.haki;
+      default:
+        return 1;
+    }
+  };
+
+  const getFinalDamage = (baseDamage: number, moveKey: MoveKey) => {
+    if (baseDamage === 0) return 0;
+
+    const scalesForKey = getScaleForMoveKey(moveKey);
+
+    // Check if it's split damage (array of {scale, damage} objects)
+    if (isSplitDamage(scalesForKey)) {
+      // Sum all the split damages
+      return scalesForKey.reduce((total, { scale, damage }) => {
+        const scaledAccBonus = getScaledAccBonus(scale);
+        const buffMult = damageBuffs[scaleToBuffKey[scale]] || 1;
+        const baseStat = getBaseStat(scale);
+
+        const calculatedDamage =
+          (damage +
+            (baseStat + scaledAccBonus) / 2 +
+            (damage * (baseStat + scaledAccBonus)) / 12.5) *
+          buffMult;
+
+        return total + calculatedDamage;
+      }, 0);
+    }
+
+    // Handle regular scales (single or array for max)
+    const scales = Array.isArray(scalesForKey) ? scalesForKey : [scalesForKey];
+
+    // Calculate damage for each scale and take the maximum
+    const damages = scales.map((scale) => {
+      const scaledAccBonus = getScaledAccBonus(scale);
+      const buffMult = damageBuffs[scaleToBuffKey[scale]] || 1;
+      const baseStat = getBaseStat(scale);
+
+      return (
+        (baseDamage +
+          (baseStat + scaledAccBonus) / 2 +
+          (baseDamage * (baseStat + scaledAccBonus)) / 12.5) *
+        buffMult
+      );
+    });
+
+    // Return the highest damage from all applicable scales
+    return Math.max(...damages);
   };
 
   // Compute total max damage
   const getMaxDamageTotal = (move: MoveDamage) => {
     return moveKeys.reduce(
-      (sum, key) => sum + getFinalDamage(Number(move[key])),
+      (sum, key) => sum + getFinalDamage(Number(move[key]), key as MoveKey),
       0
     );
   };
@@ -568,10 +653,12 @@ const Calculator = () => {
     if (!selectedMove) return;
 
     const buffToDisable = sourceToBuffKey[selectedMove.source];
+    const hasTitleInName = selectedMove.name?.toLowerCase().includes("title");
 
     setBuffs((prev) => ({
       ...prev,
-      [buffToDisable]: 0, // 👈 force NONE
+      [buffToDisable]: 0, // 👈 force NONE for source buff
+      ...(hasTitleInName && { titleBuff: 0 }), // 👈 force NONE for title buff if move has "title" in name
     }));
 
     setSelectedScale(sourceToDamageScale[selectedMove.source]);
@@ -647,6 +734,14 @@ const Calculator = () => {
         <div className="stat"></div>
       </div>
       <div className="flex flex-wrap gap-4 mb-4 mt-4">
+        {selectedMove && (
+          <button
+            className="btn btn-primary"
+            onClick={() => buildAutoBest(activeScale)}
+          >
+            Auto Best for Selected Move
+          </button>
+        )}
         <button
           className="btn custom-text-fruit"
           onClick={() => buildAutoBest("fruitbuff")}
@@ -680,6 +775,59 @@ const Calculator = () => {
       </div>
       {/* Fieldsets */}
       <div className="flex flex-wrap gap-4 mt-4">
+        {/* Base Stats */}
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+          <legend className="fieldset-legend">Base Stats</legend>
+
+          {scaleTypes.map(({ key, label, className }) => {
+            const statKey = key.replace("Buff", "") as keyof typeof baseStats;
+            const value = baseStats[statKey];
+
+            return (
+              <div key={statKey} className="mb-4">
+                <label className="label mt-2">
+                  <span>{label}</span>
+                  <span className={`text-sm ${className}`}>
+                    {value.toLocaleString()}
+                  </span>
+                </label>
+
+                <input
+                  type="range"
+                  min="1"
+                  max="14285"
+                  value={value}
+                  onChange={(e) =>
+                    setBaseStats((prev) => ({
+                      ...prev,
+                      [statKey]: Number(e.target.value),
+                    }))
+                  }
+                  className="range range-sm w-full mb-2"
+                />
+
+                <input
+                  type="number"
+                  min="1"
+                  max="14285"
+                  value={value}
+                  onChange={(e) => {
+                    const val = Math.min(
+                      14285,
+                      Math.max(1, Number(e.target.value) || 1)
+                    );
+                    setBaseStats((prev) => ({
+                      ...prev,
+                      [statKey]: val,
+                    }));
+                  }}
+                  className="input input-bordered input-sm w-full text-center"
+                />
+              </div>
+            );
+          })}
+        </fieldset>
+
         {/* GROUP 1 — First 3 accessories */}
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 mb-4">
           <legend className="fieldset-legend">Accessories (1-3)</legend>
@@ -936,26 +1084,6 @@ const Calculator = () => {
                   ))}
               </select>
             </div>
-
-            {/* Scale selector */}
-            <div className="flex-1 min-w-[220px]">
-              <label className="label">
-                <span>Damage Scale</span>
-              </label>
-              <select
-                className="select w-full"
-                value={selectedScale}
-                onChange={(e) =>
-                  setSelectedScale(e.target.value as DamageScale)
-                }
-              >
-                <option value="fruitbuff">Fruit</option>
-                <option value="swordbuff">Sword</option>
-                <option value="gunbuff">Gun</option>
-                <option value="strengthbuff">Strength</option>
-                <option value="hakibuff">Haki</option>
-              </select>
-            </div>
           </div>
         </div>
       </div>
@@ -963,39 +1091,6 @@ const Calculator = () => {
       {/* DAMAGE TABLES SIDE BY SIDE */}
       <div className="w-full flex justify-center mt-8">
         <div className="flex gap-6 max-w-5xl w-full">
-          {/* Base Damage Table */}
-          <div className="flex-1 overflow-x-auto">
-            <table className="table table-zebra w-full text-center">
-              <thead>
-                <tr>
-                  <th>Move</th>
-                  <th>Base Damage</th>
-                </tr>
-              </thead>
-              <tbody>
-                {selectedMove &&
-                  moveKeys.map((key, idx) => (
-                    <tr key={`base-${key}-${idx}`}>
-                      <td>{key}</td>
-                      <td>
-                        {Number(
-                          selectedMove[key as keyof MoveDamage]
-                        ).toLocaleString()}
-                      </td>
-                    </tr>
-                  ))}
-                <tr className="font-bold border-t">
-                  <td>Total</td>
-                  <td>
-                    {selectedMove
-                      ? getMoveTotal(selectedMove).toLocaleString()
-                      : 0}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
           {/* Max Damage Table */}
           <div className="flex-1 overflow-x-auto">
             <table className="table table-zebra w-full text-center">
@@ -1013,7 +1108,8 @@ const Calculator = () => {
                       <td>
                         {Math.round(
                           getFinalDamage(
-                            Number(selectedMove[key as keyof MoveDamage])
+                            Number(selectedMove[key as keyof MoveDamage]),
+                            key as MoveKey
                           )
                         ).toLocaleString()}
                       </td>
@@ -1023,7 +1119,9 @@ const Calculator = () => {
                   <td>Total</td>
                   <td>
                     {selectedMove
-                      ? getMaxDamageTotal(selectedMove).toLocaleString()
+                      ? Math.round(
+                          getMaxDamageTotal(selectedMove)
+                        ).toLocaleString()
                       : 0}
                   </td>
                 </tr>

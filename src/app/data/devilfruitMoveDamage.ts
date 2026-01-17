@@ -68,7 +68,7 @@ export const devilFruitMoveDamage: MoveDamage[] = [
   },
   {
     id: 5,
-    name: "Final Dragon",
+    name: "Final Dragon + Hybrid",
     M1: 11500,
     Q: 34500,
     E: 51750,
@@ -1431,4 +1431,24 @@ export const devilFruitMoveDamage: MoveDamage[] = [
     U: 0,
     Y: 0,
   },
+  // {
+  //   id: 110,
+  //   name: "Final Dragon + Full",
+  //   M1: 0,
+  //   Q: 250000 * 1.15,
+  //   E: 300000 * 1.15,
+  //   R: 400000 * 1.15,
+  //   F: 350000 * 1.15,
+  //   G: 450000 * 1.15,
+  //   T: 0,
+  //   U: 0,
+  //   Y: 0,
+  //   scale: "swordbuff",
+  //   scales: {
+  //     Q: [
+  //       { scale: "fruitbuff", damage: 100000 * 1.15 },
+  //       { scale: "strengthbuff", damage: 150000 },
+  //     ],
+  //   },
+  // },
 ];

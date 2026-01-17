@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   Accessories,
   headAccData,
@@ -24,7 +24,7 @@ import {
 import { titleBuffsData } from "../data/titlebuff";
 import { raceBuffsData } from "../data/racebuff";
 import { BaseBuff } from "../data/basebuff";
-import { MoveDamage, getMoveTotal, DamageScale, MoveKey } from "../data/move";
+import { MoveDamage, DamageScale, MoveKey } from "../data/move";
 import { devilFruitMoveDamage } from "../data/devilfruitMoveDamage";
 import { swordStyleMoveDamage } from "../data/swordstyleMoveDamage";
 import { gunStyleMoveDamage } from "../data/gunstyleMoveDamage";
@@ -84,16 +84,16 @@ const Calculator = () => {
 
   const pickBestAccessory = (
     data: Accessories[],
-    stat: keyof Accessories
+    stat: keyof Accessories,
   ): number => {
     return data.reduce((best, cur) =>
-      (cur[stat] ?? 0) > (best[stat] ?? 0) ? cur : best
+      (cur[stat] ?? 0) > (best[stat] ?? 0) ? cur : best,
     ).id;
   };
 
   const pickBestBuff = (data: BaseBuff[], scale: DamageScale): number => {
     return data.reduce((best, cur) =>
-      (cur[scale] ?? 1) > (best[scale] ?? 1) ? cur : best
+      (cur[scale] ?? 1) > (best[scale] ?? 1) ? cur : best,
     ).id;
   };
 
@@ -178,7 +178,7 @@ const Calculator = () => {
   ];
 
   const [selectedMoveId, setSelectedMoveId] = useState<number>(
-    allMoves[0]?.id || 0
+    allMoves[0]?.id || 0,
   );
   const [selectedScale, setSelectedScale] = useState<DamageScale>("fruitbuff");
 
@@ -192,23 +192,29 @@ const Calculator = () => {
     hakibuff: "hakiBuff",
   };
 
-  const sourceToBuffKey: Record<MoveSource, keyof typeof buffs> = {
-    fighting: "fightingBuff",
-    fruit: "fruitSBuff",
-    support: "supportBuff",
-    gun: "gunSBuff",
-    sword: "swordSBuff",
-    haki: "hakiBuff",
-  };
+  const sourceToBuffKey: Record<MoveSource, keyof typeof buffs> = useMemo(
+    () => ({
+      fighting: "fightingBuff",
+      fruit: "fruitSBuff",
+      support: "supportBuff",
+      gun: "gunSBuff",
+      sword: "swordSBuff",
+      haki: "hakiBuff",
+    }),
+    [],
+  );
 
-  const sourceToDamageScale: Record<MoveSource, DamageScale> = {
-    fighting: "strengthbuff",
-    support: "strengthbuff",
-    fruit: "fruitbuff",
-    sword: "swordbuff",
-    gun: "gunbuff",
-    haki: "hakibuff",
-  };
+  const sourceToDamageScale: Record<MoveSource, DamageScale> = useMemo(
+    () => ({
+      fighting: "strengthbuff",
+      support: "strengthbuff",
+      fruit: "fruitbuff",
+      sword: "swordbuff",
+      gun: "gunbuff",
+      haki: "hakibuff",
+    }),
+    [],
+  );
 
   // Determine the active scale: use move's scale if specified, otherwise use source's default scale, fallback to selectedScale
   const activeScale: DamageScale = selectedMove
@@ -242,32 +248,32 @@ const Calculator = () => {
       selectedHeadAcc: pickBestAccessory(
         headAccData,
         //eslint-disable-next-line @typescript-eslint/no-explicit-any
-        scaleKey.replace("buff", "") as any
+        scaleKey.replace("buff", "") as any,
       ),
       selectedTopAcc: pickBestAccessory(
         topAccData,
         //eslint-disable-next-line @typescript-eslint/no-explicit-any
-        scaleKey.replace("buff", "") as any
+        scaleKey.replace("buff", "") as any,
       ),
       selectedBackAcc: pickBestAccessory(
         backAccData,
         //eslint-disable-next-line @typescript-eslint/no-explicit-any
-        useDefenseForGun ? "defense" : (scaleKey.replace("buff", "") as any)
+        useDefenseForGun ? "defense" : (scaleKey.replace("buff", "") as any),
       ),
       selectedArmAcc: pickBestAccessory(
         armAccData,
         //eslint-disable-next-line @typescript-eslint/no-explicit-any
-        useDefenseForGun ? "defense" : (scaleKey.replace("buff", "") as any)
+        useDefenseForGun ? "defense" : (scaleKey.replace("buff", "") as any),
       ),
       selectedWaistAcc: pickBestAccessory(
         waistAccData,
         //eslint-disable-next-line @typescript-eslint/no-explicit-any
-        useDefenseForGun ? "defense" : (scaleKey.replace("buff", "") as any)
+        useDefenseForGun ? "defense" : (scaleKey.replace("buff", "") as any),
       ),
       selectedLegsAcc: pickBestAccessory(
         legsAccData,
         //eslint-disable-next-line @typescript-eslint/no-explicit-any
-        scaleKey.replace("buff", "") as any
+        scaleKey.replace("buff", "") as any,
       ),
     });
 
@@ -349,7 +355,7 @@ const Calculator = () => {
 
   // Helper to check if a value is SplitDamage
   const isSplitDamage = (
-    value: any
+    value: unknown,
   ): value is { scale: DamageScale; damage: number }[] => {
     return (
       Array.isArray(value) &&
@@ -438,7 +444,7 @@ const Calculator = () => {
   const getMaxDamageTotal = (move: MoveDamage) => {
     return moveKeys.reduce(
       (sum, key) => sum + getFinalDamage(Number(move[key]), key as MoveKey),
-      0
+      0,
     );
   };
 
@@ -562,7 +568,7 @@ const Calculator = () => {
               (selected.support[type] || 1) *
               (selected.artifact[type] || 1)
             : prod,
-        1
+        1,
       ),
       swordBuff: buffTypes.reduce(
         (prod, type, i) =>
@@ -582,7 +588,7 @@ const Calculator = () => {
               (selected.support[type] || 1) *
               (selected.artifact[type] || 1)
             : prod,
-        1
+        1,
       ),
       gunBuff: buffTypes.reduce(
         (prod, type, i) =>
@@ -602,7 +608,7 @@ const Calculator = () => {
               (selected.support[type] || 1) *
               (selected.artifact[type] || 1)
             : prod,
-        1
+        1,
       ),
       strengthBuff: buffTypes.reduce(
         (prod, type, i) =>
@@ -622,7 +628,7 @@ const Calculator = () => {
               (selected.support[type] || 1) *
               (selected.artifact[type] || 1)
             : prod,
-        1
+        1,
       ),
       hakiBuff: buffTypes.reduce(
         (prod, type, i) =>
@@ -642,7 +648,7 @@ const Calculator = () => {
               (selected.support[type] || 1) *
               (selected.artifact[type] || 1)
             : prod,
-        1
+        1,
       ),
     });
 
@@ -662,7 +668,7 @@ const Calculator = () => {
     }));
 
     setSelectedScale(sourceToDamageScale[selectedMove.source]);
-  }, [selectedMoveId]);
+  }, [selectedMoveId, selectedMove, sourceToBuffKey, sourceToDamageScale]);
 
   const firstGroup = accKeys.slice(0, 3); // first 3
   const secondGroup = accKeys.slice(3, 6); // next 3
@@ -710,7 +716,7 @@ const Calculator = () => {
                   className={`badge badge-lg w-full ${className}`}
                 >
                   {Number(
-                    damageBuffs[key as keyof typeof damageBuffs].toFixed(2)
+                    damageBuffs[key as keyof typeof damageBuffs].toFixed(2),
                   ).toLocaleString()}{" "}
                   x {label} Damage
                 </span>
@@ -723,7 +729,7 @@ const Calculator = () => {
                   className={`badge badge-lg w-full ${className}`}
                 >
                   {Number(
-                    damageBuffs[key as keyof typeof damageBuffs].toFixed(2)
+                    damageBuffs[key as keyof typeof damageBuffs].toFixed(2),
                   ).toLocaleString()}{" "}
                   x {label} Damage
                 </span>
@@ -814,7 +820,7 @@ const Calculator = () => {
                   onChange={(e) => {
                     const val = Math.min(
                       14285,
-                      Math.max(1, Number(e.target.value) || 1)
+                      Math.max(1, Number(e.target.value) || 1),
                     );
                     setBaseStats((prev) => ({
                       ...prev,
@@ -835,7 +841,7 @@ const Calculator = () => {
           {firstGroup.map(({ key, label, data, color }) => {
             const selectedId = acc[key as keyof typeof acc];
             const selectedAccessory = data.find(
-              (item) => item.id === selectedId
+              (item) => item.id === selectedId,
             );
 
             return (
@@ -899,7 +905,7 @@ const Calculator = () => {
           {secondGroup.map(({ key, label, data, color }) => {
             const selectedId = acc[key as keyof typeof acc];
             const selectedAccessory = data.find(
-              (item) => item.id === selectedId
+              (item) => item.id === selectedId,
             );
 
             return (
@@ -974,7 +980,7 @@ const Calculator = () => {
               const selectedBuffId = buffs[key as keyof typeof buffs];
               const selectedBuff = data.find(
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                (buff: any) => buff.id === selectedBuffId
+                (buff: any) => buff.id === selectedBuffId,
               );
 
               // Prepare buff display
@@ -1109,8 +1115,8 @@ const Calculator = () => {
                         {Math.round(
                           getFinalDamage(
                             Number(selectedMove[key as keyof MoveDamage]),
-                            key as MoveKey
-                          )
+                            key as MoveKey,
+                          ),
                         ).toLocaleString()}
                       </td>
                     </tr>
@@ -1120,7 +1126,7 @@ const Calculator = () => {
                   <td>
                     {selectedMove
                       ? Math.round(
-                          getMaxDamageTotal(selectedMove)
+                          getMaxDamageTotal(selectedMove),
                         ).toLocaleString()
                       : 0}
                   </td>

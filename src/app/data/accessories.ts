@@ -615,6 +615,17 @@ export const headAccData: Accessories[] = [
     haki: 0,
     fruit: 2650,
   },
+  {
+    id: 55,
+    name: "Final Dragon Horns",
+    strength: 0,
+    stamina: 0,
+    defense: 2200,
+    sword: 0,
+    gun: 0,
+    haki: 2000,
+    fruit: 2500,
+  },
 ];
 
 export const topAccData: Accessories[] = [

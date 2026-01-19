@@ -4,11 +4,66 @@ This document provides a comprehensive guide to all data files in the `src/app/d
 
 ## Table of Contents
 
-1. [Core Type Definitions](#core-type-definitions)
-2. [Buff System](#buff-system)
-3. [Accessories System](#accessories-system)
-4. [Move Damage System](#move-damage-system)
-5. [Quick Reference](#quick-reference)
+1. [Directory Structure](#directory-structure)
+2. [Core Type Definitions](#core-type-definitions)
+3. [Buff System](#buff-system)
+4. [Accessories System](#accessories-system)
+5. [Move Damage System](#move-damage-system)
+6. [Quick Reference](#quick-reference)
+
+---
+
+## Directory Structure
+
+The data directory is organized into modular files with centralized type definitions:
+
+```
+src/app/data/
+├── accessories/
+│   ├── types.ts          # Accessories interface
+│   ├── index.ts          # Barrel exports for all accessories
+│   ├── head.ts           # Head slot equipment (56 items)
+│   ├── top.ts            # Top slot equipment (22 items)
+│   ├── arm.ts            # Arm slot equipment (21 items)
+│   ├── back.ts           # Back slot equipment (24 items)
+│   ├── waist.ts          # Waist slot equipment (23 items)
+│   └── legs.ts           # Legs slot equipment (30 items)
+├── buffs/
+│   ├── types.ts          # All buff interfaces (BaseBuff, ActiveBuffs, TitleBuffs, RaceBuffs)
+│   ├── index.ts          # Barrel exports for all buffs
+│   ├── active/
+│   │   ├── index.ts      # Active buff exports
+│   │   ├── fruit.ts      # Devil Fruit transformations (28 forms)
+│   │   ├── fighting.ts   # Fighting style modes (11 modes)
+│   │   ├── gun.ts        # Gun buffs (5 buffs)
+│   │   ├── sword.ts      # Sword buffs (11 buffs)
+│   │   ├── armament.ts   # Armament Haki stages (5 stages)
+│   │   ├── conquerors.ts # Conqueror's Haki stages (5 stages)
+│   │   ├── suit.ts       # Suit buffs (5 buffs)
+│   │   └── support.ts    # Support buffs (16 buffs)
+│   └── passive/
+│       ├── index.ts      # Passive buff exports
+│       ├── title.ts      # Title buffs (55 titles)
+│       ├── race.ts       # Race buffs (31 races)
+│       ├── blacksmith.ts # Permanent blacksmith weapon upgrades
+│       ├── giant.ts      # Permanent giant transformation upgrades
+│       └── artifact.ts   # Permanent artifact equipment buffs
+├── devilfruitMoveDamage.ts    # Devil Fruit ability damage values
+├── fightingstyleMoveDamage.ts # Fighting style ability damage values
+├── swordstyleMoveDamage.ts    # Sword weapon ability damage values
+├── gunstyleMoveDamage.ts      # Gun weapon ability damage values
+├── hakiMoveDamage.ts          # Haki emission ability damage values
+├── supportstyleMoveDamage.ts  # Support style ability damage values
+└── move.ts                     # Core type definitions for moves and scaling
+```
+
+**Key Points:**
+- **Type Definitions**: Centralized in `types.ts` files to avoid duplication
+- **Barrel Exports**: `index.ts` files provide clean import paths
+- **Active Buffs**: Temporary/toggleable transformations and abilities (8 categories)
+- **Passive Buffs**: Permanent upgrades including titles, races, and progression systems (5 categories)
+- **Accessories**: Equipment split by body slot (6 slots, 176 total items)
+- **Move Damage**: Base damage values for all ability types (6 files)
 
 ---
 
@@ -146,9 +201,11 @@ All buff values are multipliers (1.0 = no change, 1.5 = +50%, etc.)
 
 ---
 
-### `activebuff.ts` - Active Buffs
+### Active Buffs
 
 **Purpose:** Stores temporary buffs from abilities, transformations, and special states.
+
+**Location:** `src/app/data/buffs/active/`
 
 #### Interface
 
@@ -158,17 +215,14 @@ interface ActiveBuffs extends BaseBuff {}
 
 #### Available Buff Arrays
 
-- `fruitActiveBuffs[]` - Devil fruit transformations
-- `fightingActiveBuffs[]` - Fighting style modes
-- `gunActiveBuffs[]` - Gun weapon modes
-- `swordActiveBuffs[]` - Sword weapon modes
-- `armamentActiveBuffs[]` - Armament Haki levels
-- `conquerorsActiveBuffs[]` - Conqueror's Haki stages
-- `blacksmithActiveBuffs[]` - Blacksmith upgrade levels
-- `giantActiveBuffs[]` - Giant blacksmith upgrades
-- `suitActiveBuffs[]` - Special suit bonuses
-- `supportActiveBuffs[]` - Support style transformations
-- `artifactActiveBuffs[]` - Artifact buffs
+- `fruitActiveBuffs[]` - Devil fruit transformations (fruit.ts)
+- `fightingActiveBuffs[]` - Fighting style modes (fighting.ts)
+- `gunActiveBuffs[]` - Gun weapon modes (gun.ts)
+- `swordActiveBuffs[]` - Sword weapon modes (sword.ts)
+- `armamentActiveBuffs[]` - Armament Haki levels (armament.ts)
+- `conquerorsActiveBuffs[]` - Conqueror's Haki stages (conquerors.ts)
+- `suitActiveBuffs[]` - Special suit bonuses (suit.ts)
+- `supportActiveBuffs[]` - Support style transformations (support.ts)
 
 #### Example Entry
 
@@ -208,9 +262,27 @@ interface ActiveBuffs extends BaseBuff {}
 
 ---
 
-### `racebuff.ts` - Race Buffs
+### Passive Buffs
+
+**Purpose:** Stores permanent buffs that are always active once acquired.
+
+**Location:** `src/app/data/buffs/passive/`
+
+#### Available Passive Buff Arrays
+
+- `titleBuffsData[]` - Title/achievement bonuses (title.ts)
+- `raceBuffsData[]` - Character race bonuses (race.ts)
+- `blacksmithActiveBuffs[]` - Permanent blacksmith upgrade levels (blacksmith.ts)
+- `giantActiveBuffs[]` - Permanent giant blacksmith upgrades (giant.ts)
+- `artifactActiveBuffs[]` - Permanent artifact buffs (artifact.ts)
+
+---
+
+### `race.ts` - Race Buffs
 
 **Purpose:** Stores passive buffs from character races.
+
+**Location:** `src/app/data/buffs/passive/race.ts`
 
 #### Interface
 
@@ -255,9 +327,11 @@ interface RaceBuffs extends BaseBuff {
 
 ---
 
-### `titlebuff.ts` - Title Buffs
+### `title.ts` - Title Buffs
 
 **Purpose:** Stores buffs from player titles/achievements.
+
+**Location:** `src/app/data/buffs/passive/title.ts`
 
 #### Interface
 
@@ -312,11 +386,64 @@ interface TitleBuffs extends BaseBuff {
 
 ---
 
+### `blacksmith.ts`, `giant.ts`, `artifact.ts` - Permanent Upgrades
+
+**Purpose:** Stores permanent upgrade buffs from various progression systems.
+
+**Location:** `src/app/data/buffs/passive/`
+
+These three files contain permanent upgrades that function similarly to active buffs but represent irreversible character progression:
+
+- **blacksmith.ts** - Blacksmith weapon upgrade levels
+- **giant.ts** - Giant-themed blacksmith upgrades
+- **artifact.ts** - Artifact equipment buffs
+
+#### Interface
+
+```typescript
+interface ActiveBuffs extends BaseBuff {}
+```
+
+These use the same interface as active buffs, with multipliers for each damage type.
+
+#### Example Entry (Blacksmith)
+
+```typescript
+{
+  id: 1,
+  name: "Blacksmith Level 5",
+  fruitbuff: 1.0,
+  swordbuff: 2.5,    // 2.5x sword damage
+  gunbuff: 1.0,
+  strengthbuff: 1.0,
+  hakibuff: 1.0,
+}
+```
+
+#### How to Add New Permanent Upgrade
+
+```typescript
+// In blacksmith.ts, giant.ts, or artifact.ts:
+{
+  id: 10,                     // Next available ID
+  name: "Upgrade Name/Level",
+  fruitbuff: 1.0,             // Set appropriate multipliers
+  swordbuff: 1.5,
+  gunbuff: 1.0,
+  strengthbuff: 1.0,
+  hakibuff: 1.0,
+}
+```
+
+---
+
 ## Accessories System
 
-### `accessories.ts` - Equipment Buffs
+### Equipment Buffs
 
 **Purpose:** Stores stat bonuses from equipment items.
+
+**Location:** `src/app/data/accessories/`
 
 #### Interface
 
@@ -648,11 +775,15 @@ Some entries use custom scaling:
 | File | Purpose | Key Feature |
 |------|---------|-------------|
 | `move.ts` | Core type definitions | Defines `MoveDamage` interface and scaling types |
-| `basebuff.ts` | Base buff interface | Core structure for all buffs |
-| `activebuff.ts` | Temporary buffs | Multiple arrays for different buff sources |
-| `racebuff.ts` | Race bonuses | Includes image and note fields |
-| `titlebuff.ts` | Title bonuses | Includes rank/rarity field |
-| `accessories.ts` | Equipment stats | Six equipment slots with stat bonuses |
+| `buffs/types.ts` | Base buff interfaces | Core structure for all buff types |
+| `buffs/active/` | Temporary buffs | 8 different buff categories (fruit, fighting, sword, gun, etc.) |
+| `buffs/passive/race.ts` | Race bonuses | Includes image and note fields |
+| `buffs/passive/title.ts` | Title bonuses | Includes rank/rarity field |
+| `buffs/passive/blacksmith.ts` | Blacksmith upgrades | Permanent weapon enhancements |
+| `buffs/passive/giant.ts` | Giant upgrades | Permanent giant transformations |
+| `buffs/passive/artifact.ts` | Artifact buffs | Permanent artifact bonuses |
+| `accessories/types.ts` | Accessories interface | Core structure for equipment |
+| `accessories/` | Equipment stats | Six equipment slots with stat bonuses (head, top, arm, back, waist, legs) |
 | `devilfruitMoveDamage.ts` | Devil fruit damage | Base damage for fruit abilities |
 | `fightingstyleMoveDamage.ts` | Fighting style damage | Base damage for combat styles |
 | `swordstyleMoveDamage.ts` | Sword damage | Base damage for sword weapons |

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import {
-  Accessories,
+  type Accessories,
   headAccData,
   topAccData,
   backAccData,
@@ -20,17 +20,20 @@ import {
   giantActiveBuffs,
   supportActiveBuffs,
   artifactActiveBuffs,
-} from "../data/activebuff";
-import { titleBuffsData } from "../data/titlebuff";
-import { raceBuffsData } from "../data/racebuff";
-import { BaseBuff } from "../data/basebuff";
-import { MoveDamage, DamageScale, MoveKey } from "../data/move";
-import { devilFruitMoveDamage } from "../data/devilfruitMoveDamage";
-import { swordStyleMoveDamage } from "../data/swordstyleMoveDamage";
-import { gunStyleMoveDamage } from "../data/gunstyleMoveDamage";
-import { fightingStyleMoveDamage } from "../data/fightingstyleMoveDamage";
-import { supportStyleMoveDamage } from "../data/supportstyleMoveDamage";
-import { hakiMoveDamage } from "../data/hakiMoveDamage";
+} from "../data/buffs/active";
+import { type BaseBuff } from "../data/buffs";
+import { titleBuffsData, raceBuffsData } from "../data/buffs/passive";
+import {
+  type MoveDamage,
+  type DamageScale,
+  type MoveKey,
+  devilFruitMoveDamage,
+  fightingStyleMoveDamage,
+  gunStyleMoveDamage,
+  hakiMoveDamage,
+  supportStyleMoveDamage,
+  swordStyleMoveDamage,
+} from "../data/moves";
 
 const accKeys = [
   {
@@ -142,47 +145,49 @@ const Calculator = () => {
   });
   type MoveSource = "fighting" | "fruit" | "support" | "gun" | "sword" | "haki";
 
-  let idCounter = 0;
+  const allMoves = useMemo(() => {
+    let idCounter = 0;
+    return [
+      ...hakiMoveDamage.map((m) => ({
+        ...m,
+        id: idCounter++,
+        source: "haki" as MoveSource,
+      })),
+      ...devilFruitMoveDamage.map((m) => ({
+        ...m,
+        id: idCounter++,
+        source: "fruit" as MoveSource,
+      })),
+      ...fightingStyleMoveDamage.map((m) => ({
+        ...m,
+        id: idCounter++,
+        source: "fighting" as MoveSource,
+      })),
+      ...gunStyleMoveDamage.map((m) => ({
+        ...m,
+        id: idCounter++,
+        source: "gun" as MoveSource,
+      })),
+      ...supportStyleMoveDamage.map((m) => ({
+        ...m,
+        id: idCounter++,
+        source: "support" as MoveSource,
+      })),
+      ...swordStyleMoveDamage.map((m) => ({
+        ...m,
+        id: idCounter++,
+        source: "sword" as MoveSource,
+      })),
+    ];
+  }, []);
 
-  const allMoves = [
-    ...hakiMoveDamage.map((m) => ({
-      ...m,
-      id: idCounter++,
-      source: "haki" as MoveSource,
-    })),
-    ...devilFruitMoveDamage.map((m) => ({
-      ...m,
-      id: idCounter++,
-      source: "fruit" as MoveSource,
-    })),
-    ...fightingStyleMoveDamage.map((m) => ({
-      ...m,
-      id: idCounter++,
-      source: "fighting" as MoveSource,
-    })),
-    ...gunStyleMoveDamage.map((m) => ({
-      ...m,
-      id: idCounter++,
-      source: "gun" as MoveSource,
-    })),
-    ...supportStyleMoveDamage.map((m) => ({
-      ...m,
-      id: idCounter++,
-      source: "support" as MoveSource,
-    })),
-    ...swordStyleMoveDamage.map((m) => ({
-      ...m,
-      id: idCounter++,
-      source: "sword" as MoveSource,
-    })),
-  ];
-
-  const [selectedMoveId, setSelectedMoveId] = useState<number>(
-    allMoves[0]?.id || 0,
-  );
+  const [selectedMoveId, setSelectedMoveId] = useState<number>(0);
   const [selectedScale, setSelectedScale] = useState<DamageScale>("fruitbuff");
 
-  const selectedMove = allMoves.find((m) => m.id === selectedMoveId);
+  const selectedMove = useMemo(
+    () => allMoves.find((m) => m.id === selectedMoveId),
+    [allMoves, selectedMoveId]
+  );
 
   const scaleToBuffKey: Record<DamageScale, keyof typeof damageBuffs> = {
     fruitbuff: "fruitBuff",
@@ -668,7 +673,7 @@ const Calculator = () => {
     }));
 
     setSelectedScale(sourceToDamageScale[selectedMove.source]);
-  }, [selectedMoveId, selectedMove, sourceToBuffKey, sourceToDamageScale]);
+  }, [selectedMove, sourceToBuffKey, sourceToDamageScale]);
 
   const firstGroup = accKeys.slice(0, 3); // first 3
   const secondGroup = accKeys.slice(3, 6); // next 3

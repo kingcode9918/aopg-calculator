@@ -1,8 +1,4 @@
-import { BaseBuff } from "./basebuff";
-
-export interface TitleBuffs extends BaseBuff {
-  rank: string;
-}
+import type { TitleBuffs } from "../types";
 
 export const titleBuffsData: TitleBuffs[] = [
   {

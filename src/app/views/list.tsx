@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TitleBuffs, titleBuffsData } from "../data/titlebuff";
+import { type TitleBuffs, titleBuffsData } from "../data/buffs/passive";
 
 // Group titles by rank
 const groupedByRank = titleBuffsData

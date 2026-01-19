@@ -1,4 +1,4 @@
-import { MoveDamage } from "./move";
+import { MoveDamage } from "./types";
 
 export const devilFruitMoveDamage: MoveDamage[] = [
   {

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { RaceBuffs } from "../data/racebuff";
+import { type RaceBuffs } from "../data/buffs";
 
 const BuffCard = ({ buff }: { buff: RaceBuffs }) => (
   <div className="card bg-base-100 w-80 shadow-sm">

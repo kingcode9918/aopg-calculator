@@ -7,7 +7,7 @@ import BuffSelector, { BuffCategory } from "./views/buffselector";
 import MoveSelector, { MoveCategory } from "./views/moveselector";
 import Navbar from "./views/navbar";
 import {
-  Accessories,
+  type Accessories,
   headAccData,
   topAccData,
   armAccData,
@@ -15,8 +15,7 @@ import {
   waistAccData,
   legsAccData,
 } from "./data/accessories";
-import { titleBuffsData } from "./data/titlebuff";
-import { raceBuffsData } from "./data/racebuff";
+import { titleBuffsData, raceBuffsData } from "./data/buffs/passive";
 import {
   armamentActiveBuffs,
   blacksmithActiveBuffs,
@@ -28,14 +27,16 @@ import {
   suitActiveBuffs,
   supportActiveBuffs,
   swordActiveBuffs,
-} from "./data/activebuff";
-import { gunStyleMoveDamage } from "./data/gunstyleMoveDamage";
-import { swordStyleMoveDamage } from "./data/swordstyleMoveDamage";
-import { fightingStyleMoveDamage } from "./data/fightingstyleMoveDamage";
-import { supportStyleMoveDamage } from "./data/supportstyleMoveDamage";
-import { devilFruitMoveDamage } from "./data/devilfruitMoveDamage";
-import { hakiMoveDamage } from "./data/hakiMoveDamage";
-import { getMoveTotal } from "./data/move";
+} from "./data/buffs/active";
+import {
+  devilFruitMoveDamage,
+  fightingStyleMoveDamage,
+  gunStyleMoveDamage,
+  hakiMoveDamage,
+  supportStyleMoveDamage,
+  swordStyleMoveDamage,
+  getMoveTotal,
+} from "./data/moves";
 
 type Page = "build" | "accessory" | "buff" | "move";
 
@@ -88,7 +89,7 @@ export default function Home() {
   const getMoveData = () =>
     (moveDataMap[moveSelected] ?? [])
       .filter(
-        (move) => !move.name?.toLowerCase().includes("title") // hide moves with "title" in text
+        (move) => !move.name?.toLowerCase().includes("title"), // hide moves with "title" in text
       )
       .map((move) => ({
         ...move,
@@ -133,7 +134,7 @@ export default function Home() {
 
         {/* Footer / info */}
         <div className="fixed bottom-3 left-3 text-xs text-gray-500 dark:text-gray-400">
-          v125 | Last updated: January 14, 2026
+          v130 | Last updated: January 19, 2026
         </div>
 
         <div className="fixed bottom-3 right-3 group cursor-help">

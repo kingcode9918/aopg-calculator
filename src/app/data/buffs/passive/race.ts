@@ -1,9 +1,4 @@
-import { BaseBuff } from "./basebuff";
-
-export interface RaceBuffs extends BaseBuff {
-  note: string;
-  image: string;
-}
+import type { RaceBuffs } from "../types";
 
 export const raceBuffsData: RaceBuffs[] = [
   {

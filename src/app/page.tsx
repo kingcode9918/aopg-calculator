@@ -17,28 +17,28 @@ export default function Home() {
               <p className="text-blue-100 text-center text-lg">
                 A One Piece Game Calculator
               </p>
-              <div className="mt-6 text-sm text-blue-200">
-                Click to enter →
-              </div>
+              <div className="mt-6 text-sm text-blue-200">Click to enter →</div>
             </div>
           </Link>
 
           {/* Verse Calculator Card */}
-          <div className="bg-gradient-to-br from-purple-600/50 to-purple-800/50 rounded-2xl p-8 w-80 h-64 flex flex-col items-center justify-center shadow-2xl opacity-75 cursor-not-allowed">
-            <h2 className="text-3xl font-bold text-white mb-4">Verse</h2>
-            <p className="text-purple-100 text-center text-lg">
-              Verse Piece Calculator
-            </p>
-            <div className="mt-6 text-sm text-purple-200 font-semibold">
-              Coming Soon
+          <Link href="#">
+            <div className="bg-gradient-to-br from-purple-600/50 to-purple-800/50 rounded-2xl p-8 w-80 h-64 flex flex-col items-center justify-center shadow-2xl opacity-75 cursor-not-allowed">
+              <h2 className="text-3xl font-bold text-white mb-4">Verse</h2>
+              <p className="text-purple-100 text-center text-lg">
+                Verse Piece Calculator
+              </p>
+              <div className="mt-6 text-sm text-purple-200 font-semibold">
+                Coming Soon
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
 
         {/* Footer */}
         <div className="mt-16 text-center">
           <div className="text-sm text-gray-400 mb-2">
-            v130 | Last updated: January 19, 2026
+            Last updated: January 27, 2026
           </div>
           <div className="text-xs text-gray-500">
             Need help? DM me on Discord:{" "}

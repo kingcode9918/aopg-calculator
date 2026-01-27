@@ -1,8 +1,7 @@
 import type { ActiveBuffs } from "../types";
 
-
 export const suitActiveBuffs: ActiveBuffs[] = [
-{
+  {
     id: 0,
     name: "None",
     fruitbuff: 1,
@@ -114,6 +113,15 @@ export const suitActiveBuffs: ActiveBuffs[] = [
     id: 12,
     name: "Vegapunk Suit: Red",
     fruitbuff: 1.35,
+    swordbuff: 1.0,
+    gunbuff: 1.0,
+    strengthbuff: 1.0,
+    hakibuff: 1,
+  },
+  {
+    id: 13,
+    name: "Mother's Kimono",
+    fruitbuff: 1.8,
     swordbuff: 1.0,
     gunbuff: 1.0,
     strengthbuff: 1.0,

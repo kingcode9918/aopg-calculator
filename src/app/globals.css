@@ -54,3 +54,6 @@ body {
 .custom-text-haki {
   color: var(--hakicolor);
 }
+.custom-text-special {
+  color: var(--fruitcolor);
+}

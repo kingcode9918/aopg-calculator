@@ -1,149 +1,48 @@
 "use client";
-import Calculator from "./views/calculator";
-import GenericTable from "./views/table";
-import { useState } from "react";
-import AccessorySelector from "./views/accselector";
-import BuffSelector, { BuffCategory } from "./views/buffselector";
-import MoveSelector, { MoveCategory } from "./views/moveselector";
-import Navbar from "./views/navbar";
-import {
-  type Accessories,
-  headAccData,
-  topAccData,
-  armAccData,
-  backAccData,
-  waistAccData,
-  legsAccData,
-} from "./data/accessories";
-import { titleBuffsData, raceBuffsData } from "./data/buffs/passive";
-import {
-  armamentActiveBuffs,
-  blacksmithActiveBuffs,
-  conquerorsActiveBuffs,
-  fightingActiveBuffs,
-  fruitActiveBuffs,
-  giantActiveBuffs,
-  gunActiveBuffs,
-  suitActiveBuffs,
-  supportActiveBuffs,
-  swordActiveBuffs,
-} from "./data/buffs/active";
-import {
-  devilFruitMoveDamage,
-  fightingStyleMoveDamage,
-  gunStyleMoveDamage,
-  hakiMoveDamage,
-  supportStyleMoveDamage,
-  swordStyleMoveDamage,
-  getMoveTotal,
-} from "./data/moves";
-
-type Page = "build" | "accessory" | "buff" | "move";
-
-const accessoryDataMap = {
-  head: headAccData,
-  top: topAccData,
-  arm: armAccData,
-  back: backAccData,
-  waist: waistAccData,
-  legs: legsAccData,
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const buffDataMap: Record<BuffCategory, any[]> = {
-  title: titleBuffsData,
-  race: raceBuffsData,
-  fruit: fruitActiveBuffs,
-  fighting: fightingActiveBuffs,
-  gun: gunActiveBuffs,
-  sword: swordActiveBuffs,
-  armament: armamentActiveBuffs,
-  conqueror: conquerorsActiveBuffs,
-  blacksmith: blacksmithActiveBuffs,
-  giant: giantActiveBuffs,
-  suit: suitActiveBuffs,
-  support: supportActiveBuffs,
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const moveDataMap: Record<MoveCategory, any[]> = {
-  fighting: fightingStyleMoveDamage,
-  sword: swordStyleMoveDamage,
-  gun: gunStyleMoveDamage,
-  support: supportStyleMoveDamage,
-  fruit: devilFruitMoveDamage,
-  haki: hakiMoveDamage,
-};
+import Link from "next/link";
 
 export default function Home() {
-  const [currentPage, setCurrentPage] = useState<Page>("build");
-  const [accessorySelected, setAccessorySelected] = useState<
-    "head" | "top" | "arm" | "back" | "waist" | "legs"
-  >("head");
-  const [buffSelected, setBuffSelected] = useState<BuffCategory>("title");
-  const [moveSelected, setMoveSelected] = useState<MoveCategory>("support");
-  const getAccessoryData = () =>
-    accessoryDataMap[accessorySelected]?.filter((buff) => buff.id !== 0) ?? [];
-  const getBuffData = () =>
-    buffDataMap[buffSelected]?.filter((buff) => buff.id !== 0) ?? [];
-  const getMoveData = () =>
-    (moveDataMap[moveSelected] ?? [])
-      .filter(
-        (move) => !move.name?.toLowerCase().includes("title"), // hide moves with "title" in text
-      )
-      .map((move) => ({
-        ...move,
-        total: getMoveTotal(move),
-      }))
-      .sort((a, b) => b.total - a.total);
-
   return (
-    <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
-      {/* Navbar */}
-      <Navbar
-        selected={currentPage}
-        onSelect={(page) => setCurrentPage(page as Page)}
-      />
+    <div className="min-h-screen font-[family-name:var(--font-geist-sans)] flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+      <main className="flex flex-col gap-8 items-center p-8">
+        <h1 className="text-5xl font-bold text-white mb-8">
+          Choose Your Calculator
+        </h1>
 
-      <main className="flex flex-col gap-8 items-center sm:items-start p-4">
-        {currentPage === "build" && <Calculator />}
+        <div className="flex gap-8 flex-wrap justify-center">
+          {/* AOPG Calculator Card */}
+          <Link href="/aopg">
+            <div className="bg-gradient-to-br from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 transition-all duration-300 rounded-2xl p-8 w-80 h-64 flex flex-col items-center justify-center cursor-pointer shadow-2xl hover:shadow-blue-500/50 hover:scale-105 transform">
+              <h2 className="text-3xl font-bold text-white mb-4">AOPG</h2>
+              <p className="text-blue-100 text-center text-lg">
+                A One Piece Game Calculator
+              </p>
+              <div className="mt-6 text-sm text-blue-200">
+                Click to enter →
+              </div>
+            </div>
+          </Link>
 
-        {currentPage === "accessory" && (
-          <>
-            <AccessorySelector
-              selected={accessorySelected}
-              onSelect={setAccessorySelected}
-            />
-            <GenericTable<Accessories> data={getAccessoryData()} />
-          </>
-        )}
-
-        {currentPage === "buff" && (
-          <>
-            <BuffSelector selected={buffSelected} onSelect={setBuffSelected} />
-            <GenericTable data={getBuffData()} />
-          </>
-        )}
-
-        {currentPage === "move" && (
-          <>
-            <MoveSelector selected={moveSelected} onSelect={setMoveSelected} />
-            <GenericTable data={getMoveData()} />
-          </>
-        )}
-
-        {/* Footer / info */}
-        <div className="fixed bottom-3 left-3 text-xs text-gray-500 dark:text-gray-400">
-          v130 | Last updated: January 19, 2026
+          {/* Verse Calculator Card */}
+          <div className="bg-gradient-to-br from-purple-600/50 to-purple-800/50 rounded-2xl p-8 w-80 h-64 flex flex-col items-center justify-center shadow-2xl opacity-75 cursor-not-allowed">
+            <h2 className="text-3xl font-bold text-white mb-4">Verse</h2>
+            <p className="text-purple-100 text-center text-lg">
+              Verse Piece Calculator
+            </p>
+            <div className="mt-6 text-sm text-purple-200 font-semibold">
+              Coming Soon
+            </div>
+          </div>
         </div>
 
-        <div className="fixed bottom-3 right-3 group cursor-help">
-          <div className="text-xs text-gray-500 dark:text-gray-400">
-            Need help?
+        {/* Footer */}
+        <div className="mt-16 text-center">
+          <div className="text-sm text-gray-400 mb-2">
+            v130 | Last updated: January 19, 2026
           </div>
-          <div className="absolute bottom-6 right-0 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md shadow-lg w-44">
-            If there&apos;s a wrong value, DM me on Discord:
-            <span className="font-semibold block mt-1">kingcode99</span>
+          <div className="text-xs text-gray-500">
+            Need help? DM me on Discord:{" "}
+            <span className="font-semibold text-gray-300">kingcode99</span>
           </div>
         </div>
       </main>

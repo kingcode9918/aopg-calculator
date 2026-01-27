@@ -11,4 +11,5 @@ export interface Accessories {
   defense: number;   // Defense stat bonus
   sword: number;     // Sword damage bonus
   special: number;   // Special damage bonus
+  increment: number; // Stat increase per enchantment level
 }

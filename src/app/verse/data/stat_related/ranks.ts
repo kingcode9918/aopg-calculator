@@ -1,7 +1,4 @@
-export interface Rank {
-  label: string;
-  value: number;
-}
+import type { Rank } from "./types";
 
 export const ranks: Rank[] = [
   { label: "D", value: 0 },

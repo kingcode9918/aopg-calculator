@@ -1,6 +1,6 @@
-import type { Accessories } from "./types";
+import type { Stats } from "./types";
 
-export const accessoriesData: Accessories[] = [
+export const accessoriesData: Stats[] = [
   {
     id: 0,
     name: "None",
@@ -702,5 +702,23 @@ export const accessoriesData: Accessories[] = [
     sword: 0,
     special: 0,
     increment: 500,
+  },
+  {
+    id: 78,
+    name: "Yami Outfit",
+    strength: 50000,
+    defense: 50000,
+    sword: 50000,
+    special: 50000,
+    increment: 1000,
+  },
+  {
+    id: 79,
+    name: "Asta Demon Wing",
+    strength: 75000,
+    defense: 75000,
+    sword: 100000,
+    special: 0,
+    increment: 1500,
   },
 ];

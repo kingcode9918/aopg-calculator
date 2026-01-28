@@ -1,6 +1,7 @@
 "use client";
 import Calculator from "./views/calculator";
 import Navbar from "./views/navbar";
+import UpdateModal from "../components/UpdateModal";
 
 export default function VerseCalculator() {
   return (
@@ -12,8 +13,34 @@ export default function VerseCalculator() {
         <Calculator />
 
         {/* Footer / info */}
-        <div className="fixed bottom-3 left-3 text-xs text-gray-500 dark:text-gray-400">
-          Verse Calculator v1 | Last updated: January 22, 2026
+        <div className="fixed bottom-3 left-3 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+          <span>
+            Verse Calculator v1.1.1.1 | Last updated: January 27, 2026
+          </span>
+          <UpdateModal
+            updates={[
+              {
+                version: "v1.1.1.2",
+                date: "January 28, 2026",
+                changes: [
+                  "Added Race",
+                  "Added Trait",
+                  "Added Title",
+                  "Added Haki",
+                ],
+              },
+              {
+                version: "v1.1.1.1",
+                date: "January 27, 2026",
+                changes: [
+                  "Initial release",
+                  "Added base stats calculator with 80,000 total cap",
+                  "Added accessory selector with enhancement system",
+                  "Added 78 accessories with increment values",
+                ],
+              },
+            ]}
+          />
         </div>
 
         <div className="fixed bottom-3 right-3 group cursor-help">

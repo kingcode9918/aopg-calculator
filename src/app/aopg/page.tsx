@@ -6,6 +6,7 @@ import AccessorySelector from "./views/accselector";
 import BuffSelector, { BuffCategory } from "./views/buffselector";
 import MoveSelector, { MoveCategory } from "./views/moveselector";
 import Navbar from "./views/navbar";
+import UpdateModal from "../components/UpdateModal";
 import {
   type Accessories,
   headAccData,
@@ -133,8 +134,21 @@ export default function AopgCalculator() {
         )}
 
         {/* Footer / info */}
-        <div className="fixed bottom-3 left-3 text-xs text-gray-500 dark:text-gray-400">
-          AOPG Calculator v130 | Last updated: January 27, 2026
+        <div className="fixed bottom-3 left-3 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+          <span>AOPG Calculator v1.1.1.1 | Last updated: January 27, 2026</span>
+          <UpdateModal
+            updates={[
+              {
+                version: "v1.1.1.1",
+                date: "January 27, 2026",
+                changes: [
+                  "Added Final Soul Damage",
+                  "Added Final Soul Buff",
+                  "Added new suit called Mother's Kimono",
+                ],
+              },
+            ]}
+          />
         </div>
 
         <div className="fixed bottom-3 right-3 group cursor-help">

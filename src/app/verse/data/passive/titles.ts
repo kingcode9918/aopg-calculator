@@ -173,7 +173,7 @@ export const titlesData: buffs[] = [
     id: 24,
     name: "Silver Sword Saint Reaper",
     strengthBuff: 1,
-    swordBuff: 1.75,
+    swordBuff: 2,
     specialBuff: 1,
   },
   {

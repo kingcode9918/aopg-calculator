@@ -5,7 +5,13 @@ import {
   traitsData,
   passiveTraitsData,
 } from "../data/stat_related";
-import { titlesData, racesData, hakisData } from "../data/passive";
+import {
+  titlesData,
+  racesData,
+  hakisData,
+  relicsData,
+  abilitiesData,
+} from "../data/passive";
 
 const statTypes = [
   {
@@ -65,6 +71,8 @@ const Calculator = () => {
   const [titleId, setTitleId] = useState(0);
   const [raceId, setRaceId] = useState(0);
   const [hakiId, setHakiId] = useState(0);
+  const [relicId, setRelicId] = useState(0);
+  const [abilityId, setAbilityId] = useState(0);
 
   const selectedAccessory =
     accessoriesData.find((acc) => acc.id === accessory.selectedId) ||
@@ -84,6 +92,12 @@ const Calculator = () => {
 
   const selectedHaki = hakisData.find((h) => h.id === hakiId) || hakisData[0];
 
+  const selectedRelic =
+    relicsData.find((r) => r.id === relicId) || relicsData[0];
+
+  const selectedAbility =
+    abilitiesData.find((a) => a.id === abilityId) || abilitiesData[0];
+
   const baseDmgMult =
     (selectedTrait.dmgMult || 1) * (selectedPassiveTrait.dmgMult || 1);
 
@@ -91,22 +105,32 @@ const Calculator = () => {
     let titleMult = 1;
     let raceMult = 1;
     let hakiMult = 1;
+    let relicMult = 1;
+    let abilityMult = 1;
     if (statKey === "strength") {
       titleMult = selectedTitle.strengthBuff || 1;
       raceMult = selectedRace.strengthBuff || 1;
       hakiMult = selectedHaki.strengthBuff || 1;
+      relicMult = selectedRelic.strengthBuff || 1;
+      abilityMult = selectedAbility.strengthBuff || 1;
     }
     if (statKey === "sword") {
       titleMult = selectedTitle.swordBuff || 1;
       raceMult = selectedRace.swordBuff || 1;
       hakiMult = selectedHaki.swordBuff || 1;
+      relicMult = selectedRelic.swordBuff || 1;
+      abilityMult = selectedAbility.swordBuff || 1;
     }
     if (statKey === "special") {
       titleMult = selectedTitle.specialBuff || 1;
       raceMult = selectedRace.specialBuff || 1;
       hakiMult = selectedHaki.specialBuff || 1;
+      relicMult = selectedRelic.specialBuff || 1;
+      abilityMult = selectedAbility.specialBuff || 1;
     }
-    return baseDmgMult * titleMult * raceMult * hakiMult;
+    return (
+      baseDmgMult * titleMult * raceMult * hakiMult * relicMult * abilityMult
+    );
   };
 
   const totalBaseStats = Object.values(baseStats).reduce(
@@ -138,6 +162,69 @@ const Calculator = () => {
       ...prev,
       [statKey]: clampedValue,
     }));
+  };
+
+  const handleBestBuff = (statKey: "strength" | "sword" | "special") => {
+    const buffKey = `${statKey}Buff` as
+      | "strengthBuff"
+      | "swordBuff"
+      | "specialBuff";
+
+    // Find best passive buffs
+    const bestTitle = titlesData.reduce((best, current) =>
+      (current[buffKey] || 1) > (best[buffKey] || 1) ? current : best,
+    );
+    const bestRace = racesData.reduce((best, current) =>
+      (current[buffKey] || 1) > (best[buffKey] || 1) ? current : best,
+    );
+    const bestHaki = hakisData.reduce((best, current) =>
+      (current[buffKey] || 1) > (best[buffKey] || 1) ? current : best,
+    );
+    const bestRelic = relicsData.reduce((best, current) =>
+      (current[buffKey] || 1) > (best[buffKey] || 1) ? current : best,
+    );
+    const bestAbility = abilitiesData.reduce((best, current) =>
+      (current[buffKey] || 1) > (best[buffKey] || 1) ? current : best,
+    );
+
+    // Find best accessory for this stat
+    const bestAccessory = accessoriesData.reduce((best, current) =>
+      (current[statKey] || 0) > (best[statKey] || 0) ? current : best,
+    );
+
+    // Find best trait (highest dmgMult)
+    const bestTrait = traitsData.reduce((best, current) =>
+      (current.dmgMult || 1) > (best.dmgMult || 1) ? current : best,
+    );
+
+    // Find best passive trait (highest dmgMult)
+    const bestPassiveTrait = passiveTraitsData.reduce((best, current) =>
+      (current.dmgMult || 1) > (best.dmgMult || 1) ? current : best,
+    );
+
+    // Find best rank (highest value)
+    const bestRank = ranks.reduce((best, current) =>
+      current.value > best.value ? current : best,
+    );
+
+    // Set all passive buffs
+    setTitleId(bestTitle.id);
+    setRaceId(bestRace.id);
+    setHakiId(bestHaki.id);
+    setRelicId(bestRelic.id);
+    setAbilityId(bestAbility.id);
+
+    // Set accessory with max enhance
+    setAccessory({ selectedId: bestAccessory.id, enhanceLevel: 10 });
+
+    // Set trait and passive trait
+    setTrait({ selectedId: bestTrait.id, passiveId: bestPassiveTrait.id });
+
+    // Set ghost rank for this stat
+    setGhostStats((prev) => ({ ...prev, [statKey]: bestRank.value }));
+
+    // Max the base stat
+    handleMaxStat(statKey);
   };
 
   return (
@@ -226,6 +313,18 @@ const Calculator = () => {
                   Max
                 </button>
 
+                {statKey !== "defense" && (
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-primary"
+                    onClick={() =>
+                      handleBestBuff(statKey as "strength" | "sword" | "special")
+                    }
+                  >
+                    Best
+                  </button>
+                )}
+
                 {statKey !== "defense" && getStatMultiplier(statKey) > 1 && (
                   <span className="text-warning font-semibold">
                     x{getStatMultiplier(statKey).toFixed(2)}
@@ -234,10 +333,6 @@ const Calculator = () => {
               </div>
             );
           })}
-        </fieldset>
-
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-6 mt-6">
-          <legend className="fieldset-legend font-bold">Accessory</legend>
 
           <div className="flex gap-4 mb-4">
             <div className="flex-1">
@@ -285,10 +380,6 @@ const Calculator = () => {
               />
             </div>
           </div>
-        </fieldset>
-
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-6 mt-6">
-          <legend className="fieldset-legend font-bold">Trait</legend>
 
           <div className="flex gap-4 mb-4">
             <div className="flex-1">
@@ -444,6 +535,74 @@ const Calculator = () => {
               {hakisData.map((h) => (
                 <option key={h.id} value={h.id}>
                   {h.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-4">
+            <label className="label">
+              <span className="font-bold flex items-center gap-2 flex-wrap">
+                Select Relic
+                {selectedRelic.strengthBuff > 1 && (
+                  <span className="custom-text-strength">
+                    💪 {selectedRelic.strengthBuff}x
+                  </span>
+                )}
+                {selectedRelic.swordBuff > 1 && (
+                  <span className="custom-text-sword">
+                    ⚔️ {selectedRelic.swordBuff}x
+                  </span>
+                )}
+                {selectedRelic.specialBuff > 1 && (
+                  <span className="custom-text-special">
+                    ✨ {selectedRelic.specialBuff}x
+                  </span>
+                )}
+              </span>
+            </label>
+            <select
+              className="select select-bordered w-full"
+              value={relicId}
+              onChange={(e) => setRelicId(Number(e.target.value))}
+            >
+              {relicsData.map((r) => (
+                <option key={r.id} value={r.id}>
+                  {r.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-4">
+            <label className="label">
+              <span className="font-bold flex items-center gap-2 flex-wrap">
+                Select Ability
+                {selectedAbility.strengthBuff > 1 && (
+                  <span className="custom-text-strength">
+                    💪 {selectedAbility.strengthBuff}x
+                  </span>
+                )}
+                {selectedAbility.swordBuff > 1 && (
+                  <span className="custom-text-sword">
+                    ⚔️ {selectedAbility.swordBuff}x
+                  </span>
+                )}
+                {selectedAbility.specialBuff > 1 && (
+                  <span className="custom-text-special">
+                    ✨ {selectedAbility.specialBuff}x
+                  </span>
+                )}
+              </span>
+            </label>
+            <select
+              className="select select-bordered w-full"
+              value={abilityId}
+              onChange={(e) => setAbilityId(Number(e.target.value))}
+            >
+              {abilitiesData.map((a) => (
+                <option key={a.id} value={a.id}>
+                  {a.name}
                 </option>
               ))}
             </select>

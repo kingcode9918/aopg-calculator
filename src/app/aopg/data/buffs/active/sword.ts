@@ -1,8 +1,7 @@
 import type { ActiveBuffs } from "../types";
 
-
 export const swordActiveBuffs: ActiveBuffs[] = [
-{
+  {
     id: 0,
     name: "None",
     fruitbuff: 1,
@@ -85,6 +84,15 @@ export const swordActiveBuffs: ActiveBuffs[] = [
   },
   {
     id: 9,
+    name: "True Gryphon (The One)",
+    fruitbuff: 3,
+    swordbuff: 3,
+    gunbuff: 3,
+    strengthbuff: 3,
+    hakibuff: 15,
+  },
+  {
+    id: 10,
     name: "Sin of Pride (The One)",
     fruitbuff: 3,
     swordbuff: 3,

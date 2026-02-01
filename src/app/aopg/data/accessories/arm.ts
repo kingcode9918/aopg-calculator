@@ -1,7 +1,7 @@
 import type { Accessories } from "./types";
 
 export const armAccData: Accessories[] = [
-{
+  {
     id: 0,
     name: "None",
     strength: 0,
@@ -14,6 +14,17 @@ export const armAccData: Accessories[] = [
   },
   {
     id: 1,
+    name: "Abyss Mark",
+    strength: 1000,
+    stamina: 300,
+    defense: 1000,
+    sword: 1000,
+    gun: 0,
+    haki: 300,
+    fruit: 1200,
+  },
+  {
+    id: 2,
     name: "Blood Automail Arm",
     strength: 200,
     stamina: 0,
@@ -24,7 +35,7 @@ export const armAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 2,
+    id: 3,
     name: "Gold Bands",
     strength: 0,
     stamina: 0,
@@ -35,7 +46,7 @@ export const armAccData: Accessories[] = [
     fruit: 1000,
   },
   {
-    id: 3,
+    id: 4,
     name: "Golden Hook",
     strength: 0,
     stamina: 0,
@@ -46,7 +57,7 @@ export const armAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 4,
+    id: 5,
     name: "Golden Rings",
     strength: 1200,
     stamina: 0,
@@ -57,7 +68,7 @@ export const armAccData: Accessories[] = [
     fruit: 1200,
   },
   {
-    id: 5,
+    id: 6,
     name: "Martial Artist Gloves",
     strength: 140,
     stamina: 0,
@@ -68,7 +79,7 @@ export const armAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 6,
+    id: 7,
     name: "Scaled Gauntlet",
     strength: 900,
     stamina: 0,
@@ -79,7 +90,7 @@ export const armAccData: Accessories[] = [
     fruit: 0,
   },
   {
-    id: 7,
+    id: 8,
     name: "Stone Gauntlets",
     strength: 950,
     stamina: 0,

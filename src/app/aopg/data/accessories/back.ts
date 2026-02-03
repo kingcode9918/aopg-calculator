@@ -1,7 +1,7 @@
 import type { Accessories } from "./types";
 
 export const backAccData: Accessories[] = [
-{
+  {
     id: 0,
     name: "None",
     strength: 0,
@@ -22,6 +22,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 950,
     fruit: 1550,
+    link: "https://trello.com/c/X1JCKUoZ/899-all-seeing-admiral-cape",
   },
   {
     id: 2,
@@ -33,6 +34,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 50,
     fruit: 0,
+    link: "https://trello.com/c/LmPlNrtr/89-blackbeards-cape",
   },
   {
     id: 3,
@@ -44,6 +46,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 0,
     fruit: 2000,
+    link: "https://trello.com/c/unBb3jNg/794-cloud-of-awakening",
   },
   {
     id: 4,
@@ -55,6 +58,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 1100,
     fruit: 2300,
+    link: "https://trello.com/c/OSP2uFRP/1047-croc-cape",
   },
   {
     id: 5,
@@ -66,6 +70,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 1500,
     fruit: 0,
+    link: "https://trello.com/c/UTLR5yMs/1287-daimyo-shimenawa",
   },
   {
     id: 6,
@@ -77,6 +82,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 1300,
     fruit: 0,
+    link: "https://trello.com/c/RFvd5Egz/1182-death-cape",
   },
   {
     id: 7,
@@ -88,6 +94,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 0,
     fruit: 1500,
+    link: "https://trello.com/c/BypAxGPK/687-diva-wings",
   },
   {
     id: 8,
@@ -99,6 +106,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 40,
     fruit: 50,
+    link: "https://trello.com/c/qg6y16d2/103-flamingo-cape",
   },
   {
     id: 9,
@@ -110,6 +118,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 300,
     fruit: 350,
+    link: "https://trello.com/c/KcQvfOwd/132-gift-bag",
   },
   {
     id: 10,
@@ -121,6 +130,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 150,
     fruit: 200,
+    link: "https://trello.com/c/qjml5dKf/798-gifter-cloak",
   },
   {
     id: 11,
@@ -132,6 +142,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 200,
     fruit: 0,
+    link: "https://trello.com/c/XwqHFSDe/117-kids-cape",
   },
   {
     id: 12,
@@ -143,6 +154,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 550,
     fruit: 725,
+    link: "https://trello.com/c/K9cQZ9su/300-kraken-cape",
   },
   {
     id: 13,
@@ -154,6 +166,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 1300,
     fruit: 2350,
+    link: "https://trello.com/c/6iF8UoCZ/1162-lawed-cape",
   },
   {
     id: 14,
@@ -165,6 +178,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 500,
     fruit: 1200,
+    link: "https://trello.com/c/UoN9WGQ3/764-light-admirals-cape",
   },
   {
     id: 15,
@@ -176,6 +190,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 50,
     fruit: 0,
+    link: "https://trello.com/c/Yc0tgs7r/94-lion-cape",
   },
   {
     id: 16,
@@ -187,6 +202,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 0,
     fruit: 45,
+    link: "https://trello.com/c/0pQcnQFl/107-marine-cape",
   },
   {
     id: 17,
@@ -198,6 +214,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 700,
     fruit: 0,
+    link: "https://trello.com/c/8MybOlum/822-odens-shimenawa",
   },
   {
     id: 18,
@@ -209,6 +226,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 700,
     fruit: 0,
+    link: "https://trello.com/c/bJCQnI2s/819-king-of-the-pirates-cloak",
   },
   {
     id: 19,
@@ -220,6 +238,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 900,
     fruit: 1200,
+    link: "https://trello.com/c/CYRelmNZ/797-revolutionary-cape",
   },
   {
     id: 20,
@@ -231,6 +250,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 100,
     fruit: 0,
+    link: "https://trello.com/c/OQyaCQxA/121-royal-cape",
   },
   {
     id: 21,
@@ -242,6 +262,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 0,
     fruit: 1000,
+    link: "https://trello.com/c/cfHJDJvL/792-sandstorm-cape",
   },
   {
     id: 22,
@@ -253,6 +274,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 50,
     fruit: 0,
+    link: "https://trello.com/c/e1Bh21VA/96-shell-necklace",
   },
   {
     id: 23,
@@ -264,6 +286,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 200,
     fruit: 0,
+    link: "https://trello.com/c/PaQxP5U5/112-sign-of-the-strongest",
   },
   {
     id: 24,
@@ -275,6 +298,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 1350,
     fruit: 0,
+    link: "https://trello.com/c/vGhG7hZk/1220-swordsman-wraps",
   },
   {
     id: 25,
@@ -286,6 +310,7 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 800,
     fruit: 0,
+    link: "https://trello.com/c/DCPPfyHI/857-warriors-cape",
   },
   {
     id: 26,
@@ -297,5 +322,6 @@ export const backAccData: Accessories[] = [
     gun: 0,
     haki: 0,
     fruit: 0,
+    link: "https://trello.com/c/YTt1DTTp/1401-withered-cape",
   },
 ];

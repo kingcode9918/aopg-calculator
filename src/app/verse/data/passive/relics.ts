@@ -32,9 +32,9 @@ export const relicsData: buffs[] = [
   {
     id: 4,
     name: "Golden Earrings",
-    strengthBuff: 1.2,
-    swordBuff: 1.2,
-    specialBuff: 1.2,
+    strengthBuff: 1.25,
+    swordBuff: 1.25,
+    specialBuff: 1.25,
   },
   {
     id: 5,

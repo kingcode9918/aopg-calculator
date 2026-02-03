@@ -855,23 +855,37 @@ const Calculator = () => {
                   <span>{label} Accessory</span>
                 </label>
 
-                <select
-                  value={selectedId}
-                  onChange={(e) => handleAccChange(key, Number(e.target.value))}
-                  className={`select ${color} w-full`}
-                >
-                  <option value="" disabled>
-                    Pick a {label.toLowerCase()} accessory
-                  </option>
+                <div className="flex gap-2">
+                  <select
+                    value={selectedId}
+                    onChange={(e) => handleAccChange(key, Number(e.target.value))}
+                    className={`select ${color} flex-1`}
+                  >
+                    <option value="" disabled>
+                      Pick a {label.toLowerCase()} accessory
+                    </option>
 
-                  {[...data]
-                    .sort((a, b) => a.name.localeCompare(b.name))
-                    .map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.name}
-                      </option>
-                    ))}
-                </select>
+                    {[...data]
+                      .sort((a, b) => a.name.localeCompare(b.name))
+                      .map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                  </select>
+
+                  {selectedAccessory?.link && (
+                    <a
+                      href={selectedAccessory.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-square btn-ghost"
+                      title="How to get this item"
+                    >
+                      🔗
+                    </a>
+                  )}
+                </div>
 
                 {selectedAccessory && (
                   <div className="mt-2 bg-base-300 p-2 rounded-lg text-sm flex flex-wrap gap-x-3 gap-y-1 w-full">
@@ -919,23 +933,37 @@ const Calculator = () => {
                   <span>{label} Accessory</span>
                 </label>
 
-                <select
-                  value={selectedId}
-                  onChange={(e) => handleAccChange(key, Number(e.target.value))}
-                  className={`select ${color} w-full`}
-                >
-                  <option value="" disabled>
-                    Pick a {label.toLowerCase()} accessory
-                  </option>
+                <div className="flex gap-2">
+                  <select
+                    value={selectedId}
+                    onChange={(e) => handleAccChange(key, Number(e.target.value))}
+                    className={`select ${color} flex-1`}
+                  >
+                    <option value="" disabled>
+                      Pick a {label.toLowerCase()} accessory
+                    </option>
 
-                  {[...data]
-                    .sort((a, b) => a.name.localeCompare(b.name))
-                    .map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.name}
-                      </option>
-                    ))}
-                </select>
+                    {[...data]
+                      .sort((a, b) => a.name.localeCompare(b.name))
+                      .map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                  </select>
+
+                  {selectedAccessory?.link && (
+                    <a
+                      href={selectedAccessory.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-square btn-ghost"
+                      title="How to get this item"
+                    >
+                      🔗
+                    </a>
+                  )}
+                </div>
 
                 {selectedAccessory && (
                   <div className="mt-2 bg-base-300 p-2 rounded-lg text-sm flex flex-wrap gap-x-3 gap-y-1 w-full">
@@ -1048,24 +1076,38 @@ const Calculator = () => {
                       </span>
                     )}
                   </label>
-                  <select
-                    disabled={isDisabled}
-                    value={buffs[key as keyof typeof buffs]}
-                    onChange={(e) =>
-                      handleBuffChange(key, Number(e.target.value))
-                    }
-                    className="select disabled:opacity-50"
-                  >
-                    {[...data]
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      .sort((a: any, b: any) => a.name.localeCompare(b.name))
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      .map((buff: any) => (
-                        <option key={buff.id} value={buff.id}>
-                          {buff.name}
-                        </option>
-                      ))}
-                  </select>
+                  <div className="flex gap-2">
+                    <select
+                      disabled={isDisabled}
+                      value={buffs[key as keyof typeof buffs]}
+                      onChange={(e) =>
+                        handleBuffChange(key, Number(e.target.value))
+                      }
+                      className="select disabled:opacity-50 flex-1"
+                    >
+                      {[...data]
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        .sort((a: any, b: any) => a.name.localeCompare(b.name))
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        .map((buff: any) => (
+                          <option key={buff.id} value={buff.id}>
+                            {buff.name}
+                          </option>
+                        ))}
+                    </select>
+
+                    {selectedBuff?.link && (
+                      <a
+                        href={selectedBuff.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-square btn-ghost"
+                        title="How to get this buff"
+                      >
+                        🔗
+                      </a>
+                    )}
+                  </div>
                 </div>
               );
             })}

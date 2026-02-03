@@ -30,6 +30,7 @@ interface Accessories {
   gun: number;       // Gun damage bonus
   haki: number;      // Haki damage bonus
   fruit: number;     // Devil Fruit damage bonus
+  link?: string;     // Optional URL to wiki/guide on how to obtain
 }
 ```
 
@@ -57,6 +58,7 @@ interface Accessories {
     gun: 0,
     haki: 0,
     fruit: 0,
+    link: "https://wiki.example.com/accessory-name",  // Optional
   },
 ```
 
@@ -73,6 +75,7 @@ interface Accessories {
     gun: 0,
     haki: 200,
     fruit: 600,
+    link: "https://aopg.fandom.com/wiki/New_Head_Item",
   },
 ```
 
@@ -93,6 +96,7 @@ interface ActiveBuffs {
   gunbuff: number;      // Gun damage multiplier
   strengthbuff: number; // Strength damage multiplier
   hakibuff: number;     // Haki damage multiplier
+  link?: string;        // Optional URL to wiki/guide on how to obtain
 }
 ```
 
@@ -127,6 +131,7 @@ interface ActiveBuffs {
     gunbuff: 1,
     strengthbuff: 1,
     hakibuff: 1,
+    link: "https://wiki.example.com/buff-name",  // Optional
   },
 ```
 
@@ -141,6 +146,7 @@ interface ActiveBuffs {
     gunbuff: 2.5,
     strengthbuff: 2.5,
     hakibuff: 2.5,
+    link: "https://aopg.fandom.com/wiki/New_Transformation",
   },
 ```
 
@@ -203,6 +209,7 @@ interface RaceBuffs {
     strengthbuff: 1,
     hakibuff: 1,
     rank: "legendary",  // common, uncommon, rare, epic, legendary, mythical, divine
+    link: "https://wiki.example.com/title-name",  // Optional
   },
 ```
 
@@ -219,6 +226,7 @@ interface RaceBuffs {
     hakibuff: 1.5,
     note: "Special ability description or 'No other damage buff'",
     image: "/resources/newrace.jpg",
+    link: "https://wiki.example.com/race-name",  // Optional
   },
 ```
 
@@ -393,3 +401,4 @@ interface MoveDamage {
 - [ ] For moves: use `0` for unused move keys
 - [ ] For buffs: use `1` for neutral multipliers
 - [ ] For accessories: use `0` for unused stat bonuses
+- [ ] Add `link` field with wiki/guide URL (optional but recommended)

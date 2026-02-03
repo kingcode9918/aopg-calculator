@@ -18,6 +18,7 @@ export interface BaseBuff {
   gunbuff: number;      // Gun damage multiplier
   strengthbuff: number; // Strength damage multiplier
   hakibuff: number;     // Haki damage multiplier
+  link?: string;        // Optional URL to wiki/guide on how to obtain
 }
 
 /**

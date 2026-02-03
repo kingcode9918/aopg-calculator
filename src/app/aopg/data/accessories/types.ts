@@ -14,4 +14,5 @@ export interface Accessories {
   gun: number;       // Gun damage bonus
   haki: number;      // Haki damage bonus
   fruit: number;     // Devil Fruit damage bonus
+  link?: string;     // Optional URL to wiki/guide on how to obtain
 }

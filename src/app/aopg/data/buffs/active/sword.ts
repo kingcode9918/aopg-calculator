@@ -84,7 +84,7 @@ export const swordActiveBuffs: ActiveBuffs[] = [
   },
   {
     id: 9,
-    name: "True Gryphon (The One)",
+    name: "True Gryphon (The Emperor)",
     fruitbuff: 3,
     swordbuff: 3,
     gunbuff: 3,

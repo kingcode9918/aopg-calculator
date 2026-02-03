@@ -1,8 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Roblox Game Damage Calculator
+
+A Next.js web application for calculating damage in Roblox anime games. Currently supports **A One Piece Game (AOPG)** and **Verse Piece**.
+
+## Overview
+
+This calculator helps players optimize their builds by computing damage output based on:
+
+- **Base Stats** - Strength, Defense, Sword, Special
+- **Passive Buffs** - Titles, Races, Hakis, Relics, Abilities, Prestiges, Wisps
+- **Equipment** - Accessories with enhancement levels
+- **Traits** - Active and passive trait damage multipliers
+- **Moves** - Sword styles, Fruits, Fighting styles, Specs with base damage values
+- **Modifiers** - Enhancement levels, Blessing multipliers
+
+### Damage Formula
+
+```
+finalDamage = baseDamage * (1 + totalStat / 75) * damageMultiplier * enhanceMult * blessingMult
+```
+
+Where:
+- `totalStat` = baseStat + ghostStat + accessoryStat + traitStat
+- `damageMultiplier` = All buff multipliers combined (title, race, haki, relic, ability, prestige, wisp, trait)
+- `enhanceMult` = `enhanceLevel * 2.5` (sword moves only)
+- `blessingMult` = `2.5` when blessing is enabled
+
+## Features
+
+### AOPG Calculator (`/aopg`)
+- Accessory slots (Head, Top, Waist, Legs, Arm, Back)
+- Active buffs (Armament, Conquerors, Fighting, Fruit, Gun, Suit, Support, Sword)
+- Passive buffs (Race, Title, Blacksmith, Giant, Artifact)
+- Move damage tables for different fighting styles
+
+### Verse Calculator (`/verse`)
+- Base stat allocation with ghost rank bonuses
+- Passive buff selectors (Title, Race, Haki, Relic, Ability, Prestige, Wisp)
+- Accessory and Trait selection with enhancement
+- Move damage calculator with:
+  - Move types: Sword, Fruit, Fighting, Spec
+  - Enhancement levels (1-10) for swords
+  - Blessing modifier (2.5x damage)
+- Automatic stat-to-move mapping:
+  - Sword moves use Sword stat
+  - Fighting moves use Strength stat
+  - Fruit/Spec moves use Special stat
+
+## Tech Stack
+
+- **Framework**: Next.js 15 with Turbopack
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 4 + DaisyUI 5
+- **React**: React 19
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd aopg-calculator
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+### Running the Development Server
 
 ```bash
 npm run dev
@@ -14,23 +91,64 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+### Linting
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run lint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/app/
+├── page.tsx                 # Home page with calculator selection
+├── aopg/                    # AOPG Calculator
+│   ├── page.tsx
+│   ├── views/               # UI components
+│   ├── data/
+│   │   ├── accessories/     # Accessory data (head, top, waist, etc.)
+│   │   ├── buffs/           # Active & passive buff data
+│   │   └── moves/           # Move damage data
+│   ├── hooks/               # Custom hooks
+│   └── utils/               # Damage calculation utilities
+├── verse/                   # Verse Calculator
+│   ├── page.tsx
+│   ├── views/               # UI components
+│   │   └── calculator.tsx   # Main calculator component
+│   ├── data/
+│   │   ├── passive/         # Buff data (titles, races, hakis, etc.)
+│   │   ├── stat_related/    # Stats, accessories, traits
+│   │   └── moves/           # Move data (swords, fruits, etc.)
+│   └── HOW_TO_ADD_BUFF.md   # Guide for adding new data
+```
 
-## Deploy on Vercel
+## Adding New Data
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+See the following guides:
+- [Verse: How to Add Buffs & Moves](src/app/verse/HOW_TO_ADD_BUFF.md)
+- [AOPG: Data Guide](src/app/aopg/data/GUIDE.md)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/new-feature`)
+3. Commit your changes (`git commit -m 'Add new feature'`)
+4. Push to the branch (`git push origin feature/new-feature`)
+5. Open a Pull Request
+
+## Contact
+
+Need help? DM on Discord: **kingcode99**
+
+## License
+
+This project is for personal/educational use. Game data belongs to their respective Roblox game developers.

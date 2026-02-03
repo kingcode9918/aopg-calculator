@@ -22,6 +22,7 @@ export const armAccData: Accessories[] = [
     gun: 0,
     haki: 300,
     fruit: 1200,
+    link: "https://trello.com/c/mqHe8IQ4/1571-abyss-mark",
   },
   {
     id: 2,
@@ -33,6 +34,7 @@ export const armAccData: Accessories[] = [
     gun: 0,
     haki: 100,
     fruit: 0,
+    link: "https://trello.com/c/QtHOlnkg/82-blood-automail-arm",
   },
   {
     id: 3,
@@ -44,6 +46,7 @@ export const armAccData: Accessories[] = [
     gun: 0,
     haki: 0,
     fruit: 1000,
+    link: "https://trello.com/c/yCbuCmX3/836-gold-bands",
   },
   {
     id: 4,
@@ -55,6 +58,7 @@ export const armAccData: Accessories[] = [
     gun: 0,
     haki: 0,
     fruit: 0,
+    link: "https://trello.com/c/TgFXSnQ0/101-golden-hook",
   },
   {
     id: 5,
@@ -66,6 +70,7 @@ export const armAccData: Accessories[] = [
     gun: 0,
     haki: 0,
     fruit: 1200,
+    link: "https://trello.com/c/J7xvsmOt/1374-golden-rings-no-visual",
   },
   {
     id: 6,
@@ -77,6 +82,7 @@ export const armAccData: Accessories[] = [
     gun: 0,
     haki: 0,
     fruit: 0,
+    link: "https://trello.com/c/faNnmEqG/93-martial-artist-gloves",
   },
   {
     id: 7,
@@ -88,6 +94,7 @@ export const armAccData: Accessories[] = [
     gun: 0,
     haki: 700,
     fruit: 0,
+    link: "https://trello.com/c/2ijRvHRp/301-scaled-gauntlet",
   },
   {
     id: 8,
@@ -99,5 +106,6 @@ export const armAccData: Accessories[] = [
     gun: 0,
     haki: 0,
     fruit: 900,
+    link: "https://trello.com/c/nwlqrVWU/543-stone-gauntlets",
   },
 ];

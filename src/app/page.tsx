@@ -23,7 +23,7 @@ export default function Home() {
 
           {/* Verse Calculator Card */}
           <Link href="/verse">
-            <div className="bg-gradient-to-br from-purple-600/50 to-purple-800/50 rounded-2xl p-8 w-80 h-64 flex flex-col items-center justify-center shadow-2xl opacity-75">
+            <div className="bg-gradient-to-br from-purple-600/50 to-purple-800/50 hover:from-purple-500 hover:to-purple-700 transition-all duration-300 rounded-2xl p-8 w-80 h-64 flex flex-col items-center justify-center cursor-pointer shadow-2xl hover:shadow-purple-500/50 hover:scale-105 transform">
               <h2 className="text-3xl font-bold text-white mb-4">Verse</h2>
               <p className="text-purple-100 text-center text-lg">
                 Verse Piece Calculator
@@ -38,7 +38,7 @@ export default function Home() {
         {/* Footer */}
         <div className="mt-16 text-center">
           <div className="text-sm text-gray-400 mb-2">
-            Last updated: January 27, 2026
+            Last updated: February 8, 2026
           </div>
           <div className="text-xs text-gray-500">
             Need help? DM me on Discord:{" "}

@@ -1496,4 +1496,17 @@ export const devilFruitMoveDamage: MoveDamage[] = [
     U: 0,
     Y: 1897500,
   },
+  {
+    id: 115,
+    name: "Arrow",
+    M1: 0,
+    Q: 13800,
+    E: 23000,
+    R: 32200,
+    F: 46000,
+    G: 0,
+    T: 0,
+    U: 0,
+    Y: 0,
+  },
 ];

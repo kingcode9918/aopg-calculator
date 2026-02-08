@@ -218,4 +218,32 @@ export const titlesData: buffs[] = [
     swordBuff: 1,
     specialBuff: 2.1,
   },
+  {
+    id: 31,
+    name: "Indomitable Human Will",
+    strengthBuff: 1,
+    swordBuff: 1.66,
+    specialBuff: 1.66,
+  },
+  {
+    id: 32,
+    name: "Black Bull Captain",
+    strengthBuff: 1,
+    swordBuff: 2,
+    specialBuff: 1,
+  },
+  {
+    id: 33,
+    name: "Trusted Devil",
+    strengthBuff: 2.25,
+    swordBuff: 1,
+    specialBuff: 1,
+  },
+  {
+    id: 34,
+    name: "Control Devil",
+    strengthBuff: 1,
+    swordBuff: 1,
+    specialBuff: 2.25,
+  },
 ];

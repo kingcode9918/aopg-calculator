@@ -22,14 +22,14 @@ export default function Home() {
           </Link>
 
           {/* Verse Calculator Card */}
-          <Link href="#">
-            <div className="bg-gradient-to-br from-purple-600/50 to-purple-800/50 rounded-2xl p-8 w-80 h-64 flex flex-col items-center justify-center shadow-2xl opacity-75 cursor-not-allowed">
+          <Link href="/verse">
+            <div className="bg-gradient-to-br from-purple-600/50 to-purple-800/50 rounded-2xl p-8 w-80 h-64 flex flex-col items-center justify-center shadow-2xl opacity-75">
               <h2 className="text-3xl font-bold text-white mb-4">Verse</h2>
               <p className="text-purple-100 text-center text-lg">
                 Verse Piece Calculator
               </p>
-              <div className="mt-6 text-sm text-purple-200 font-semibold">
-                Coming Soon
+              <div className="mt-6 text-sm text-purple-200">
+                Click to enter →
               </div>
             </div>
           </Link>

@@ -721,4 +721,22 @@ export const accessoriesData: Stats[] = [
     special: 0,
     increment: 1500,
   },
+  {
+    id: 80,
+    name: "Chainsaw Mask",
+    strength: 90000,
+    defense: 95000,
+    sword: 90000,
+    special: 0,
+    increment: 1500,
+  },
+  {
+    id: 81,
+    name: "Special Contact",
+    strength: 0,
+    defense: 90000,
+    sword: 0,
+    special: 105000,
+    increment: 1000,
+  },
 ];

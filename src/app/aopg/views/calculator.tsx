@@ -7,6 +7,7 @@ import {
   armAccData,
   waistAccData,
   legsAccData,
+  passiveData,
 } from "../data/accessories";
 import {
   fightingActiveBuffs,
@@ -20,6 +21,7 @@ import {
   giantActiveBuffs,
   supportActiveBuffs,
   artifactActiveBuffs,
+  contractActiveBuffs,
 } from "../data/buffs/active";
 import { type BaseBuff } from "../data/buffs";
 import { titleBuffsData, raceBuffsData } from "../data/buffs/passive";
@@ -72,6 +74,12 @@ const accKeys = [
     data: legsAccData,
     color: "select-warning",
   },
+  {
+    key: "selectedPassive",
+    label: "Passive",
+    data: passiveData,
+    color: "select-info",
+  },
 ];
 
 const scaleTypes = [
@@ -108,6 +116,7 @@ const Calculator = () => {
     selectedArmAcc: 0,
     selectedWaistAcc: 0,
     selectedLegsAcc: 0,
+    selectedPassive: 0,
   });
   const [accBonus, setAccBonus] = useState({
     strength: 0,
@@ -135,6 +144,7 @@ const Calculator = () => {
     supportBuff: 0,
     hakiBuff: 0,
     artifactBuff: 0,
+    contractBuff: 0,
   });
   const [damageBuffs, setDamageBuffs] = useState({
     fruitBuff: 1,
@@ -186,7 +196,7 @@ const Calculator = () => {
 
   const selectedMove = useMemo(
     () => allMoves.find((m) => m.id === selectedMoveId),
-    [allMoves, selectedMoveId]
+    [allMoves, selectedMoveId],
   );
 
   const scaleToBuffKey: Record<DamageScale, keyof typeof damageBuffs> = {
@@ -280,6 +290,11 @@ const Calculator = () => {
         //eslint-disable-next-line @typescript-eslint/no-explicit-any
         scaleKey.replace("buff", "") as any,
       ),
+      selectedPassive: pickBestAccessory(
+        passiveData,
+        //eslint-disable-next-line @typescript-eslint/no-explicit-any
+        scaleKey.replace("buff", "") as any,
+      ),
     });
 
     const disabledBuff = selectedMove && sourceToBuffKey[selectedMove.source];
@@ -321,6 +336,7 @@ const Calculator = () => {
       blacksmithBuff: pickBestBuff(blacksmithActiveBuffs, scaleKey),
       giantBuff: pickBestBuff(giantActiveBuffs, scaleKey),
       artifactBuff: pickBestBuff(artifactActiveBuffs, scaleKey),
+      contractBuff: pickBestBuff(contractActiveBuffs, scaleKey),
     }));
 
     // ===== Base Stats =====
@@ -471,6 +487,7 @@ const Calculator = () => {
         { key: "swordSBuff", label: "Sword Style", data: swordActiveBuffs },
         { key: "fruitSBuff", label: "Devil Fruit", data: fruitActiveBuffs },
         { key: "suitBuff", label: "Suit", data: suitActiveBuffs },
+        { key: "contractBuff", label: "Contract", data: contractActiveBuffs },
       ],
     },
     {
@@ -517,6 +534,7 @@ const Calculator = () => {
       armAccData.find((a) => a.id === acc.selectedArmAcc),
       waistAccData.find((a) => a.id === acc.selectedWaistAcc),
       legsAccData.find((a) => a.id === acc.selectedLegsAcc),
+      passiveData.find((a) => a.id === acc.selectedPassive),
     ];
     setAccBonus({
       strength: accObjs.reduce((sum, a) => sum + (a?.strength || 0), 0),
@@ -546,6 +564,7 @@ const Calculator = () => {
       giant: getBuff(giantActiveBuffs, buffs.giantBuff),
       support: getBuff(supportActiveBuffs, buffs.supportBuff),
       artifact: getBuff(artifactActiveBuffs, buffs.artifactBuff),
+      contract: getBuff(contractActiveBuffs, buffs.contractBuff),
     };
     const buffTypes = [
       "fruitbuff",
@@ -571,7 +590,8 @@ const Calculator = () => {
               (selected.blacksmith[type] || 1) *
               (selected.giant[type] || 1) *
               (selected.support[type] || 1) *
-              (selected.artifact[type] || 1)
+              (selected.artifact[type] || 1) *
+              (selected.contract[type] || 1)
             : prod,
         1,
       ),
@@ -591,7 +611,8 @@ const Calculator = () => {
               (selected.blacksmith[type] || 1) *
               (selected.giant[type] || 1) *
               (selected.support[type] || 1) *
-              (selected.artifact[type] || 1)
+              (selected.artifact[type] || 1) *
+              (selected.contract[type] || 1)
             : prod,
         1,
       ),
@@ -611,7 +632,8 @@ const Calculator = () => {
               (selected.blacksmith[type] || 1) *
               (selected.giant[type] || 1) *
               (selected.support[type] || 1) *
-              (selected.artifact[type] || 1)
+              (selected.artifact[type] || 1) *
+              (selected.contract[type] || 1)
             : prod,
         1,
       ),
@@ -631,7 +653,8 @@ const Calculator = () => {
               (selected.blacksmith[type] || 1) *
               (selected.giant[type] || 1) *
               (selected.support[type] || 1) *
-              (selected.artifact[type] || 1)
+              (selected.artifact[type] || 1) *
+              (selected.contract[type] || 1)
             : prod,
         1,
       ),
@@ -651,7 +674,8 @@ const Calculator = () => {
               (selected.blacksmith[type] || 1) *
               (selected.giant[type] || 1) *
               (selected.support[type] || 1) *
-              (selected.artifact[type] || 1)
+              (selected.artifact[type] || 1) *
+              (selected.contract[type] || 1)
             : prod,
         1,
       ),
@@ -676,7 +700,7 @@ const Calculator = () => {
   }, [selectedMove, sourceToBuffKey, sourceToDamageScale]);
 
   const firstGroup = accKeys.slice(0, 3); // first 3
-  const secondGroup = accKeys.slice(3, 6); // next 3
+  const secondGroup = accKeys.slice(3, 7); // next 3
 
   // Render
   return (
@@ -858,7 +882,9 @@ const Calculator = () => {
                 <div className="flex gap-2">
                   <select
                     value={selectedId}
-                    onChange={(e) => handleAccChange(key, Number(e.target.value))}
+                    onChange={(e) =>
+                      handleAccChange(key, Number(e.target.value))
+                    }
                     className={`select ${color} flex-1`}
                   >
                     <option value="" disabled>
@@ -919,7 +945,7 @@ const Calculator = () => {
 
         {/* GROUP 2 — Next 3 accessories */}
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-          <legend className="fieldset-legend">Accessories (4-6)</legend>
+          <legend className="fieldset-legend">Accessories (4-7)</legend>
 
           {secondGroup.map(({ key, label, data, color }) => {
             const selectedId = acc[key as keyof typeof acc];
@@ -936,7 +962,9 @@ const Calculator = () => {
                 <div className="flex gap-2">
                   <select
                     value={selectedId}
-                    onChange={(e) => handleAccChange(key, Number(e.target.value))}
+                    onChange={(e) =>
+                      handleAccChange(key, Number(e.target.value))
+                    }
                     className={`select ${color} flex-1`}
                   >
                     <option value="" disabled>

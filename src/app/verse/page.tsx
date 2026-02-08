@@ -20,6 +20,11 @@ export default function VerseCalculator() {
           <UpdateModal
             updates={[
               {
+                version: "v1.1.2.0",
+                date: "February 8, 2026",
+                changes: ["Added Chainsaw Update", "Added Black Clover"],
+              },
+              {
                 version: "v1.1.1.2",
                 date: "January 28, 2026",
                 changes: [

@@ -343,4 +343,13 @@ export const traitsData: Stats[] = [
     special: 120000,
     dmgMult: 22,
   },
+  {
+    id: 38,
+    name: "Feared Devil",
+    strength: 200000,
+    defense: 5000,
+    sword: 50000,
+    special: 50000,
+    dmgMult: 20,
+  },
 ];

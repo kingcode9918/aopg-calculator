@@ -342,4 +342,15 @@ export const raceBuffsData: RaceBuffs[] = [
     note: "No other damage buff",
     image: "/resources/santa.jpg",
   },
+  {
+    id: 31,
+    name: "Giant",
+    fruitbuff: 2.7,
+    swordbuff: 2.7,
+    gunbuff: 2.7,
+    strengthbuff: 2.7,
+    hakibuff: 2.7,
+    note: "No other damage buff",
+    image: "/resources/santa.jpg",
+  },
 ];

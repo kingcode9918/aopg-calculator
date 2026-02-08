@@ -139,6 +139,11 @@ export default function AopgCalculator() {
           <UpdateModal
             updates={[
               {
+                version: "v1.1.2.0",
+                date: "February 8, 2026",
+                changes: ["Added Shanks Update", "Added Imu's Update"],
+              },
+              {
                 version: "v1.1.1.1",
                 date: "January 27, 2026",
                 changes: [

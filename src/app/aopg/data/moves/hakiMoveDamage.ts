@@ -92,4 +92,17 @@ export const hakiMoveDamage: MoveDamage[] = [
     U: 0,
     Y: 0,
   },
+  {
+    id: 7,
+    name: "Shadow Ruler's Authority",
+    M1: 300000,
+    Q: 0,
+    E: 0,
+    R: 0,
+    F: 0,
+    G: 0,
+    T: 0,
+    U: 0,
+    Y: 0,
+  },
 ];

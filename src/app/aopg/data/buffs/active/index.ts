@@ -13,3 +13,4 @@ export { giantActiveBuffs } from "../passive/giant";
 export { suitActiveBuffs } from "./suit";
 export { supportActiveBuffs } from "./support";
 export { artifactActiveBuffs } from "../passive/artifact";
+export { contractActiveBuffs } from "./contract";

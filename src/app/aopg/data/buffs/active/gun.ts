@@ -1,8 +1,7 @@
 import type { ActiveBuffs } from "../types";
 
-
 export const gunActiveBuffs: ActiveBuffs[] = [
-{
+  {
     id: 0,
     name: "None",
     fruitbuff: 1,
@@ -22,6 +21,15 @@ export const gunActiveBuffs: ActiveBuffs[] = [
   },
   {
     id: 2,
+    name: "Cupid Bow (Flaming Love)",
+    fruitbuff: 2.5,
+    swordbuff: 2.5,
+    gunbuff: 2.5,
+    strengthbuff: 2.5,
+    hakibuff: 2.5,
+  },
+  {
+    id: 3,
     name: "Frost Bazooka (Subzero)",
     fruitbuff: 2,
     swordbuff: 2,
@@ -30,7 +38,7 @@ export const gunActiveBuffs: ActiveBuffs[] = [
     hakibuff: 2,
   },
   {
-    id: 3,
+    id: 4,
     name: "Jolly Rapier V2 (Krampus Awakening)",
     fruitbuff: 1,
     swordbuff: 1,

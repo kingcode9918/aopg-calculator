@@ -153,6 +153,12 @@ const Calculator = () => {
     strengthBuff: 1,
     hakiBuff: 1,
   });
+
+  const [availableFightingBuffs, setAvailableFightingBuffs] =
+    useState(fightingActiveBuffs);
+  const [availableSupportBuffs, setAvailableSupportBuffs] =
+    useState(supportActiveBuffs);
+
   type MoveSource = "fighting" | "fruit" | "support" | "gun" | "sword" | "haki";
 
   const allMoves = useMemo(() => {
@@ -305,7 +311,7 @@ const Calculator = () => {
       fightingBuff:
         disabledBuff === "fightingBuff"
           ? 0
-          : pickBestBuff(fightingActiveBuffs, scaleKey),
+          : pickBestBuff(availableFightingBuffs, scaleKey),
 
       gunSBuff:
         disabledBuff === "gunSBuff"
@@ -325,7 +331,7 @@ const Calculator = () => {
       supportBuff:
         disabledBuff === "supportBuff"
           ? 0
-          : pickBestBuff(supportActiveBuffs, scaleKey),
+          : pickBestBuff(availableSupportBuffs, scaleKey),
       suitBuff: pickBestBuff(suitActiveBuffs, scaleKey),
       titleBuff: selectedMove?.name?.toLowerCase().includes("title")
         ? 0
@@ -476,12 +482,12 @@ const Calculator = () => {
         {
           key: "supportBuff",
           label: "Support Style",
-          data: supportActiveBuffs,
+          data: availableSupportBuffs,
         },
         {
           key: "fightingBuff",
           label: "Fighting Style",
-          data: fightingActiveBuffs,
+          data: availableFightingBuffs,
         },
         { key: "gunSBuff", label: "Gun Style", data: gunActiveBuffs },
         { key: "swordSBuff", label: "Sword Style", data: swordActiveBuffs },
@@ -688,7 +694,24 @@ const Calculator = () => {
     if (!selectedMove) return;
 
     const buffToDisable = sourceToBuffKey[selectedMove.source];
+    const hasStudentPassive = selectedMove?.name
+      ?.toLowerCase()
+      .includes("student of the strongest one");
+    const hasCopyingPassive = selectedMove?.name
+      ?.toLowerCase()
+      .includes("copying the dishonored one");
     const hasTitleInName = selectedMove.name?.toLowerCase().includes("title");
+
+    const fightingFiltered = hasCopyingPassive
+      ? fightingActiveBuffs.filter((f) => f.id === 0 || f.id === 6)
+      : fightingActiveBuffs;
+
+    const supportFiltered = hasStudentPassive
+      ? supportActiveBuffs.filter((f) => f.id === 0 || f.id === 11)
+      : supportActiveBuffs;
+
+    setAvailableFightingBuffs(fightingFiltered);
+    setAvailableSupportBuffs(supportFiltered);
 
     setBuffs((prev) => ({
       ...prev,

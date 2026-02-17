@@ -198,7 +198,7 @@ const Calculator = () => {
 
     // Apply enhance multiplier (sword only)
     if (moveType === "sword") {
-      damage = damage * moveState.enhanceLevel * 2.5;
+      damage = damage + moveState.enhanceLevel * 2.5;
     }
 
     // Apply blessing multiplier (sword, fighting, spec - not fruit)

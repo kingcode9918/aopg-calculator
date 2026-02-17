@@ -90,7 +90,10 @@ export default function AopgCalculator() {
   const getMoveData = () =>
     (moveDataMap[moveSelected] ?? [])
       .filter(
-        (move) => !move.name?.toLowerCase().includes("title"), // hide moves with "title" in text
+        (move) =>
+          !move.name?.toLowerCase().includes("title") &&
+          !move.name?.toLowerCase().includes("copying the dishonored one") &&
+          !move.name?.toLowerCase().includes("student of the strongest one"), // hide moves with "title" in text
       )
       .map((move) => ({
         ...move,

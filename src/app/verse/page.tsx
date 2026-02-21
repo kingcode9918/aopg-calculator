@@ -20,6 +20,16 @@ export default function VerseCalculator() {
           <UpdateModal
             updates={[
               {
+                version: "v1.1.4.0",
+                date: "February 22, 2026",
+                changes: ["Enable the moves damage and table", "Currently got the damage for Combat and Yuji", "Will add the other moves damage soon"],
+              },
+              {
+                version: "v1.1.3.0",
+                date: "February 17, 2026",
+                changes: ["Added Yuta Update"],
+              },
+              {
                 version: "v1.1.2.0",
                 date: "February 8, 2026",
                 changes: ["Added Chainsaw Update", "Added Black Clover"],

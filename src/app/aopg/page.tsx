@@ -142,6 +142,11 @@ export default function AopgCalculator() {
           <UpdateModal
             updates={[
               {
+                version: "v1.1.4.0",
+                date: "February 22, 2026",
+                changes: ["Updated the Suits Buff", "Updated the Support Styles Buff"],
+              },
+              {
                 version: "v1.1.3.0",
                 date: "February 17, 2026",
                 changes: ["Added Yuta Update"],

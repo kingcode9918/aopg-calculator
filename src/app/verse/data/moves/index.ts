@@ -1,6 +1,6 @@
-export type { move } from "./types";
+export type { MoveHit, MoveSlot, MoveSet } from "./types";
 
 export { swordsData } from "./swords";
 export { fruitsData } from "./fruits";
-export { fightingsData } from "./fightings";
+export { fightingsData } from "./combat";
 export { specsData } from "./specs";

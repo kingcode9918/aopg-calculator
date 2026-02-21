@@ -20,7 +20,7 @@ import {
   fightingsData,
   specsData,
 } from "../data/moves";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { MoveSlot } from "../data/moves/types";
 const formatNumber = (num: number): string => {
   const absNum = Math.abs(num);
   if (absNum >= 1e12) {
@@ -100,11 +100,9 @@ const Calculator = () => {
   const [abilityId, setAbilityId] = useState(0);
   const [prestigeId, setPrestigeId] = useState(0);
   const [wispId, setWispId] = useState(0);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [moveType, setMoveType] = useState<
     "sword" | "fruit" | "fighting" | "spec"
   >("sword");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [moveState, setMoveState] = useState({
     selectedId: 0,
     enhanceLevel: 1,
@@ -153,9 +151,7 @@ const Calculator = () => {
         return specsData;
     }
   };
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const currentMoveData = getMoveData();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const selectedMove =
     currentMoveData.find((m) => m.id === moveState.selectedId) ||
     currentMoveData[0];
@@ -172,12 +168,13 @@ const Calculator = () => {
         return "special";
     }
   };
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const calculateMoveDamage = (baseDamage: number) => {
+  const calculateMoveDamage = (input: number | MoveSlot | undefined) => {
+    if (input === undefined) return 0;
+
     // Get the appropriate stat key for this move type
     const statKey = getMoveStatKey();
 
-    // Calculate total stat: baseStats + ghostStats + accessory + trait
+    // Calculate total stat components
     const baseStat = baseStats[statKey];
     const ghostStat = ghostStats[statKey];
     const accessoryStat =
@@ -190,23 +187,39 @@ const Calculator = () => {
     const totalStat =
       baseStat > 0 ? baseStat + ghostStat + accessoryStat + traitStat : 0;
 
-    // Get the damage multiplier from buffs (title, race, haki, etc.)
+    // Get the damage multiplier from buffs
     const damageMultiplier = getStatMultiplier(statKey);
 
-    // Base formula: baseDamage * (1 + stat/75) * damageMultiplier
-    let damage = baseDamage * (1 + totalStat / 75) * damageMultiplier;
+    const getBaseFormula = (base: number) => {
+      return base * (1 + totalStat / 75) * damageMultiplier;
+    };
+
+    let totalDamage = 0;
+
+    if (typeof input === "number") {
+      totalDamage = getBaseFormula(input);
+    } else if (input && typeof input === "object" && "hits" in input) {
+      totalDamage = input.hits.reduce((sum, hit) => {
+        return sum + getBaseFormula(hit.damage * (hit.multiplier || 1));
+      }, 0);
+    }
 
     // Apply enhance multiplier (sword only)
     if (moveType === "sword") {
-      damage = damage + moveState.enhanceLevel * 2.5;
+      // For multi-hit, apply per hit if it's a slot, otherwise apply once
+      if (typeof input === "object" && "hits" in input) {
+        totalDamage += moveState.enhanceLevel * 2.5 * input.hits.length;
+      } else {
+        totalDamage += moveState.enhanceLevel * 2.5;
+      }
     }
 
     // Apply blessing multiplier (sword, fighting, spec - not fruit)
     if (moveType !== "fruit" && moveState.blessing) {
-      damage = damage * 2.5;
+      totalDamage = totalDamage * 2.5;
     }
 
-    return damage;
+    return totalDamage;
   };
 
   const baseDmgMult =
@@ -572,7 +585,129 @@ const Calculator = () => {
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-6 mt-6">
           <legend className="fieldset-legend font-bold">Moves</legend>
 
-          <h1> Coming Soon! </h1>
+          <div className="flex gap-4 mb-4">
+            <div className="flex-1">
+              <label className="label">
+                <span className="font-bold">Move Type</span>
+              </label>
+              <select
+                className="select select-bordered w-full"
+                value={moveType}
+                onChange={(e) => {
+                  setMoveType(e.target.value as typeof moveType);
+                  setMoveState((prev) => ({ ...prev, selectedId: 0 }));
+                }}
+              >
+                <option value="sword">Sword</option>
+                <option value="fruit">Fruit</option>
+                <option value="fighting">Fighting</option>
+                <option value="spec">Spec</option>
+              </select>
+            </div>
+
+            <div className="flex-1">
+              <label className="label">
+                <span className="font-bold">Select Style</span>
+              </label>
+              <select
+                className="select select-bordered w-full"
+                value={moveState.selectedId}
+                onChange={(e) =>
+                  setMoveState((prev) => ({
+                    ...prev,
+                    selectedId: Number(e.target.value),
+                  }))
+                }
+              >
+                {currentMoveData.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {(moveType === "sword" ||
+            moveType === "fighting" ||
+            moveType === "spec") && (
+            <div className="flex gap-4 mb-4">
+              {moveType === "sword" && (
+                <div className="flex-1">
+                  <label className="label">
+                    <span className="font-bold">Enhance Level</span>
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="10"
+                    value={moveState.enhanceLevel}
+                    onChange={(e) => {
+                      const val = Math.min(
+                        10,
+                        Math.max(1, Number(e.target.value) || 1),
+                      );
+                      setMoveState((prev) => ({
+                        ...prev,
+                        enhanceLevel: val,
+                      }));
+                    }}
+                    className="input input-bordered w-full text-center"
+                  />
+                </div>
+              )}
+
+              <div className="flex-1">
+                <label className="label">
+                  <span className="font-bold">Blessing</span>
+                </label>
+                <div className="input input-bordered w-full flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-primary"
+                    checked={moveState.blessing}
+                    onChange={(e) =>
+                      setMoveState((prev) => ({
+                        ...prev,
+                        blessing: e.target.checked,
+                      }))
+                    }
+                  />
+                  <span>{moveState.blessing ? "x2.5 DMG" : "Off"}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="overflow-x-auto">
+            <table className="table table-zebra w-full">
+              <thead>
+                <tr>
+                  <th>Move</th>
+                  {/* <th>Base DMG</th> */}
+                  <th>Final DMG</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(["M1", "Z", "X", "C", "V", "F"] as const).map((move) => {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  const moveValue = (selectedMove as any)[move];
+                  if (moveValue === undefined) return null;
+
+                  return (
+                    <tr key={move}>
+                      <td className="font-bold">{move}</td>
+                      <td className="text-success font-semibold">
+                        {formatNumber(
+                          Math.round(calculateMoveDamage(moveValue)),
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </fieldset>
       </div>
 

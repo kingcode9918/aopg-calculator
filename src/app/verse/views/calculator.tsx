@@ -105,7 +105,7 @@ const Calculator = () => {
   >("sword");
   const [moveState, setMoveState] = useState({
     selectedId: 0,
-    enhanceLevel: 1,
+    enhanceLevel: 0,
     blessing: false,
   });
 
@@ -168,13 +168,8 @@ const Calculator = () => {
         return "special";
     }
   };
-  const calculateMoveDamage = (input: number | MoveSlot | undefined) => {
-    if (input === undefined) return 0;
-
-    // Get the appropriate stat key for this move type
+  const calculateHitDamage = (damage: number, multiplier = 1) => {
     const statKey = getMoveStatKey();
-
-    // Calculate total stat components
     const baseStat = baseStats[statKey];
     const ghostStat = ghostStats[statKey];
     const accessoryStat =
@@ -187,39 +182,50 @@ const Calculator = () => {
     const totalStat =
       baseStat > 0 ? baseStat + ghostStat + accessoryStat + traitStat : 0;
 
-    // Get the damage multiplier from buffs
     const damageMultiplier = getStatMultiplier(statKey);
 
-    const getBaseFormula = (base: number) => {
-      return base * (1 + totalStat / 75) * damageMultiplier;
-    };
+    // Apply sword enhance to base damage
+    let baseWithEnhance = damage * multiplier;
+    if (moveType === "sword") {
+      baseWithEnhance += moveState.enhanceLevel * 2.5;
+    }
 
-    let totalDamage = 0;
+    let finalDamage =
+      baseWithEnhance * (1 + totalStat / 75) * damageMultiplier;
+
+    // Apply blessing
+    if (moveType !== "fruit" && moveState.blessing) {
+      finalDamage *= 2.5;
+    }
+
+    return finalDamage;
+  };
+
+  const renderMoveDamage = (input: number | MoveSlot | undefined) => {
+    if (input === undefined) return null;
 
     if (typeof input === "number") {
-      totalDamage = getBaseFormula(input);
-    } else if (input && typeof input === "object" && "hits" in input) {
-      totalDamage = input.hits.reduce((sum, hit) => {
-        return sum + getBaseFormula(hit.damage * (hit.multiplier || 1));
-      }, 0);
+      return formatNumber(Math.round(calculateHitDamage(input)));
     }
 
-    // Apply enhance multiplier (sword only)
-    if (moveType === "sword") {
-      // For multi-hit, apply per hit if it's a slot, otherwise apply once
-      if (typeof input === "object" && "hits" in input) {
-        totalDamage += moveState.enhanceLevel * 2.5 * input.hits.length;
-      } else {
-        totalDamage += moveState.enhanceLevel * 2.5;
-      }
+    if (!input.hits || input.hits.length === 0) {
+      return input.desc || "0";
     }
 
-    // Apply blessing multiplier (sword, fighting, spec - not fruit)
-    if (moveType !== "fruit" && moveState.blessing) {
-      totalDamage = totalDamage * 2.5;
+    const totalDamage = input.hits.reduce((sum, hit) => {
+      return sum + calculateHitDamage(hit.damage, hit.multiplier || 1);
+    }, 0);
+
+    if (input.hits.length === 1) {
+      return formatNumber(Math.round(totalDamage));
     }
 
-    return totalDamage;
+    const firstHit = calculateHitDamage(
+      input.hits[0].damage,
+      input.hits[0].multiplier || 1,
+    );
+
+    return `${formatNumber(Math.round(firstHit))} - ${formatNumber(Math.round(totalDamage))} | ${input.hits.length} hits`;
   };
 
   const baseDmgMult =
@@ -475,12 +481,6 @@ const Calculator = () => {
                     Best
                   </button>
                 )}
-
-                {statKey !== "defense" && getStatMultiplier(statKey) > 1 && (
-                  <span className="text-warning font-semibold">
-                    x{getStatMultiplier(statKey).toFixed(2)}
-                  </span>
-                )}
               </div>
             );
           })}
@@ -572,10 +572,7 @@ const Calculator = () => {
               >
                 {passiveTraitsData.map((p) => (
                   <option key={p.id} value={p.id}>
-                    {p.name}{" "}
-                    {p.dmgMult > 1
-                      ? `(${((p.dmgMult - 1) * 100).toFixed(0)}% DMG)`
-                      : ""}
+                    {p.name}
                   </option>
                 ))}
               </select>
@@ -637,23 +634,23 @@ const Calculator = () => {
                   <label className="label">
                     <span className="font-bold">Enhance Level</span>
                   </label>
-                  <input
-                    type="number"
-                    min="1"
-                    max="10"
-                    value={moveState.enhanceLevel}
-                    onChange={(e) => {
-                      const val = Math.min(
-                        10,
-                        Math.max(1, Number(e.target.value) || 1),
-                      );
-                      setMoveState((prev) => ({
-                        ...prev,
-                        enhanceLevel: val,
-                      }));
-                    }}
-                    className="input input-bordered w-full text-center"
-                  />
+                    <input
+                      type="number"
+                      min="0"
+                      max="10"
+                      value={moveState.enhanceLevel}
+                      onChange={(e) => {
+                        const val = Math.min(
+                          10,
+                          Math.max(0, Number(e.target.value) || 0),
+                        );
+                        setMoveState((prev) => ({
+                          ...prev,
+                          enhanceLevel: val,
+                        }));
+                      }}
+                      className="input input-bordered w-full text-center"
+                    />
                 </div>
               )}
 
@@ -698,9 +695,7 @@ const Calculator = () => {
                     <tr key={move}>
                       <td className="font-bold">{move}</td>
                       <td className="text-success font-semibold">
-                        {formatNumber(
-                          Math.round(calculateMoveDamage(moveValue)),
-                        )}
+                        {renderMoveDamage(moveValue)}
                       </td>
                     </tr>
                   );

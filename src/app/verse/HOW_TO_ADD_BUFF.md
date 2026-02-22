@@ -333,7 +333,7 @@ const calculateMoveDamage = (baseDamage: number) => {
 
   // Apply enhance multiplier (sword only, or add your type)
   if (moveType === "sword") {
-    damage = damage * moveState.enhanceLevel * 2.5;
+    damage = (damage + moveState.enhanceLevel * 2.5) * multipliers;
   }
 
   // Apply blessing multiplier (sword, fighting, spec - not fruit)
@@ -392,14 +392,15 @@ If your move type needs enhance/blessing controls, update the conditional render
 The move damage is calculated as:
 
 ```
-finalDamage = baseDamage * (1 + totalStat / 75) * damageMultiplier * enhanceMult * blessingMult
+finalDamage = (baseDamage * multiplier + enhanceAmt) * (1 + totalStat / 75) * damageMultiplier * blessingMult
 ```
 
 Where:
 - `baseDamage` = The move's base damage (M1, Z, X, C, V, or F)
+- `multiplier` = The move's internal hit multiplier
 - `totalStat` = baseStat + ghostStat + accessoryStat + traitStat
 - `damageMultiplier` = All buff multipliers (title, race, haki, relic, ability, prestige, wisp, trait)
-- `enhanceMult` = `enhanceLevel * 2.5` (sword only)
+- `enhanceAmt` = `enhanceLevel * 2.5` (added to base damage, sword only)
 - `blessingMult` = `2.5` if blessing is enabled
 
 ## Move Type to Stat Mapping
@@ -413,7 +414,7 @@ Where:
 
 ## Notes
 
-- Move types that use `enhance` multiply damage by `enhanceLevel * 2.5`
+- Move types that use `enhance` add `enhanceLevel * 2.5` to base damage
 - Move types that use `blessing` multiply damage by `2.5` when enabled
 - Fruit moves have no enhance or blessing multipliers (raw stat damage only)
 - The stat used affects which buffs apply (e.g., sword buffs only affect sword stat)

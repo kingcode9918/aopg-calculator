@@ -551,4 +551,14 @@ export const titleBuffsData: TitleBuffs[] = [
     hakibuff: 3.75,
     rank: "divine",
   },
+  {
+    id: 55,
+    name: "Yandere",
+    fruitbuff: 2.0,
+    swordbuff: 2.0,
+    gunbuff: 2.0,
+    strengthbuff: 2.0,
+    hakibuff: 2.0,
+    rank: "divine",
+  },
 ];

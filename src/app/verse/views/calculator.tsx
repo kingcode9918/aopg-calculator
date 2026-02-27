@@ -24,18 +24,18 @@ import type { MoveSlot } from "../data/moves/types";
 const formatNumber = (num: number): string => {
   const absNum = Math.abs(num);
   if (absNum >= 1e12) {
-    return (num / 1e12).toFixed(1).replace(/\.0$/, "") + "T";
+    return (num / 1e12).toFixed(2).replace(/\.00$/, "") + "T";
   }
   if (absNum >= 1e9) {
-    return (num / 1e9).toFixed(1).replace(/\.0$/, "") + "B";
+    return (num / 1e9).toFixed(2).replace(/\.00$/, "") + "B";
   }
   if (absNum >= 1e6) {
-    return (num / 1e6).toFixed(1).replace(/\.0$/, "") + "M";
+    return (num / 1e6).toFixed(2).replace(/\.00$/, "") + "M";
   }
   if (absNum >= 1e3) {
-    return (num / 1e3).toFixed(1).replace(/\.0$/, "") + "k";
+    return (num / 1e3).toFixed(2).replace(/\.00$/, "") + "k";
   }
-  return num.toString();
+  return num.toFixed(2);
 };
 
 const statTypes = [
@@ -168,7 +168,11 @@ const Calculator = () => {
         return "special";
     }
   };
-  const calculateHitDamage = (damage: number, multiplier = 1) => {
+  const calculateHitDamage = (
+    damage: number,
+    multiplier = 1,
+    enhanceMult = 2.5,
+  ) => {
     const statKey = getMoveStatKey();
     const baseStat = baseStats[statKey];
     const ghostStat = ghostStats[statKey];
@@ -187,7 +191,7 @@ const Calculator = () => {
     // Apply sword enhance to base damage
     let baseWithEnhance = damage * multiplier;
     if (moveType === "sword") {
-      baseWithEnhance += moveState.enhanceLevel * 2.5;
+      baseWithEnhance += moveState.enhanceLevel * enhanceMult;
     }
 
     let finalDamage =
@@ -205,27 +209,36 @@ const Calculator = () => {
     if (input === undefined) return null;
 
     if (typeof input === "number") {
-      return formatNumber(Math.round(calculateHitDamage(input)));
+      return formatNumber(calculateHitDamage(input, 1, 2.5));
     }
 
     if (!input.hits || input.hits.length === 0) {
       return input.desc || "0";
     }
 
+    const defaultUpgrade = input.upgrade ?? 2.5;
+
     const totalDamage = input.hits.reduce((sum, hit) => {
-      return sum + calculateHitDamage(hit.damage, hit.multiplier || 1);
+      const hitUpgrade = hit.upgrade ?? defaultUpgrade;
+      return (
+        sum + calculateHitDamage(hit.damage, hit.multiplier || 1, hitUpgrade)
+      );
     }, 0);
 
     if (input.hits.length === 1) {
-      return formatNumber(Math.round(totalDamage));
+      return formatNumber(totalDamage);
     }
 
+    const firstHitUpgrade = input.hits[0].upgrade ?? defaultUpgrade;
     const firstHit = calculateHitDamage(
       input.hits[0].damage,
       input.hits[0].multiplier || 1,
+      firstHitUpgrade,
     );
 
-    return `${formatNumber(Math.round(firstHit))} - ${formatNumber(Math.round(totalDamage))} | ${input.hits.length} hits`;
+    return `${formatNumber(firstHit)} - ${formatNumber(totalDamage)} | ${
+      input.hits.length
+    } hits`;
   };
 
   const baseDmgMult =

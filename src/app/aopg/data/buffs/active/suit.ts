@@ -68,7 +68,7 @@ export const suitActiveBuffs: ActiveBuffs[] = [
     id: 7,
     name: "Swordsman Heist Suit",
     fruitbuff: 1.0,
-    swordbuff: 3.21,
+    swordbuff: 3.12,
     gunbuff: 1.0,
     strengthbuff: 1.0,
     hakibuff: 1,

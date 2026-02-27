@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import UpdateModal from "./components/UpdateModal";
 
 export default function Home() {
   return (
@@ -37,9 +38,93 @@ export default function Home() {
 
         {/* Footer */}
         <div className="mt-16 text-center">
-          <div className="text-sm text-gray-400 mb-2">
-            Last updated: February 8, 2026
-          </div>
+          <span className="text-sm text-gray-400 mb-2">
+            Last updated: February 27, 2026
+          </span>
+          <UpdateModal
+            updates={[
+              {
+                version: "v1.2.1.0 | Verse Piece",
+                date: "February 27, 2026",
+                changes: ["Added Multiple Enchance Buff for damage"],
+              },
+              {
+                version: "v1.2.0.0 | AOPG",
+                date: "February 27, 2026",
+                changes: [
+                  "Added Love Fruit",
+                  "Added Love Goddess",
+                  "Added Yandere",
+                ],
+              },
+              {
+                version: "v1.1.9.0 | Verse Piece",
+                date: "February 22, 2026",
+                changes: [
+                  "Enable the moves damage and table",
+                  "Currently got the damage for Combat and Yuji",
+                  "Will add the other moves damage soon",
+                ],
+              },
+              {
+                version: "v1.1.8.0 | Verse Piece",
+                date: "February 17, 2026",
+                changes: ["Added Yuta Update"],
+              },
+              {
+                version: "v1.1.7.0 | Verse Piece",
+                date: "February 8, 2026",
+                changes: ["Added Chainsaw Update", "Added Black Clover"],
+              },
+              {
+                version: "v1.1.6.0 | Verse Piece",
+                date: "January 28, 2026",
+                changes: [
+                  "Added Race",
+                  "Added Trait",
+                  "Added Title",
+                  "Added Haki",
+                ],
+              },
+              {
+                version: "v1.1.5.0 | Verse Piece",
+                date: "January 27, 2026",
+                changes: [
+                  "Initial release",
+                  "Added base stats calculator with 80,000 total cap",
+                  "Added accessory selector with enhancement system",
+                  "Added 78 accessories with increment values",
+                ],
+              },
+              {
+                version: "v1.1.4.0 | AOPG",
+                date: "February 22, 2026",
+                changes: [
+                  "Updated the Suits Buff",
+                  "Updated the Support Styles Buff",
+                ],
+              },
+              {
+                version: "v1.1.3.0 | AOPG",
+                date: "February 17, 2026",
+                changes: ["Added Yuta Update"],
+              },
+              {
+                version: "v1.1.2.0 | AOPG",
+                date: "February 8, 2026",
+                changes: ["Added Shanks Update", "Added Imu's Update"],
+              },
+              {
+                version: "v1.1.1.0 | AOPG",
+                date: "January 27, 2026",
+                changes: [
+                  "Added Final Soul Damage",
+                  "Added Final Soul Buff",
+                  "Added new suit called Mother's Kimono",
+                ],
+              },
+            ]}
+          />
           <div className="text-xs text-gray-500">
             Need help? DM me on Discord:{" "}
             <span className="font-semibold text-gray-300">kingcode99</span>

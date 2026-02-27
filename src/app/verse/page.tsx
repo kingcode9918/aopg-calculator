@@ -1,7 +1,6 @@
 "use client";
 import Calculator from "./views/calculator";
 import Navbar from "./views/navbar";
-import UpdateModal from "../components/UpdateModal";
 
 export default function VerseCalculator() {
   return (
@@ -11,52 +10,6 @@ export default function VerseCalculator() {
 
       <main className="flex flex-col gap-8 items-center sm:items-start p-4">
         <Calculator />
-
-        {/* Footer / info */}
-        <div className="fixed bottom-3 left-3 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-          <span>
-            Verse Calculator v1.1.1.1 | Last updated: January 27, 2026
-          </span>
-          <UpdateModal
-            updates={[
-              {
-                version: "v1.1.4.0",
-                date: "February 22, 2026",
-                changes: ["Enable the moves damage and table", "Currently got the damage for Combat and Yuji", "Will add the other moves damage soon"],
-              },
-              {
-                version: "v1.1.3.0",
-                date: "February 17, 2026",
-                changes: ["Added Yuta Update"],
-              },
-              {
-                version: "v1.1.2.0",
-                date: "February 8, 2026",
-                changes: ["Added Chainsaw Update", "Added Black Clover"],
-              },
-              {
-                version: "v1.1.1.2",
-                date: "January 28, 2026",
-                changes: [
-                  "Added Race",
-                  "Added Trait",
-                  "Added Title",
-                  "Added Haki",
-                ],
-              },
-              {
-                version: "v1.1.1.1",
-                date: "January 27, 2026",
-                changes: [
-                  "Initial release",
-                  "Added base stats calculator with 80,000 total cap",
-                  "Added accessory selector with enhancement system",
-                  "Added 78 accessories with increment values",
-                ],
-              },
-            ]}
-          />
-        </div>
 
         <div className="fixed bottom-3 right-3 group cursor-help">
           <div className="text-xs text-gray-500 dark:text-gray-400">

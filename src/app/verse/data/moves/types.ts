@@ -25,16 +25,21 @@ export interface MoveSet {
   C?: MoveSlot;
   V?: MoveSlot;
   F?: MoveSlot;
+  Y?: MoveSlot;
 }
 
 /**
  * Utility to generate multiple hits with the same base damage.
  */
-export function generateHits(
-  baseDamage: number,
-  count: number,
-  upgrade?: number,
-): MoveHit[] {
+export function generateHits({
+  baseDamage,
+  count,
+  upgrade,
+}: {
+  baseDamage: number;
+  count: number;
+  upgrade?: number;
+}): MoveHit[] {
   return Array.from({ length: count }, (_, i) => ({
     hit: i + 1,
     damage: baseDamage,

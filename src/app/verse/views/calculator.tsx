@@ -172,8 +172,9 @@ const Calculator = () => {
     damage: number,
     multiplier = 1,
     enhanceMult = 2.5,
+    statKeyOverride?: "strength" | "sword" | "special",
   ) => {
-    const statKey = getMoveStatKey();
+    const statKey = statKeyOverride || getMoveStatKey();
     const baseStat = baseStats[statKey];
     const ghostStat = ghostStats[statKey];
     const accessoryStat =
@@ -217,11 +218,19 @@ const Calculator = () => {
     }
 
     const defaultUpgrade = input.upgrade ?? 2.5;
+    const defaultScaleType = input.scaleType;
 
     const totalDamage = input.hits.reduce((sum, hit) => {
       const hitUpgrade = hit.upgrade ?? defaultUpgrade;
+      const hitScaleType = hit.scaleType ?? defaultScaleType;
       return (
-        sum + calculateHitDamage(hit.damage, hit.multiplier || 1, hitUpgrade)
+        sum +
+        calculateHitDamage(
+          hit.damage,
+          hit.multiplier || 1,
+          hitUpgrade,
+          hitScaleType,
+        )
       );
     }, 0);
 
@@ -230,10 +239,12 @@ const Calculator = () => {
     }
 
     const firstHitUpgrade = input.hits[0].upgrade ?? defaultUpgrade;
+    const firstHitScaleType = input.hits[0].scaleType ?? defaultScaleType;
     const firstHit = calculateHitDamage(
       input.hits[0].damage,
       input.hits[0].multiplier || 1,
       firstHitUpgrade,
+      firstHitScaleType,
     );
 
     return `${formatNumber(firstHit)} - ${formatNumber(totalDamage)} | ${

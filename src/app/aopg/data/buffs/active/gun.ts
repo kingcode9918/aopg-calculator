@@ -39,6 +39,15 @@ export const gunActiveBuffs: ActiveBuffs[] = [
   },
   {
     id: 4,
+    name: "Ancient Elf (Elven Blood)",
+    fruitbuff: 2.75,
+    swordbuff: 2.75,
+    gunbuff: 2.75,
+    strengthbuff: 2.75,
+    hakibuff: 9.625,
+  },
+  {
+    id: 5,
     name: "Jolly Rapier V2 (Krampus Awakening)",
     fruitbuff: 1,
     swordbuff: 1,

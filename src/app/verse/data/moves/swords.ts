@@ -494,7 +494,12 @@ export const swordsData: MoveSet[] = [
     },
     X: {
       hits: [
-        ...generateHits({ baseDamage: 10, count: 1, upgrade: 0.6 }),
+        ...generateHits({
+          baseDamage: 10,
+          count: 1,
+          upgrade: 0.6,
+          scaleType: "strength",
+        }),
         ...generateHits({ baseDamage: 15, count: 37, upgrade: 0.25 }),
       ],
     },
@@ -574,19 +579,29 @@ export const swordsData: MoveSet[] = [
       hits: [...generateHits({ baseDamage: 145.0, count: 1 })],
     },
     Z: {
-      hits: [...generateHits({ baseDamage: 725.0, count: 1 })],
+      hits: [
+        ...generateHits({ baseDamage: 725.0, count: 1, scaleType: "special" }),
+      ],
     },
     X: {
-      hits: [...generateHits({ baseDamage: 1087.5, count: 1 })],
+      hits: [
+        ...generateHits({ baseDamage: 1087.5, count: 1, scaleType: "special" }),
+      ],
     },
     C: {
-      hits: [...generateHits({ baseDamage: 1232.5, count: 1 })],
+      hits: [
+        ...generateHits({ baseDamage: 1232.5, count: 1, scaleType: "special" }),
+      ],
     },
     V: {
-      hits: [...generateHits({ baseDamage: 1595.0, count: 1 })],
+      hits: [
+        ...generateHits({ baseDamage: 1595.0, count: 1, scaleType: "special" }),
+      ],
     },
     F: {
-      hits: [...generateHits({ baseDamage: 5437.5, count: 1 })],
+      hits: [
+        ...generateHits({ baseDamage: 5437.5, count: 1, scaleType: "special" }),
+      ],
     },
   },
   {
@@ -596,16 +611,44 @@ export const swordsData: MoveSet[] = [
       hits: [...generateHits({ baseDamage: 156.0, count: 1 })],
     },
     Z: {
-      hits: [...generateHits({ baseDamage: 1020.5, count: 1, upgrade: 0 })],
+      hits: [
+        ...generateHits({
+          baseDamage: 1020.5,
+          count: 1,
+          upgrade: 0,
+          scaleType: "special",
+        }),
+      ],
     },
     X: {
-      hits: [...generateHits({ baseDamage: 1651, count: 1, upgrade: 0 })],
+      hits: [
+        ...generateHits({
+          baseDamage: 1651,
+          count: 1,
+          upgrade: 0,
+          scaleType: "special",
+        }),
+      ],
     },
     C: {
-      hits: [...generateHits({ baseDamage: 393.9, count: 5, upgrade: 0 })],
+      hits: [
+        ...generateHits({
+          baseDamage: 393.9,
+          count: 5,
+          upgrade: 0,
+          scaleType: "special",
+        }),
+      ],
     },
     V: {
-      hits: [...generateHits({ baseDamage: 2275.0, count: 1, upgrade: 0 })],
+      hits: [
+        ...generateHits({
+          baseDamage: 2275.0,
+          count: 1,
+          upgrade: 0,
+          scaleType: "special",
+        }),
+      ],
     },
   },
   {
@@ -622,19 +665,54 @@ export const swordsData: MoveSet[] = [
       hits: [...generateHits({ baseDamage: 390.0, count: 1 })],
     },
     Z: {
-      hits: [...generateHits({ baseDamage: 686.4, count: 1, upgrade: 0 })],
+      hits: [
+        ...generateHits({
+          baseDamage: 686.4,
+          count: 1,
+          upgrade: 0,
+          scaleType: "special",
+        }),
+      ],
     },
     X: {
-      hits: [...generateHits({ baseDamage: 471.9, count: 2, upgrade: 0 })],
+      hits: [
+        ...generateHits({
+          baseDamage: 471.9,
+          count: 2,
+          upgrade: 0,
+          scaleType: "special",
+        }),
+      ],
     },
     C: {
-      hits: [...generateHits({ baseDamage: 150.15, count: 8, upgrade: 0 })],
+      hits: [
+        ...generateHits({
+          baseDamage: 150.15,
+          count: 8,
+          upgrade: 0,
+          scaleType: "special",
+        }),
+      ],
     },
     V: {
-      hits: [...generateHits({ baseDamage: 117.98, count: 16, upgrade: 0 })],
+      hits: [
+        ...generateHits({
+          baseDamage: 117.98,
+          count: 16,
+          upgrade: 0,
+          scaleType: "special",
+        }),
+      ],
     },
     F: {
-      hits: [...generateHits({ baseDamage: 1287, count: 1, upgrade: 0 })],
+      hits: [
+        ...generateHits({
+          baseDamage: 1287,
+          count: 1,
+          upgrade: 0,
+          scaleType: "special",
+        }),
+      ],
     },
     Y: {
       hits: [],
@@ -648,29 +726,205 @@ export const swordsData: MoveSet[] = [
       hits: [...generateHits({ baseDamage: 390.0, count: 1 })],
     },
     Z: {
-      hits: [...generateHits({ baseDamage: 650, count: 1, upgrade: 0 })],
+      hits: [
+        ...generateHits({
+          baseDamage: 650,
+          count: 1,
+          upgrade: 0,
+          scaleType: "special",
+        }),
+      ],
     },
     X: {
-      hits: [...generateHits({ baseDamage: 812.5, count: 2, upgrade: 0 })],
+      hits: [
+        ...generateHits({
+          baseDamage: 812.5,
+          count: 2,
+          upgrade: 0,
+          scaleType: "special",
+        }),
+      ],
     },
     C: {
-      hits: [...generateHits({ baseDamage: 1105, count: 1, upgrade: 0 })],
+      hits: [
+        ...generateHits({
+          baseDamage: 1105,
+          count: 1,
+          upgrade: 0,
+          scaleType: "special",
+        }),
+      ],
     },
     V: {
       hits: [
         ...generateHits({ baseDamage: 40.625, count: 8, upgrade: 0 }),
         ...generateHits({ baseDamage: 975, count: 1, upgrade: 0 }),
       ],
+      scaleType: "special",
     },
     F: {
       hits: [
         ...generateHits({ baseDamage: 650, count: 1, upgrade: 0 }),
         ...generateHits({ baseDamage: 1950, count: 1, upgrade: 0 }),
       ],
+      scaleType: "special",
     },
     Y: {
       hits: [],
       desc: "Mode",
     },
   },
+  {
+    id: 36,
+    name: "Griffith",
+
+    M1: {
+      hits: [...generateHits({ baseDamage: 650, count: 1 })],
+    },
+    Z: {
+      hits: [
+        ...generateHits({ baseDamage: 57.15, count: 7 }),
+        ...generateHits({ baseDamage: 50, count: 8 }),
+      ],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    X: {
+      hits: [...generateHits({ baseDamage: 95.83, count: 12 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    C: {
+      hits: [...generateHits({ baseDamage: 750, count: 2 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    V: {
+      hits: [...generateHits({ baseDamage: 277.75, count: 12 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    F: { hits: [], desc: "Mode" },
+  },
+  {
+    id: 37,
+    name: "Griffith + Mode",
+
+    M1: {
+      hits: [...generateHits({ baseDamage: 1300, count: 1 })],
+    },
+    Z: {
+      hits: [...generateHits({ baseDamage: 1700, count: 1 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    X: {
+      hits: [...generateHits({ baseDamage: 291.38, count: 8 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    C: {
+      hits: [],
+      desc: "I-Frame",
+    },
+    V: {
+      hits: [...generateHits({ baseDamage: 1111, count: 12 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    F: { hits: [], desc: "Mode" },
+  },
+  {
+    id: 38,
+    name: "Guts",
+    M1: { hits: [...generateHits({ baseDamage: 1008, count: 1 })] },
+    Z: {
+      hits: [...generateHits({ baseDamage: 280, count: 5 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    X: {
+      hits: [...generateHits({ baseDamage: 78.75, count: 16 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    C: {
+      hits: [...generateHits({ baseDamage: 3780, count: 1 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    V: {
+      hits: [
+        ...generateHits({ baseDamage: 1400, count: 1 }),
+        ...generateHits({ baseDamage: 4200, count: 1 }),
+      ],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    F: { hits: [], desc: "Mode" },
+  },
+  {
+    id: 39,
+    name: "Guts + Mode",
+    M1: { hits: [...generateHits({ baseDamage: 1713.6, count: 1 })] },
+    Z: {
+      hits: [...generateHits({ baseDamage: 476, count: 5 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    X: {
+      hits: [...generateHits({ baseDamage: 133.88, count: 16 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    C: {
+      hits: [...generateHits({ baseDamage: 6426, count: 1 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    V: {
+      hits: [
+        ...generateHits({ baseDamage: 2380, count: 1 }),
+        ...generateHits({ baseDamage: 7140, count: 1 }),
+      ],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    F: { hits: [], desc: "Mode" },
+  },
+  {
+    id: 40,
+    name: "Arthur Boyle",
+    M1: { hits: [...generateHits({ baseDamage: 350, count: 1 })] },
+    Z: {
+      hits: [...generateHits({ baseDamage: 555, count: 1 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    X: {
+      hits: [...generateHits({ baseDamage: 666, count: 1 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    C: {
+      hits: [...generateHits({ baseDamage: 777, count: 2 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    V: {
+      hits: [...generateHits({ baseDamage: 556, count: 2 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+  },
+  // {
+  //   id: 0,
+  //   name: "Name",
+  //   M1: { hits: [] },
+  //   Z: { hits: [] },
+  //   X: { hits: [] },
+  //   C: { hits: [] },
+  //   V: { hits: [] },
+  //   F: { hits: [] },
+  // },
 ];

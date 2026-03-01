@@ -1,7 +1,7 @@
 import type { Accessories } from "./types";
 
 export const legsAccData: Accessories[] = [
-{
+  {
     id: 0,
     name: "None",
     strength: 0,
@@ -374,5 +374,16 @@ export const legsAccData: Accessories[] = [
     gun: 0,
     haki: 0,
     fruit: 0,
+  },
+  {
+    id: 34,
+    name: "Great Mage Skirt",
+    strength: 0,
+    stamina: 0,
+    defense: 0,
+    sword: 0,
+    gun: 0,
+    haki: 2300,
+    fruit: 3000,
   },
 ];

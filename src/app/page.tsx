@@ -39,10 +39,26 @@ export default function Home() {
         {/* Footer */}
         <div className="mt-16 text-center">
           <span className="text-sm text-gray-400 mb-2">
-            Last updated: February 27, 2026
+            Last updated: March 1, 2026
           </span>
           <UpdateModal
             updates={[
+              {
+                version: "v1.2.3.0 | Verse Piece",
+                date: "March 1, 2026",
+                changes: [
+                  "Add scaling for damage calculator",
+                  "Added few swords in moves",
+                ],
+              },
+              {
+                version: "v1.2.2.0 | AOPG",
+                date: "March 1, 2026",
+                changes: [
+                  "Added new move called Ancient Elf + Elven Blood",
+                  "Added new accessory, title, and buff.",
+                ],
+              },
               {
                 version: "v1.2.1.0 | Verse Piece",
                 date: "February 27, 2026",

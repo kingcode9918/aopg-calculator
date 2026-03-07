@@ -917,6 +917,99 @@ export const swordsData: MoveSet[] = [
       scaleType: "special",
     },
   },
+  {
+    id: 41,
+    name: "Homura",
+    M1: {
+      hits: [
+        ...generateHits({ baseDamage: 5000, count: 3 }),
+        ...generateHits({ baseDamage: 7500, count: 1 }),
+      ],
+    },
+    Z: {
+      hits: [...generateHits({ baseDamage: 95000, count: 1 })],
+      scaleType: "special",
+    },
+    X: {
+      hits: [...generateHits({ baseDamage: 36000, count: 5 })],
+      scaleType: "special",
+    },
+    C: {
+      hits: [...generateHits({ baseDamage: 123750, count: 3 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    V: {
+      hits: [...generateHits({ baseDamage: 68750, count: 40 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+  },
+  {
+    id: 42,
+    name: "Yami (Void Captain)",
+    M1: {
+      hits: [
+        ...generateHits({ baseDamage: 5000, count: 2 }),
+        ...generateHits({ baseDamage: 7500, count: 1 }),
+      ],
+    },
+    Z: {
+      hits: [...generateHits({ baseDamage: 6700, count: 10 })],
+      scaleType: "special",
+    },
+    X: {
+      hits: [...generateHits({ baseDamage: 2931.25, count: 16 })],
+      scaleType: "special",
+    },
+    C: {
+      hits: [
+        ...generateHits({ baseDamage: 26800, count: 1 }),
+        ...generateHits({ baseDamage: 40200, count: 1 }),
+      ],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    V: {
+      hits: [...generateHits({ baseDamage: 167000, count: 1 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+    F: { hits: [...generateHits({ baseDamage: 666777, count: 1 })] },
+  },
+  {
+    id: 43,
+    name: "Asta (Half Demon)",
+    M1: {
+      hits: [
+        ...generateHits({ baseDamage: 6666, count: 3 }),
+        ...generateHits({ baseDamage: 9999, count: 1 }),
+      ],
+    },
+    Z: {
+      hits: [...generateHits({ baseDamage: 50000, count: 2 })],
+      scaleType: "special",
+    },
+    X: {
+      hits: [...generateHits({ baseDamage: 175000, count: 1 })],
+      scaleType: "special",
+    },
+    C: {
+      hits: [...generateHits({ baseDamage: 37500, count: 10 })],
+      scaleType: "special",
+    },
+    V: {
+      hits: [
+        ...generateHits({ baseDamage: 37500, count: 2 }),
+        ...generateHits({ baseDamage: 150000, count: 2 }),
+      ],
+    },
+    F: {
+      hits: [...generateHits({ baseDamage: 350000, count: 10 })],
+      upgrade: 0,
+      scaleType: "special",
+    },
+  },
   // {
   //   id: 0,
   //   name: "Name",

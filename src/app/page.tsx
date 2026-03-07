@@ -44,6 +44,14 @@ export default function Home() {
           <UpdateModal
             updates={[
               {
+                version: "v1.2.4.0 | AOPG",
+                date: "March 8, 2026",
+                changes: [
+                  "Add heian demon damage",
+                  "Add heian accessories and buff",
+                ],
+              },
+              {
                 version: "v1.2.3.0 | Verse Piece",
                 date: "March 1, 2026",
                 changes: [

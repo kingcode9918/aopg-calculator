@@ -1,8 +1,7 @@
 import type { ActiveBuffs } from "../types";
 
-
 export const fightingActiveBuffs: ActiveBuffs[] = [
-{
+  {
     id: 0,
     name: "None",
     fruitbuff: 1,
@@ -136,5 +135,14 @@ export const fightingActiveBuffs: ActiveBuffs[] = [
     gunbuff: 2,
     strengthbuff: 2,
     hakibuff: 2,
+  },
+  {
+    id: 15,
+    name: "Heian Demon (Haien's Strongest)",
+    fruitbuff: 2.75,
+    swordbuff: 2.75,
+    gunbuff: 2.75,
+    strengthbuff: 2.75,
+    hakibuff: 2.75,
   },
 ];

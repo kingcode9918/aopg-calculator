@@ -209,16 +209,51 @@ const Calculator = () => {
   const renderMoveDamage = (input: number | MoveSlot | undefined) => {
     if (input === undefined) return null;
 
+    const getScaleColor = (scale?: "strength" | "sword" | "special") => {
+      const type = scale || getMoveStatKey();
+      switch (type) {
+        case "strength":
+          return "#ff0000";
+        case "sword":
+          return "#ffff7f";
+        case "special":
+          return "#ff00bf";
+        default:
+          return "#ffffff";
+      }
+    };
+
+    const getScaleGradient = (scales: Set<"strength" | "sword" | "special">) => {
+      const scaleArray = Array.from(scales);
+      if (scaleArray.length <= 1) return null;
+
+      const gradientColors = scaleArray
+        .map((s) => getScaleColor(s))
+        .join(", ");
+      return `linear-gradient(90deg, ${gradientColors})`;
+    };
+
+    const defaultUpgrade = typeof input === "object" ? input.upgrade ?? 2.5 : 2.5;
+    const defaultScaleType =
+      typeof input === "object" ? input.scaleType : undefined;
+
+    // Determine the color class based on scaleType or default moveType
+    const getScaleColorClass = (scale?: "strength" | "sword" | "special") => {
+      const type = scale || getMoveStatKey();
+      return `custom-text-${type}`;
+    };
+
     if (typeof input === "number") {
-      return formatNumber(calculateHitDamage(input, 1, 2.5));
+      return (
+        <span className={`${getScaleColorClass()} font-semibold`}>
+          {formatNumber(calculateHitDamage(input, 1, 2.5))}
+        </span>
+      );
     }
 
     if (!input.hits || input.hits.length === 0) {
-      return input.desc || "0";
+      return <span className="font-semibold">{input.desc || "0"}</span>;
     }
-
-    const defaultUpgrade = input.upgrade ?? 2.5;
-    const defaultScaleType = input.scaleType;
 
     const totalDamage = input.hits.reduce((sum, hit) => {
       const hitUpgrade = hit.upgrade ?? defaultUpgrade;
@@ -234,10 +269,6 @@ const Calculator = () => {
       );
     }, 0);
 
-    if (input.hits.length === 1) {
-      return formatNumber(totalDamage);
-    }
-
     const firstHitUpgrade = input.hits[0].upgrade ?? defaultUpgrade;
     const firstHitScaleType = input.hits[0].scaleType ?? defaultScaleType;
     const firstHit = calculateHitDamage(
@@ -247,9 +278,58 @@ const Calculator = () => {
       firstHitScaleType,
     );
 
-    return `${formatNumber(firstHit)} - ${formatNumber(totalDamage)} | ${
-      input.hits.length
-    } hits`;
+    const uniqueScales = new Set<"strength" | "sword" | "special">();
+    if (typeof input === "object" && input.hits) {
+      input.hits.forEach((hit) => {
+        uniqueScales.add(hit.scaleType || defaultScaleType || getMoveStatKey());
+      });
+    } else {
+      uniqueScales.add(defaultScaleType || getMoveStatKey());
+    }
+
+    const gradient = getScaleGradient(uniqueScales);
+
+    const firstHitColorClass = getScaleColorClass(firstHitScaleType);
+    const allSameScale = input.hits.every(
+      (hit) =>
+        (hit.scaleType ?? defaultScaleType) ===
+        (input.hits[0].scaleType ?? defaultScaleType),
+    );
+    const totalColorClass = allSameScale
+      ? firstHitColorClass
+      : getScaleColorClass(defaultScaleType);
+
+    const lineStyle = gradient
+      ? {
+          backgroundImage: gradient,
+          backgroundClip: "text",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          display: "inline-block",
+        }
+      : {};
+
+    if (input.hits.length === 1) {
+      return (
+        <span className={`${firstHitColorClass} font-semibold`} style={lineStyle}>
+          {formatNumber(totalDamage)}
+        </span>
+      );
+    }
+
+    return (
+      <span className="font-semibold" style={lineStyle}>
+        <span className={gradient ? "" : firstHitColorClass}>
+          {formatNumber(firstHit)}
+        </span>
+        {" - "}
+        <span className={gradient ? "" : totalColorClass}>
+          {formatNumber(totalDamage)}
+        </span>
+        {" | "}
+        {input.hits.length} hits
+      </span>
+    );
   };
 
   const baseDmgMult =
@@ -718,9 +798,7 @@ const Calculator = () => {
                   return (
                     <tr key={move}>
                       <td className="font-bold">{move}</td>
-                      <td className="text-success font-semibold">
-                        {renderMoveDamage(moveValue)}
-                      </td>
+                      <td>{renderMoveDamage(moveValue)}</td>
                     </tr>
                   );
                 })}

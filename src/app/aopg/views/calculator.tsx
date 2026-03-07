@@ -237,6 +237,22 @@ const Calculator = () => {
     [],
   );
 
+  const damageScaleToClass: Record<DamageScale, string> = {
+    fruitbuff: "custom-text-fruit",
+    swordbuff: "custom-text-sword",
+    gunbuff: "custom-text-gun",
+    strengthbuff: "custom-text-strength",
+    hakibuff: "custom-text-haki",
+  };
+
+  const damageScaleToColor: Record<DamageScale, string> = {
+    fruitbuff: "#ff00bf",
+    swordbuff: "#ffff7f",
+    gunbuff: "#ffff00",
+    strengthbuff: "#ff0000",
+    hakibuff: "#aa00aa",
+  };
+
   // Determine the active scale: use move's scale if specified, otherwise use source's default scale, fallback to selectedScale
   const activeScale: DamageScale = selectedMove
     ? selectedMove.scale || sourceToDamageScale[selectedMove.source]
@@ -423,15 +439,32 @@ const Calculator = () => {
     }
   };
 
-  const getFinalDamage = (baseDamage: number, moveKey: MoveKey) => {
-    if (baseDamage === 0) return 0;
+  const getFinalDamage = (
+    baseDamage: number,
+    moveKey: MoveKey,
+  ): { damage: number; className?: string; style?: React.CSSProperties } => {
+    if (baseDamage === 0) return { damage: 0, className: "" };
 
     const scalesForKey = getScaleForMoveKey(moveKey);
+
+    // Helper to get gradient style from multiple scales
+    const getGradientStyle = (scales: DamageScale[]): React.CSSProperties => {
+      const colors = scales.map((s) => damageScaleToColor[s]);
+      if (colors.length <= 1) return {};
+      return {
+        backgroundImage: `linear-gradient(90deg, ${colors.join(", ")})`,
+        backgroundClip: "text",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+        display: "inline-block",
+      };
+    };
 
     // Check if it's split damage (array of {scale, damage} objects)
     if (isSplitDamage(scalesForKey)) {
       // Sum all the split damages
-      return scalesForKey.reduce((total, { scale, damage }) => {
+      const uniqueScales = Array.from(new Set(scalesForKey.map((s) => s.scale)));
+      const totalDamage = scalesForKey.reduce((total, { scale, damage }) => {
         const scaledAccBonus = getScaledAccBonus(scale);
         const buffMult = damageBuffs[scaleToBuffKey[scale]] || 1;
         const baseStat = getBaseStat(scale);
@@ -444,33 +477,54 @@ const Calculator = () => {
 
         return total + calculatedDamage;
       }, 0);
+
+      return {
+        damage: totalDamage,
+        style: getGradientStyle(uniqueScales),
+      };
     }
 
     // Handle regular scales (single or array for max)
     const scales = Array.isArray(scalesForKey) ? scalesForKey : [scalesForKey];
 
-    // Calculate damage for each scale and take the maximum
-    const damages = scales.map((scale) => {
+    // Calculate damage for each scale and keep track of the scale that gave the max
+    let maxDamage = -1;
+    let bestScale: DamageScale = scales[0];
+
+    scales.forEach((scale) => {
       const scaledAccBonus = getScaledAccBonus(scale);
       const buffMult = damageBuffs[scaleToBuffKey[scale]] || 1;
       const baseStat = getBaseStat(scale);
 
-      return (
+      const calculatedDamage =
         (baseDamage +
           (baseStat + scaledAccBonus) / 2 +
           (baseDamage * (baseStat + scaledAccBonus)) / 12.5) *
-        buffMult
-      );
+        buffMult;
+
+      if (calculatedDamage > maxDamage) {
+        maxDamage = calculatedDamage;
+        bestScale = scale;
+      }
     });
 
-    // Return the highest damage from all applicable scales
-    return Math.max(...damages);
+    if (scales.length > 1) {
+      return {
+        damage: maxDamage,
+        style: getGradientStyle(scales),
+      };
+    }
+
+    return {
+      damage: maxDamage,
+      className: damageScaleToClass[bestScale] || "",
+    };
   };
 
   // Compute total max damage
   const getMaxDamageTotal = (move: MoveDamage) => {
     return moveKeys.reduce(
-      (sum, key) => sum + getFinalDamage(Number(move[key]), key as MoveKey),
+      (sum, key) => sum + getFinalDamage(Number(move[key]), key as MoveKey).damage,
       0,
     );
   };
@@ -1206,19 +1260,20 @@ const Calculator = () => {
               </thead>
               <tbody>
                 {selectedMove &&
-                  moveKeys.map((key, idx) => (
-                    <tr key={`max-${key}-${idx}`}>
-                      <td>{key}</td>
-                      <td>
-                        {Math.round(
-                          getFinalDamage(
-                            Number(selectedMove[key as keyof MoveDamage]),
-                            key as MoveKey,
-                          ),
-                        ).toLocaleString()}
-                      </td>
-                    </tr>
-                  ))}
+                  moveKeys.map((key, idx) => {
+                    const { damage, className, style } = getFinalDamage(
+                      Number(selectedMove[key as keyof MoveDamage]),
+                      key as MoveKey,
+                    );
+                    return (
+                      <tr key={`max-${key}-${idx}`}>
+                        <td>{key}</td>
+                        <td className={className} style={style}>
+                          {Math.round(damage).toLocaleString()}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 <tr className="font-bold border-t">
                   <td>Total</td>
                   <td>

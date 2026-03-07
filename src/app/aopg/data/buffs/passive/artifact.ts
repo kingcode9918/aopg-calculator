@@ -28,4 +28,13 @@ export const artifactActiveBuffs: ActiveBuffs[] = [
     strengthbuff: 1,
     hakibuff: 1,
   },
+  {
+    id: 3,
+    name: "Binding Vow",
+    fruitbuff: 1,
+    swordbuff: 1,
+    gunbuff: 1,
+    strengthbuff: 2,
+    hakibuff: 1,
+  },
 ];

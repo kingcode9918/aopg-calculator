@@ -617,4 +617,15 @@ export const headAccData: Accessories[] = [
     haki: 2000,
     fruit: 2500,
   },
+  {
+    id: 56,
+    name: "Heian Markings",
+    strength: 4000,
+    stamina: 1500,
+    defense: 1500,
+    sword: 1500,
+    gun: 1500,
+    haki: 1500,
+    fruit: 1500,
+  },
 ];

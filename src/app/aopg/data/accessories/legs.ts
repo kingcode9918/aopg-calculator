@@ -386,4 +386,15 @@ export const legsAccData: Accessories[] = [
     haki: 2300,
     fruit: 3000,
   },
+  {
+    id: 35,
+    name: "Heian Era Tobi",
+    strength: 2300,
+    stamina: 1200,
+    defense: 2100,
+    sword: 0,
+    gun: 0,
+    haki: 0,
+    fruit: 3200,
+  },
 ];

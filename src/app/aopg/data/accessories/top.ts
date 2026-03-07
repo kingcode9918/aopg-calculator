@@ -540,4 +540,15 @@ export const topAccData: Accessories[] = [
     haki: 2100,
     fruit: 2900,
   },
+  {
+    id: 49,
+    name: "Heian Era Robe",
+    strength: 2150,
+    stamina: 1500,
+    defense: 2100,
+    sword: 3150,
+    gun: 0,
+    haki: 0,
+    fruit: 0,
+  },
 ];

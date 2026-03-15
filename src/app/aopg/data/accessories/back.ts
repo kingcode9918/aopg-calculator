@@ -324,4 +324,15 @@ export const backAccData: Accessories[] = [
     fruit: 0,
     link: "https://trello.com/c/YTt1DTTp/1401-withered-cape",
   },
+  {
+    id: 27,
+    name: "Admiral's Gravity Cloak",
+    strength: 0,
+    stamina: 0,
+    defense: 1150,
+    sword: 2000,
+    gun: 0,
+    haki: 0,
+    fruit: 2100,
+  },
 ];

@@ -39,7 +39,7 @@ export const fruitActiveBuffs: ActiveBuffs[] = [
   },
   {
     id: 4,
-    name: "Final Soul (Mother's Misery)",
+    name: "Final Gravity (Believing in Gravity)",
     fruitbuff: 4,
     swordbuff: 4,
     gunbuff: 4,
@@ -48,6 +48,15 @@ export const fruitActiveBuffs: ActiveBuffs[] = [
   },
   {
     id: 5,
+    name: "Final Soul (Mother's Misery)",
+    fruitbuff: 4,
+    swordbuff: 4,
+    gunbuff: 4,
+    strengthbuff: 4,
+    hakibuff: 4,
+  },
+  {
+    id: 6,
     name: "Snow (Arctic Hawk)",
     fruitbuff: 4,
     swordbuff: 4,

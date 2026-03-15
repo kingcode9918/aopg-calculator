@@ -551,4 +551,15 @@ export const topAccData: Accessories[] = [
     haki: 0,
     fruit: 0,
   },
+  {
+    id: 50,
+    name: "Admiral's Kimono",
+    strength: 0,
+    stamina: 0,
+    defense: 2000,
+    sword: 0,
+    gun: 0,
+    haki: 1700,
+    fruit: 2800,
+  },
 ];

@@ -1535,4 +1535,17 @@ export const devilFruitMoveDamage: MoveDamage[] = [
     U: 0,
     Y: 0,
   },
+  {
+    id: 118,
+    name: "Final Gravity + Believing in Gravity",
+    M1: 0,
+    Q: 25000 * 1.15 * 4,
+    E: 32500 * 1.15 * 4,
+    R: 40000 * 1.15 * 4,
+    F: 0,
+    G: 60000 * 1.15 * 4,
+    T: 0,
+    U: 85000 * 1.15 * 4,
+    Y: 110000 * 1.15 * 4,
+  },
 ];

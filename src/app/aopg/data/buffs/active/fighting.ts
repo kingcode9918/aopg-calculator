@@ -139,10 +139,10 @@ export const fightingActiveBuffs: ActiveBuffs[] = [
   {
     id: 15,
     name: "Heian Demon (Haien's Strongest)",
-    fruitbuff: 2.75,
-    swordbuff: 2.75,
-    gunbuff: 2.75,
-    strengthbuff: 2.75,
-    hakibuff: 2.75,
+    fruitbuff: 2.85,
+    swordbuff: 2.85,
+    gunbuff: 2.85,
+    strengthbuff: 2.85,
+    hakibuff: 2.85,
   },
 ];

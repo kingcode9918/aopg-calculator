@@ -333,7 +333,7 @@ export const raceBuffsData: RaceBuffs[] = [
   },
   {
     id: 30,
-    name: "The Pinnacle",
+    name: "Soul Resonator",
     fruitbuff: 3.3,
     swordbuff: 3.3,
     gunbuff: 3.3,
@@ -344,6 +344,17 @@ export const raceBuffsData: RaceBuffs[] = [
   },
   {
     id: 31,
+    name: "The Pinnacle",
+    fruitbuff: 3.3,
+    swordbuff: 3.3,
+    gunbuff: 3.3,
+    strengthbuff: 3.3,
+    hakibuff: 3.3,
+    note: "No other damage buff",
+    image: "/resources/santa.jpg",
+  },
+  {
+    id: 32,
     name: "Giant",
     fruitbuff: 2.7,
     swordbuff: 2.7,
@@ -354,7 +365,7 @@ export const raceBuffsData: RaceBuffs[] = [
     image: "/resources/santa.jpg",
   },
   {
-    id: 32,
+    id: 33,
     name: "Love Goddess",
     fruitbuff: 3.1,
     swordbuff: 3.1,

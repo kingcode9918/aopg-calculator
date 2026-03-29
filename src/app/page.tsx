@@ -23,7 +23,7 @@ export default function Home() {
           </Link>
 
           {/* Verse Calculator Card */}
-          <Link href="/verse">
+          {/* <Link href="/verse">
             <div className="bg-gradient-to-br from-purple-600/50 to-purple-800/50 hover:from-purple-500 hover:to-purple-700 transition-all duration-300 rounded-2xl p-8 w-80 h-64 flex flex-col items-center justify-center cursor-pointer shadow-2xl hover:shadow-purple-500/50 hover:scale-105 transform">
               <h2 className="text-3xl font-bold text-white mb-4">Verse</h2>
               <p className="text-purple-100 text-center text-lg">
@@ -33,7 +33,7 @@ export default function Home() {
                 Click to enter →
               </div>
             </div>
-          </Link>
+          </Link> */}
         </div>
 
         {/* Footer */}
@@ -43,6 +43,21 @@ export default function Home() {
           </span>
           <UpdateModal
             updates={[
+              {
+                version: "v1.2.7.0 | Verse Piece",
+                date: "March 29, 2026",
+                changes: [
+                  "Temporarily remove the damage calculator for Verse Piece",
+                ],
+              },
+              {
+                version: "v1.2.6.0 | AOPG",
+                date: "March 29, 2026",
+                changes: [
+                  "Add heroic demon damage",
+                  "Add heroic demon accessories and buff",
+                ],
+              },
               {
                 version: "v1.2.5.0 | AOPG",
                 date: "March 15, 2026",

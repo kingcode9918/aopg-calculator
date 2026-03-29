@@ -108,4 +108,15 @@ export const armAccData: Accessories[] = [
     fruit: 900,
     link: "https://trello.com/c/nwlqrVWU/543-stone-gauntlets",
   },
+  {
+    id: 9,
+    name: "Ring of Stars",
+    strength: 1500,
+    stamina: 0,
+    defense: 1200,
+    sword: 0,
+    gun: 0,
+    haki: 1200,
+    fruit: 1500,
+  },
 ];

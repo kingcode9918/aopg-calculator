@@ -1,8 +1,7 @@
 import type { ActiveBuffs } from "../types";
 
-
 export const supportActiveBuffs: ActiveBuffs[] = [
-{
+  {
     id: 0,
     name: "None",
     fruitbuff: 1,
@@ -328,7 +327,7 @@ export const supportActiveBuffs: ActiveBuffs[] = [
   },
   {
     id: 36,
-    name: "God of Stands (Godly Awakening + 3 Hit Reality Overwrite)",
+    name: "Heroic Devil (Bansho)",
     fruitbuff: 3.9,
     swordbuff: 3.9,
     gunbuff: 3.9,
@@ -337,6 +336,15 @@ export const supportActiveBuffs: ActiveBuffs[] = [
   },
   {
     id: 37,
+    name: "God of Stands (Godly Awakening + 3 Hit Reality Overwrite)",
+    fruitbuff: 3.9,
+    swordbuff: 3.9,
+    gunbuff: 3.9,
+    strengthbuff: 3.9,
+    hakibuff: 3.9,
+  },
+  {
+    id: 38,
     name: "God of Stands (3 Hit Reality Overwrite)",
     fruitbuff: 1.3,
     swordbuff: 1.3,
@@ -345,7 +353,7 @@ export const supportActiveBuffs: ActiveBuffs[] = [
     hakibuff: 1.3,
   },
   {
-    id: 38,
+    id: 39,
     name: "God of Stands (Godly Awakening + 1 Hit Reality Overwrite)",
     fruitbuff: 3.3,
     swordbuff: 3.3,
@@ -354,7 +362,7 @@ export const supportActiveBuffs: ActiveBuffs[] = [
     hakibuff: 3.3,
   },
   {
-    id: 39,
+    id: 40,
     name: "God of Stands (Godly Awakening + 2 Hit Reality Overwrite)",
     fruitbuff: 3.6,
     swordbuff: 3.6,
@@ -363,7 +371,7 @@ export const supportActiveBuffs: ActiveBuffs[] = [
     hakibuff: 3.6,
   },
   {
-    id: 40,
+    id: 41,
     name: "God of Stands (1 Hit Reality Overwrite)",
     fruitbuff: 1.1,
     swordbuff: 1.1,
@@ -372,7 +380,7 @@ export const supportActiveBuffs: ActiveBuffs[] = [
     hakibuff: 1.1,
   },
   {
-    id: 41,
+    id: 42,
     name: "God of Stands (2 Hit Reality Overwrite)",
     fruitbuff: 1.2,
     swordbuff: 1.2,

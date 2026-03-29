@@ -628,4 +628,15 @@ export const headAccData: Accessories[] = [
     haki: 1500,
     fruit: 1500,
   },
+  {
+    id: 57,
+    name: "Heroic Devil Horn",
+    strength: 4000,
+    stamina: 2000,
+    defense: 2000,
+    sword: 0,
+    gun: 0,
+    haki: 0,
+    fruit: 0,
+  },
 ];

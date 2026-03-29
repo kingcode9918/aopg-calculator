@@ -335,4 +335,15 @@ export const backAccData: Accessories[] = [
     haki: 0,
     fruit: 2100,
   },
+  {
+    id: 28,
+    name: "Ribbons of Hope",
+    strength: 2000,
+    stamina: 1000,
+    defense: 2000,
+    sword: 0,
+    gun: 0,
+    haki: 0,
+    fruit: 2500,
+  },
 ];

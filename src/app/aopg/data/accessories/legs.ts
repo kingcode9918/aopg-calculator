@@ -397,4 +397,15 @@ export const legsAccData: Accessories[] = [
     haki: 0,
     fruit: 3200,
   },
+  {
+    id: 36,
+    name: "Feverish Pants",
+    strength: 2400,
+    stamina: 2000,
+    defense: 2000,
+    sword: 0,
+    gun: 0,
+    haki: 0,
+    fruit: 0,
+  },
 ];

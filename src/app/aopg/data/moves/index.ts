@@ -5,8 +5,9 @@ export type {
   SplitDamage,
   MoveScale,
   MoveDamage,
+  MoveData,
 } from "./types";
-export { getMoveTotal } from "./types";
+export { getMoveTotal, getMoveDamageValue } from "./types";
 
 // Re-export all move damage data
 export { devilFruitMoveDamage } from "./devilfruitMoveDamage";

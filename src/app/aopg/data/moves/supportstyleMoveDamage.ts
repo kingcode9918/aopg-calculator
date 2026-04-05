@@ -804,4 +804,17 @@ export const supportStyleMoveDamage: MoveDamage[] = [
     U: 0,
     Y: 0,
   },
+  {
+    id: 61,
+    name: "Heroic Devil + 50-0% Oxygen + The Devil's Heat",
+    M1: 10000 * 1.3,
+    Q: 20000 * 1.3,
+    E: 27500 * 1.3,
+    R: 37000 * 1.3,
+    F: 0,
+    G: 42500 * 1.3,
+    T: 0,
+    U: 0,
+    Y: 0,
+  },
 ];

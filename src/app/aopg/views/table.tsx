@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 /* eslint-disable */
 interface GenericTableProps<T extends Record<string, any>> {
@@ -60,6 +60,11 @@ const GenericTable = <T extends Record<string, any>>({
 }: GenericTableProps<T>) => {
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   if (!data.length) {
     return (
@@ -127,10 +132,12 @@ const GenericTable = <T extends Record<string, any>>({
                   } ${statClassMap[key] || ""}`}
                 >
                   {typeof row[key] === "number"
-                    ? row[key].toLocaleString(undefined, {
+                    ? (isMounted ? row[key].toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
-                      })
+                      }) : row[key].toFixed(2))
+                    : typeof row[key] === "object" && row[key] !== null
+                    ? (row[key].dmg !== undefined ? row[key].dmg : JSON.stringify(row[key]))
                     : row[key]}
                 </td>
               ))}

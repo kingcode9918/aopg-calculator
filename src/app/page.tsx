@@ -44,6 +44,16 @@ export default function Home() {
           <UpdateModal
             updates={[
               {
+                version: "v1.2.8.0 | AOPG",
+                date: "April 5, 2026",
+                changes: [
+                  "New design for the calculator",
+                  "Add the DPS calculator for some styles",
+                  "Add the gambler damage",
+                  "Add the gambler accessories and buff",
+                ],
+              },
+              {
                 version: "v1.2.7.0 | Verse Piece",
                 date: "March 29, 2026",
                 changes: [

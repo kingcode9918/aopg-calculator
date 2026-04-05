@@ -1,3 +1,6 @@
+"use client";
+import React from "react";
+
 export type MoveCategory =
   | "fighting"
   | "sword"
@@ -26,7 +29,7 @@ const moveTabs: {
 
 const MoveSelector = ({ onSelect, selected }: MoveSelectorProps) => (
   <div className="w-full flex justify-center py-2">
-    <div className="tabs tabs-boxed flex flex-wrap">
+    <div className="tabs tabs-boxed flex flex-wrap" role="tablist">
       {moveTabs.map(({ key, label, text }) => (
         <a
           key={key}
@@ -34,6 +37,8 @@ const MoveSelector = ({ onSelect, selected }: MoveSelectorProps) => (
             selected === key ? "tab-active" : ""
           } ${text} font-bold`}
           onClick={() => onSelect(key)}
+          role="tab"
+          aria-selected={selected === key}
         >
           {label}
         </a>

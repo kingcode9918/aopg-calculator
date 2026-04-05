@@ -383,6 +383,16 @@ export const titleBuffsData: TitleBuffs[] = [
   },
   {
     id: 38,
+    name: "God of Hope",
+    fruitbuff: 4,
+    swordbuff: 4,
+    gunbuff: 4,
+    strengthbuff: 4,
+    hakibuff: 4,
+    rank: "divine",
+  },
+  {
+    id: 39,
     name: "I Don't Miss",
     fruitbuff: 1.0,
     swordbuff: 1.0,
@@ -392,7 +402,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "mythical",
   },
   {
-    id: 39,
+    id: 40,
     name: "King Of The Pirates",
     fruitbuff: 1.6,
     swordbuff: 1.6,
@@ -402,7 +412,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "mythical",
   },
   {
-    id: 40,
+    id: 41,
     name: "Clover",
     fruitbuff: 1.0,
     swordbuff: 1.0,
@@ -412,7 +422,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "mythical",
   },
   {
-    id: 41,
+    id: 42,
     name: "King Of The Beasts",
     fruitbuff: 2.0,
     swordbuff: 1.3,
@@ -422,7 +432,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "mythical",
   },
   {
-    id: 42,
+    id: 43,
     name: "Blood Scourge",
     fruitbuff: 2.0,
     swordbuff: 1.0,
@@ -432,7 +442,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "mythical",
   },
   {
-    id: 43,
+    id: 44,
     name: "Wanos Protector",
     fruitbuff: 1.0,
     swordbuff: 2.5,
@@ -442,7 +452,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "mythical",
   },
   {
-    id: 44,
+    id: 45,
     name: "Scorching Revolutionary",
     fruitbuff: 1.0,
     swordbuff: 1.0,
@@ -452,7 +462,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "mythical",
   },
   {
-    id: 45,
+    id: 46,
     name: "Sun God",
     fruitbuff: 3.0,
     swordbuff: 2.0,
@@ -462,7 +472,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "mythical",
   },
   {
-    id: 46,
+    id: 48,
     name: "Government's Puppet",
     fruitbuff: 2.0,
     swordbuff: 2.0,
@@ -472,7 +482,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "mythical",
   },
   {
-    id: 47,
+    id: 49,
     name: "Life On The Edge",
     fruitbuff: 2.0,
     swordbuff: 2.0,
@@ -482,7 +492,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "mythical",
   },
   {
-    id: 48,
+    id: 50,
     name: "Hero of Marines",
     fruitbuff: 3.2,
     swordbuff: 3.2,
@@ -492,7 +502,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "divine",
   },
   {
-    id: 49,
+    id: 51,
     name: "Historical Swordsman",
     fruitbuff: 1.0,
     swordbuff: 3.5,
@@ -502,7 +512,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "divine",
   },
   {
-    id: 50,
+    id: 52,
     name: "Demon Lord",
     fruitbuff: 1.0,
     swordbuff: 1.0,
@@ -512,7 +522,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "divine",
   },
   {
-    id: 51,
+    id: 53,
     name: "Monarch",
     fruitbuff: 3.5,
     swordbuff: 3.5,
@@ -522,7 +532,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "divine",
   },
   {
-    id: 52,
+    id: 54,
     name: "Professional Gambler",
     fruitbuff: 1,
     swordbuff: 1,
@@ -532,7 +542,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "divine",
   },
   {
-    id: 53,
+    id: 55,
     name: "Control Devil",
     fruitbuff: 3.7,
     swordbuff: 3.7,
@@ -542,7 +552,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "divine",
   },
   {
-    id: 54,
+    id: 56,
     name: "B Rank Hero",
     fruitbuff: 3.75,
     swordbuff: 3.75,
@@ -552,7 +562,7 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "divine",
   },
   {
-    id: 55,
+    id: 57,
     name: "Yandere",
     fruitbuff: 2.0,
     swordbuff: 2.0,
@@ -562,23 +572,13 @@ export const titleBuffsData: TitleBuffs[] = [
     rank: "divine",
   },
   {
-    id: 56,
+    id: 58,
     name: "Great Mage",
     fruitbuff: 1,
     swordbuff: 1,
     gunbuff: 1,
     strengthbuff: 1,
     hakibuff: 8,
-    rank: "divine",
-  },
-  {
-    id: 57,
-    name: "God of Hope",
-    fruitbuff: 4,
-    swordbuff: 4,
-    gunbuff: 4,
-    strengthbuff: 4,
-    hakibuff: 4,
     rank: "divine",
   },
 ];

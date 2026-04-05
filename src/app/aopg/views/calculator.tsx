@@ -35,6 +35,8 @@ import {
   hakiMoveDamage,
   supportStyleMoveDamage,
   swordStyleMoveDamage,
+  getMoveDamageValue,
+  type MoveData,
 } from "../data/moves";
 
 const accKeys = [
@@ -161,7 +163,7 @@ const Calculator = () => {
 
   type MoveSource = "fighting" | "fruit" | "support" | "gun" | "sword" | "haki";
 
-  const allMoves = useMemo(() => {
+  const allMoves = useMemo<Array<MoveDamage & { source: MoveSource }>>(() => {
     let idCounter = 0;
     return [
       ...hakiMoveDamage.map((m) => ({
@@ -199,6 +201,8 @@ const Calculator = () => {
 
   const [selectedMoveId, setSelectedMoveId] = useState<number>(0);
   const [selectedScale, setSelectedScale] = useState<DamageScale>("fruitbuff");
+  const [isModeActive, setIsModeActive] = useState<boolean>(false);
+  const [activeSpecialBuffs, setActiveSpecialBuffs] = useState<number[]>([]);
 
   const selectedMove = useMemo(
     () => allMoves.find((m) => m.id === selectedMoveId),
@@ -349,7 +353,8 @@ const Calculator = () => {
           ? 0
           : pickBestBuff(availableSupportBuffs, scaleKey),
       suitBuff: pickBestBuff(suitActiveBuffs, scaleKey),
-      titleBuff: selectedMove?.name?.toLowerCase().includes("title")
+      titleBuff: (selectedMove?.name?.toLowerCase().includes("title") || 
+                  (selectedMove?.specialBuffs && selectedMove.specialBuffs.some((b, idx) => b.isTitle && activeSpecialBuffs.includes(idx))))
         ? 0
         : pickBestBuff(titleBuffsData, scaleKey),
       raceBuff: pickBestBuff(raceBuffsData, scaleKey),
@@ -372,11 +377,11 @@ const Calculator = () => {
   };
 
   const [baseStats, setBaseStats] = useState({
-    fruit: 1,
-    sword: 1,
-    gun: 1,
-    strength: 1,
-    haki: 1,
+    fruit: 0,
+    sword: 0,
+    gun: 0,
+    strength: 0,
+    haki: 0,
   });
 
   const getScaledAccBonus = (scale: DamageScale) => {
@@ -413,7 +418,12 @@ const Calculator = () => {
   const getScaleForMoveKey = (moveKey: MoveKey) => {
     if (!selectedMove) return activeScale;
 
-    // Check if there's a per-key scale defined
+    const moveData = selectedMove[moveKey as keyof MoveDamage] as MoveData;
+    if (typeof moveData === "object" && moveData !== null && "scales" in moveData && moveData.scales) {
+        return moveData.scales;
+    }
+
+    // Check if there's a per-key scale defined mapping
     if (selectedMove.scales && selectedMove.scales[moveKey]) {
       return selectedMove.scales[moveKey]!;
     }
@@ -442,6 +452,7 @@ const Calculator = () => {
   const getFinalDamage = (
     baseDamage: number,
     moveKey: MoveKey,
+    hits: number = 1,
   ): { damage: number; className?: string; style?: React.CSSProperties } => {
     if (baseDamage === 0) return { damage: 0, className: "" };
 
@@ -479,13 +490,13 @@ const Calculator = () => {
       }, 0);
 
       return {
-        damage: totalDamage,
+        damage: totalDamage * hits,
         style: getGradientStyle(uniqueScales),
       };
     }
 
     // Handle regular scales (single or array for max)
-    const scales = Array.isArray(scalesForKey) ? scalesForKey : [scalesForKey];
+    const scales: DamageScale[] = Array.isArray(scalesForKey) ? scalesForKey : [scalesForKey as DamageScale];
 
     // Calculate damage for each scale and keep track of the scale that gave the max
     let maxDamage = -1;
@@ -510,24 +521,17 @@ const Calculator = () => {
 
     if (scales.length > 1) {
       return {
-        damage: maxDamage,
+        damage: maxDamage * hits,
         style: getGradientStyle(scales),
       };
     }
 
     return {
-      damage: maxDamage,
+      damage: maxDamage * hits,
       className: damageScaleToClass[bestScale] || "",
     };
   };
 
-  // Compute total max damage
-  const getMaxDamageTotal = (move: MoveDamage) => {
-    return moveKeys.reduce(
-      (sum, key) => sum + getFinalDamage(Number(move[key]), key as MoveKey).damage,
-      0,
-    );
-  };
 
   const buffFieldsets = [
     {
@@ -767,14 +771,16 @@ const Calculator = () => {
     setAvailableFightingBuffs(fightingFiltered);
     setAvailableSupportBuffs(supportFiltered);
 
+    const lockTitleBuff = hasTitleInName || (selectedMove?.specialBuffs && selectedMove.specialBuffs.some((b, idx) => b.isTitle && activeSpecialBuffs.includes(idx)));
+
     setBuffs((prev) => ({
       ...prev,
       [buffToDisable]: 0, // 👈 force NONE for source buff
-      ...(hasTitleInName && { titleBuff: 0 }), // 👈 force NONE for title buff if move has "title" in name
+      ...(lockTitleBuff && { titleBuff: 0 }), // 👈 force NONE for title buff
     }));
 
     setSelectedScale(sourceToDamageScale[selectedMove.source]);
-  }, [selectedMove, sourceToBuffKey, sourceToDamageScale]);
+  }, [selectedMove, sourceToBuffKey, sourceToDamageScale, activeSpecialBuffs]);
 
   const firstGroup = accKeys.slice(0, 3); // first 3
   const secondGroup = accKeys.slice(3, 7); // next 3
@@ -1113,7 +1119,8 @@ const Calculator = () => {
                 !!selectedMove &&
                 (sourceToBuffKey[selectedMove.source] === key ||
                   (key === "titleBuff" &&
-                    selectedMove.name?.toLowerCase().includes("title")));
+                    (selectedMove.name?.toLowerCase().includes("title") || 
+                     (selectedMove.specialBuffs && selectedMove.specialBuffs.some((b, idx) => b.isTitle && activeSpecialBuffs.includes(idx))))));
               // Get selected buff object
               const selectedBuffId = buffs[key as keyof typeof buffs];
               const selectedBuff = data.find(
@@ -1225,13 +1232,45 @@ const Calculator = () => {
           <div className="flex flex-wrap gap-4">
             {/* Move selector */}
             <div className="flex-1 min-w-[260px]">
-              <label className="label">
+              <label className="label flex gap-4">
                 <span>Move</span>
+                {selectedMove?.mode !== undefined && (
+                  <label className="cursor-pointer flex items-center justify-center gap-2">
+                    <span className="label-text font-bold">{selectedMove?.mode?.name || "Enable Mode"}</span>
+                    <input
+                      type="checkbox"
+                      className="toggle toggle-primary toggle-sm"
+                      checked={isModeActive}
+                      onChange={(e) => setIsModeActive(e.target.checked)}
+                    />
+                  </label>
+                )}
+                {selectedMove?.specialBuffs?.map((buff, idx) => (
+                  <label key={idx} className="cursor-pointer flex items-center justify-center gap-2">
+                    <span className="label-text font-bold">{buff.name}</span>
+                    <input
+                      type="checkbox"
+                      className={`toggle ${buff.isMode ? "toggle-primary" : "toggle-secondary"} toggle-sm`}
+                      checked={activeSpecialBuffs.includes(idx)}
+                      onChange={(e) => {
+                         if (e.target.checked) {
+                            setActiveSpecialBuffs(prev => [...prev, idx]);
+                         } else {
+                            setActiveSpecialBuffs(prev => prev.filter(i => i !== idx));
+                         }
+                      }}
+                    />
+                  </label>
+                ))}
               </label>
               <select
                 className="select w-full"
                 value={selectedMoveId}
-                onChange={(e) => setSelectedMoveId(Number(e.target.value))}
+                onChange={(e) => {
+                  setSelectedMoveId(Number(e.target.value));
+                  setActiveSpecialBuffs([]);
+                  setIsModeActive(false);
+                }}
               >
                 {allMoves
                   .sort((a, b) => a.name.localeCompare(b.name))
@@ -1247,41 +1286,295 @@ const Calculator = () => {
       </div>
 
       {/* DAMAGE TABLES SIDE BY SIDE */}
-      <div className="w-full flex justify-center mt-8">
-        <div className="flex gap-6 max-w-5xl w-full">
+      <div className="w-full flex justify-center mt-8 px-4">
+        <div className="flex flex-col lg:flex-row gap-6 max-w-6xl w-full">
+          {/* Legend - Responsive (Hidden on mobile or shown top) */}
+          <div className="lg:order-2 w-full lg:w-72">
+            <div className="card bg-base-200 border border-base-300 shadow-xl overflow-hidden sticky top-4">
+              <div className="bg-primary/10 px-4 py-2 border-b border-base-300">
+                <h2 className="text-xs font-black uppercase tracking-tighter text-primary flex items-center gap-2">
+                  <span>📖</span> Table Legend
+                </h2>
+              </div>
+              <div className="card-body p-4 space-y-4">
+                <div className="group">
+                  <div className="text-sm font-bold flex items-center gap-2 transition-colors group-hover:text-primary">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
+                    Hits
+                  </div>
+                  <p className="text-[10px] uppercase opacity-50 font-bold ml-3.5 mb-1">Impacts per cast</p>
+                  <p className="text-xs opacity-70 ml-3.5 leading-tight">Total number of separate damage ticks or strikes for the move.</p>
+                </div>
+
+                <div className="group">
+                  <div className="text-sm font-bold flex items-center gap-2 transition-colors group-hover:text-secondary">
+                    <div className="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+                    Max Damage
+                  </div>
+                  <p className="text-[10px] uppercase opacity-50 font-bold ml-3.5 mb-1">Final output</p>
+                  <p className="text-xs opacity-70 ml-3.5 leading-tight">The ultimate damage calculated including all stats, active buffs, and mode multipliers.</p>
+                </div>
+
+                <div className="group">
+                  <div className="text-sm font-bold flex items-center gap-2 transition-colors group-hover:text-accent">
+                    <div className="w-1.5 h-1.5 rounded-full bg-accent"></div>
+                    CD (Cooldown)
+                  </div>
+                  <p className="text-[10px] uppercase opacity-50 font-bold ml-3.5 mb-1">Wait time</p>
+                  <p className="text-xs opacity-70 ml-3.5 leading-tight">The time in seconds needed before you can re-use the move.</p>
+                </div>
+
+                <div className="group">
+                  <div className="text-sm font-bold flex items-center gap-2 transition-colors group-hover:text-info">
+                    <div className="w-1.5 h-1.5 rounded-full bg-info"></div>
+                    Duration
+                  </div>
+                  <p className="text-[10px] uppercase opacity-50 font-bold ml-3.5 mb-1">Active time</p>
+                  <p className="text-xs opacity-70 ml-3.5 leading-tight">The total time in seconds the move continues to impact the target.</p>
+                </div>
+
+                <div className="group">
+                  <div className="text-sm font-bold flex items-center gap-2 transition-colors group-hover:text-success">
+                    <div className="w-1.5 h-1.5 rounded-full bg-success"></div>
+                    DPS
+                  </div>
+                  <p className="text-[10px] uppercase opacity-50 font-bold ml-3.5 mb-1">Average sustained</p>
+                  <p className="text-xs opacity-70 ml-3.5 leading-tight">
+                    Damage Per Second, calculated as: <br/>
+                    <span className="text-[10px] font-mono text-warning">Damage ÷ (Cooldown + Duration)</span>
+                  </p>
+                </div>
+              </div>
+              <div className="bg-base-300/50 p-2 text-[10px] text-center opacity-60 italic border-t border-base-300">
+                Totals at the bottom represent synchronous output.
+              </div>
+            </div>
+          </div>
+
           {/* Max Damage Table */}
-          <div className="flex-1 overflow-x-auto">
-            <table className="table table-zebra w-full text-center">
-              <thead>
+          <div className="flex-1 overflow-x-auto lg:order-1">
+            <table className="table table-zebra w-full text-center border border-base-300 rounded-lg shadow-sm">
+              <thead className="bg-base-200">
                 <tr>
                   <th>Move</th>
+                  <th>Hits</th>
                   <th>Max Damage</th>
+                  <th>CD</th>
+                  <th>Duration</th>
+                  <th>DPS</th>
                 </tr>
               </thead>
               <tbody>
                 {selectedMove &&
                   moveKeys.map((key, idx) => {
+                    const moveData = selectedMove[key as keyof MoveDamage] as MoveData;
+                    const dmgRaw = getMoveDamageValue(moveData);
+                    
+                    let cdObj: number | undefined = undefined;
+                    let durObj: number | undefined = undefined;
+                    let hitsObj: number | undefined = undefined;
+                    if (typeof moveData === "object" && moveData !== null) {
+                        if ("cooldown" in moveData) cdObj = moveData.cooldown;
+                        if ("duration" in moveData) durObj = moveData.duration;
+                        if ("hits" in moveData) hitsObj = moveData.hits;
+                    } 
+
+                    let overrideHits = hitsObj !== undefined ? hitsObj : 1;
+                    let overrideCd = cdObj;
+                    let overrideDur = durObj;
+                    let finalRawDmg = dmgRaw;
+
+                    const isCombinedModeActive = isModeActive || (selectedMove.specialBuffs?.some((b, i) => b.isMode && activeSpecialBuffs.includes(i)));
+                    if (isCombinedModeActive) {
+                      if (selectedMove.modeOverrides?.[key as MoveKey] !== undefined) {
+                        const overrideData = selectedMove.modeOverrides[key as MoveKey] as MoveData;
+                        finalRawDmg = getMoveDamageValue(overrideData);
+                        
+                        if (typeof overrideData === "object" && overrideData !== null) {
+                          if ("hits" in overrideData && overrideData.hits) overrideHits = overrideData.hits;
+                          if ("cooldown" in overrideData) overrideCd = overrideData.cooldown;
+                          if ("duration" in overrideData) overrideDur = overrideData.duration;
+                        }
+                      }
+                      
+                      if (selectedMove.mode !== undefined) {
+                        finalRawDmg = finalRawDmg * selectedMove.mode.buff;
+                      }
+                    }
+                    
+                    if (selectedMove.specialBuffs) {
+                       selectedMove.specialBuffs.forEach((buff, idx) => {
+                          if (activeSpecialBuffs.includes(idx)) {
+                             if (buff.exclude?.includes(key as MoveKey)) return;
+                             if (typeof buff.buff === "number") {
+                                 finalRawDmg = finalRawDmg * buff.buff;
+                             } else if (typeof buff.buff === "object") {
+                                 finalRawDmg = finalRawDmg * (buff.buff[key as MoveKey] ?? 1);
+                             }
+                          }
+                       });
+                    }
+
+                    if (cdObj === undefined && selectedMove.cooldowns?.[key as MoveKey]) {
+                        cdObj = selectedMove.cooldowns[key as MoveKey];
+                    }
+                    if (overrideCd === undefined && cdObj !== undefined) overrideCd = cdObj;
+                    if (overrideDur === undefined && durObj !== undefined) overrideDur = durObj;
+
                     const { damage, className, style } = getFinalDamage(
-                      Number(selectedMove[key as keyof MoveDamage]),
+                      finalRawDmg,
                       key as MoveKey,
+                      overrideHits
                     );
+
+                    const cycleTime = (overrideCd || 0) + (overrideDur || 0);
+                    const dps = cycleTime > 0 ? (damage / cycleTime) : 0;
+
                     return (
                       <tr key={`max-${key}-${idx}`}>
                         <td>{key}</td>
+                        <td>
+                          <div className="flex flex-col items-center">
+                            <span>{overrideHits}</span>
+                          </div>
+                        </td>
                         <td className={className} style={style}>
-                          {Math.round(damage).toLocaleString()}
+                          <div className="flex flex-col items-center">
+                            <span>{Math.round(damage).toLocaleString()}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="flex flex-col items-center">
+                            <span>{overrideCd !== undefined ? `${overrideCd}s` : "-"}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="flex flex-col items-center">
+                            <span>{overrideDur !== undefined ? `${overrideDur}s` : "-"}</span>
+                          </div>
+                        </td>
+                        <td className={className} style={style}>
+                          <div className="flex flex-col items-center">
+                            <span>{cycleTime > 0 ? Math.round(dps).toLocaleString() : "-"}</span>
+                          </div>
                         </td>
                       </tr>
                     );
                   })}
-                <tr className="font-bold border-t">
-                  <td>Total</td>
-                  <td>
-                    {selectedMove
-                      ? Math.round(
-                          getMaxDamageTotal(selectedMove),
-                        ).toLocaleString()
-                      : 0}
+                <tr className="font-bold border-t-2 border-base-content/20 bg-base-200">
+                  <td className="text-primary uppercase tracking-wider text-xs">Total</td>
+                  <td></td>
+                  <td className="text-lg">
+                    {selectedMove ? (
+                      <div className="flex flex-col items-center">
+                        <span className="drop-shadow-sm">
+                          {Math.round(
+                            moveKeys.reduce((sum, key) => {
+                              let md = selectedMove[key as keyof MoveDamage] as MoveData;
+                              let h = 1;
+                              if (typeof md === "object" && md !== null && "hits" in md && md.hits) h = md.hits;
+                              let dmgR = getMoveDamageValue(md);
+                              
+                              const isCombinedModeActive = isModeActive || (selectedMove.specialBuffs?.some((b, i) => b.isMode && activeSpecialBuffs.includes(i)));
+                              if (isCombinedModeActive) {
+                                if (selectedMove.modeOverrides?.[key as MoveKey] !== undefined) {
+                                  md = selectedMove.modeOverrides[key as MoveKey] as MoveData;
+                                  if (typeof md === "object" && md !== null && "hits" in md && md.hits) h = md.hits;
+                                  dmgR = getMoveDamageValue(md);
+                                }
+                                if (selectedMove.mode !== undefined) {
+                                  dmgR = dmgR * selectedMove.mode.buff;
+                                }
+                              }
+                              
+                              if (selectedMove.specialBuffs) {
+                                 selectedMove.specialBuffs.forEach((buff, idx) => {
+                                    if (activeSpecialBuffs.includes(idx)) {
+                                       if (buff.exclude?.includes(key as MoveKey)) return;
+                                       if (typeof buff.buff === "number") {
+                                           dmgR = dmgR * buff.buff;
+                                       } else if (typeof buff.buff === "object") {
+                                           dmgR = dmgR * (buff.buff[key as MoveKey] ?? 1);
+                                       }
+                                    }
+                                 });
+                              }
+                              
+                              if (dmgR === 0) return sum;
+                              return sum + getFinalDamage(dmgR, key as MoveKey, h).damage;
+                            }, 0)
+                          ).toLocaleString()}
+                        </span>
+                      </div>
+                    ) : (
+                      "0"
+                    )}
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td className="text-lg text-success">
+                    {selectedMove ? (
+                      <div className="flex flex-col items-center">
+                        <span className="drop-shadow-sm">
+                          {Math.round(
+                            moveKeys.reduce((sum, key) => {
+                              let md = selectedMove[key as keyof MoveDamage] as MoveData;
+                              let h = 1;
+                              if (typeof md === "object" && md !== null && "hits" in md && md.hits) h = md.hits;
+                              let dmgR = getMoveDamageValue(md);
+                              
+                              let cdO: number | undefined = undefined;
+                              let durO: number | undefined = undefined;
+                              if (typeof md === "object" && md !== null) {
+                                  if ("cooldown" in md) cdO = md.cooldown;
+                                  if ("duration" in md) durO = md.duration;
+                              }
+
+                              const isCombinedModeActive = isModeActive || (selectedMove.specialBuffs?.some((b, i) => b.isMode && activeSpecialBuffs.includes(i)));
+                              if (isCombinedModeActive) {
+                                if (selectedMove.modeOverrides?.[key as MoveKey] !== undefined) {
+                                  md = selectedMove.modeOverrides[key as MoveKey] as MoveData;
+                                  if (typeof md === "object" && md !== null && "hits" in md && md.hits) h = md.hits;
+                                  dmgR = getMoveDamageValue(md);
+                                  if (typeof md === "object" && md !== null) {
+                                      if ("cooldown" in md) cdO = md.cooldown;
+                                      if ("duration" in md) durO = md.duration;
+                                  }
+                                }
+                                if (selectedMove.mode !== undefined) {
+                                  dmgR = dmgR * selectedMove.mode.buff;
+                                }
+                              }
+                              
+                              if (selectedMove.specialBuffs) {
+                                 selectedMove.specialBuffs.forEach((buff, idx) => {
+                                    if (activeSpecialBuffs.includes(idx)) {
+                                       if (buff.exclude?.includes(key as MoveKey)) return;
+                                       if (typeof buff.buff === "number") {
+                                           dmgR = dmgR * buff.buff;
+                                       } else if (typeof buff.buff === "object") {
+                                           dmgR = dmgR * (buff.buff[key as MoveKey] ?? 1);
+                                       }
+                                    }
+                                 });
+                              }
+                              
+                              if (dmgR === 0) return sum;
+
+                              if (cdO === undefined && selectedMove.cooldowns?.[key as MoveKey]) {
+                                  cdO = selectedMove.cooldowns[key as MoveKey];
+                              }
+
+                              const { damage } = getFinalDamage(dmgR, key as MoveKey, h);
+                              const ct = (cdO || 0) + (durO || 0);
+                              return sum + (ct > 0 ? (damage / ct) : 0);
+                            }, 0)
+                          ).toLocaleString()}
+                        </span>
+                      </div>
+                    ) : (
+                      "0"
+                    )}
                   </td>
                 </tr>
               </tbody>

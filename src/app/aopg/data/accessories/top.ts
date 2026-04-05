@@ -562,4 +562,15 @@ export const topAccData: Accessories[] = [
     haki: 1700,
     fruit: 2800,
   },
+  {
+    id: 51,
+    name: "Feverish Garbs",
+    strength: 2300,
+    stamina: 1500,
+    defense: 1800,
+    sword: 0,
+    gun: 0,
+    haki: 0,
+    fruit: 0,
+  },
 ];

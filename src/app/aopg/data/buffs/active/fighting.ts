@@ -145,4 +145,13 @@ export const fightingActiveBuffs: ActiveBuffs[] = [
     strengthbuff: 2.85,
     hakibuff: 2.85,
   },
+  {
+    id: 16,
+    name: "The Gambler (True Fever)",
+    fruitbuff: 2.85,
+    swordbuff: 2.85,
+    gunbuff: 2.85,
+    strengthbuff: 2.85,
+    hakibuff: 2.85,
+  },
 ];

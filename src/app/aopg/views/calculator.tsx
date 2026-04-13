@@ -1241,7 +1241,19 @@ const Calculator = () => {
                       type="checkbox"
                       className="toggle toggle-primary toggle-sm"
                       checked={isModeActive}
-                      onChange={(e) => setIsModeActive(e.target.checked)}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        setIsModeActive(checked);
+                        if (checked) {
+                          // When main mode is ON, disable all non-stackable special modes
+                          setActiveSpecialBuffs((prev) =>
+                            prev.filter((idx) => {
+                              const buff = selectedMove?.specialBuffs?.[idx];
+                              return !(buff?.isMode && !buff?.stackable);
+                            }),
+                          );
+                        }
+                      }}
                     />
                   </label>
                 )}
@@ -1253,11 +1265,36 @@ const Calculator = () => {
                       className={`toggle ${buff.isMode ? "toggle-primary" : "toggle-secondary"} toggle-sm`}
                       checked={activeSpecialBuffs.includes(idx)}
                       onChange={(e) => {
-                         if (e.target.checked) {
-                            setActiveSpecialBuffs(prev => [...prev, idx]);
-                         } else {
-                            setActiveSpecialBuffs(prev => prev.filter(i => i !== idx));
-                         }
+                        if (e.target.checked) {
+                          const currentBuff = selectedMove?.specialBuffs?.[idx];
+                          if (currentBuff?.isMode) {
+                            if (!currentBuff.stackable) {
+                              // If exclusive mode enabled, turn off ALL other modes
+                              setIsModeActive(false);
+                              setActiveSpecialBuffs((prev) =>
+                                prev.filter((i) => {
+                                  const b = selectedMove?.specialBuffs?.[i];
+                                  return !b?.isMode; // Keep only non-mode buffs
+                                }).concat(idx)
+                              );
+                            } else {
+                              // If stackable mode enabled, turn off any non-stackable modes (including main)
+                              setIsModeActive(false);
+                              setActiveSpecialBuffs((prev) =>
+                                prev.filter((i) => {
+                                  const b = selectedMove?.specialBuffs?.[i];
+                                  return !(b?.isMode && !b?.stackable);
+                                }).concat(idx)
+                              );
+                            }
+                          } else {
+                            setActiveSpecialBuffs((prev) => [...prev, idx]);
+                          }
+                        } else {
+                          setActiveSpecialBuffs((prev) =>
+                            prev.filter((i) => i !== idx),
+                          );
+                        }
                       }}
                     />
                   </label>
@@ -1406,11 +1443,8 @@ const Calculator = () => {
                        selectedMove.specialBuffs.forEach((buff, idx) => {
                           if (activeSpecialBuffs.includes(idx)) {
                              if (buff.exclude?.includes(key as MoveKey)) return;
-                             if (typeof buff.buff === "number") {
-                                 finalRawDmg = finalRawDmg * buff.buff;
-                             } else if (typeof buff.buff === "object") {
-                                 finalRawDmg = finalRawDmg * (buff.buff[key as MoveKey] ?? 1);
-                             }
+                             const multiplier = buff.buffKey?.[key as MoveKey] ?? buff.buff;
+                             finalRawDmg = finalRawDmg * multiplier;
                           }
                        });
                     }
@@ -1491,11 +1525,8 @@ const Calculator = () => {
                                  selectedMove.specialBuffs.forEach((buff, idx) => {
                                     if (activeSpecialBuffs.includes(idx)) {
                                        if (buff.exclude?.includes(key as MoveKey)) return;
-                                       if (typeof buff.buff === "number") {
-                                           dmgR = dmgR * buff.buff;
-                                       } else if (typeof buff.buff === "object") {
-                                           dmgR = dmgR * (buff.buff[key as MoveKey] ?? 1);
-                                       }
+                                       const multiplier = buff.buffKey?.[key as MoveKey] ?? buff.buff;
+dmgR = dmgR * multiplier;
                                     }
                                  });
                               }
@@ -1550,11 +1581,8 @@ const Calculator = () => {
                                  selectedMove.specialBuffs.forEach((buff, idx) => {
                                     if (activeSpecialBuffs.includes(idx)) {
                                        if (buff.exclude?.includes(key as MoveKey)) return;
-                                       if (typeof buff.buff === "number") {
-                                           dmgR = dmgR * buff.buff;
-                                       } else if (typeof buff.buff === "object") {
-                                           dmgR = dmgR * (buff.buff[key as MoveKey] ?? 1);
-                                       }
+                                       const multiplier = buff.buffKey?.[key as MoveKey] ?? buff.buff;
+dmgR = dmgR * multiplier;
                                     }
                                  });
                               }

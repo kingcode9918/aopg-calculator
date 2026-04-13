@@ -28,9 +28,11 @@ export type MoveData =
 
 export interface SpecialBuff {
   name: string;
-  buff: number | Partial<Record<MoveKey, number>>;
+  buff: number;
+  buffKey?: Partial<Record<MoveKey, number>>;
   isTitle?: boolean;
   isMode?: boolean;
+  stackable?: boolean;
   exclude?: MoveKey[];
 }
 

@@ -375,4 +375,15 @@ export const raceBuffsData: RaceBuffs[] = [
     note: "No other damage buff",
     image: "/resources/santa.jpg",
   },
+  {
+    id: 34,
+    name: "Ultimate Slime",
+    fruitbuff: 3.5,
+    swordbuff: 3.5,
+    gunbuff: 3.5,
+    strengthbuff: 3.5,
+    hakibuff: 3.5,
+    note: "No other damage buff",
+    image: "/resources/santa.jpg",
+  },
 ];

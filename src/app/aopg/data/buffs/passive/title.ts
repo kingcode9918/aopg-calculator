@@ -581,4 +581,14 @@ export const titleBuffsData: TitleBuffs[] = [
     hakibuff: 8,
     rank: "divine",
   },
+  {
+    id: 59,
+    name: "True Dragon",
+    fruitbuff: 4.5,
+    swordbuff: 4.5,
+    gunbuff: 4.5,
+    strengthbuff: 4.5,
+    hakibuff: 4.5,
+    rank: "divine",
+  },
 ];

@@ -44,6 +44,14 @@ export default function Home() {
           <UpdateModal
             updates={[
               {
+                version: "v1.2.9.0 | AOPG",
+                date: "April 13, 2026",
+                changes: [
+                  "Add ultimate slime damage",
+                  "Add ultimate slime race, title and buff",
+                ],
+              },
+              {
                 version: "v1.2.8.0 | AOPG",
                 date: "April 5, 2026",
                 changes: [

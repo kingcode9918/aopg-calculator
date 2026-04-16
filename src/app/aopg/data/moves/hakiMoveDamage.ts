@@ -82,15 +82,7 @@ export const hakiMoveDamage: MoveDamage[] = [
   {
     id: 6,
     name: "Emission (Joy Boy Haki)",
-    M1: 150000,
-    Q: 0,
-    E: 0,
-    R: 0,
-    F: 0,
-    G: 0,
-    T: 0,
-    U: 0,
-    Y: 0,
+    M1: { dmg: 1500, hits: 142, cooldown: 10 },
   },
   {
     id: 7,

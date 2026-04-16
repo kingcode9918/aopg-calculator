@@ -154,4 +154,13 @@ export const fightingActiveBuffs: ActiveBuffs[] = [
     strengthbuff: 2.85,
     hakibuff: 2.85,
   },
+  {
+    id: 17,
+    name: "Ultimate Slime (True Dragon)",
+    fruitbuff: 2.85,
+    swordbuff: 2.85,
+    gunbuff: 2.85,
+    strengthbuff: 2.85,
+    hakibuff: 2.85,
+  },
 ];
